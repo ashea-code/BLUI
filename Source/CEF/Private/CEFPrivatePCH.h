@@ -13,7 +13,6 @@ DECLARE_LOG_CATEGORY_EXTERN(LogCEF, Log, All);
 
 // Classes
 #include "../Classes/CEFInstance.h"
-#include "../Classes/CEFHandler.h"
 #include "../Classes/CEFViewPort.h"
 
 // CEF Things

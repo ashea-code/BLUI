@@ -1,0 +1,22 @@
+{
+    "FileVersion" : 3,
+ 
+    "FriendlyName" : "Chrome Embedded Framework Bindings",
+    "Version" : 1,
+    "VersionName": "1.0",
+    "EngineVersion" : 1579795,
+    "Description" : "Bindings for CFE",
+    "Category" : "CFE",
+    "CreatedBy" : "Aaron M. Shea",
+    "CreatedByURL" : "http://aaronshea.me",
+    "CanContainContent" : "true",
+ 
+    "Modules" :
+    [
+        {
+            "Name" : "CEF",
+            "Type" : "Developer",
+            "LoadingPhase" : "PreDefault"
+        } 
+    ]
+}

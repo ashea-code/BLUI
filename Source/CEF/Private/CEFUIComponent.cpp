@@ -12,4 +12,5 @@ void UCEFUIComponent::initComponent()
 {
 	CefString str = *DefaultURL;
 	UE_LOG(LogCEF, Warning, TEXT("TEST: %s"), *DefaultURL);
+	browser->GetMainFrame()->LoadURL(*DefaultURL);
 }

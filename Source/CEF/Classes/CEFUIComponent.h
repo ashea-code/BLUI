@@ -84,6 +84,7 @@ class UCEFUIComponent : public UActorComponent
 		UPROPERTY(EditAnywhere, Category = "View")
 		FString DefaultURL;
 
+		UFUNCTION(BlueprintCallable, Category = "UI|CEF|InintComponent")
 		void initComponent();
 
 	private:

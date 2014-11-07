@@ -4,10 +4,6 @@
 #pragma once
 #include "ModuleManager.h"
 
-#include "AllowWindowsPlatformTypes.h"
-#include "include/cef_app.h"
-#include "HideWindowsPlatformTypes.h"
-
 class ICEF : public IModuleInterface
 {
 public:
@@ -20,7 +16,7 @@ public:
 	*/
 	static inline ICEF& Get()
 	{
-		return FModuleManager::LoadModuleChecked< ICEF >("CEF");
+		return FModuleManager::LoadModuleChecked<ICEF>("CEF");
 	}
 
 	/**
@@ -32,16 +28,5 @@ public:
 	{
 		return FModuleManager::Get().IsModuleLoaded("CEF");
 	}
-
-	static void DoCEFUpdateLoop()
-	{
-		if (IsAvailable())
-		{
-			CefDoMessageLoopWork();
-		}
-	}
-
-	
-
 
 };

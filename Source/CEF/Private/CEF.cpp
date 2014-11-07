@@ -1,23 +1,37 @@
 #include "CEFPrivatePCH.h"
 
-bool running = false;
-
 class FCEF : public ICEF
 {
 
 	/** IModuleInterface implementation */
 	virtual void StartupModule() override
 	{
-		UE_LOG(LogCEF, Warning, TEXT("STATUS: Loaded"));
+		// Setup the default settings from CEFManager
+
+		CEFManager::info.SetAsWindowless(nullptr, true);
+		CEFManager::settings.windowless_rendering_enabled = true;
+		CEFManager::settings.log_severity = LOGSEVERITY_VERBOSE;
+		CefString(&CEFManager::settings.log_file).FromASCII("./CEF.log");
+		CefString(&CEFManager::settings.browser_subprocess_path).FromASCII("cef_ue4_process.exe");
+
+		CefExecuteProcess(CEFManager::main_args, NULL, NULL);
+		CefInitialize(CEFManager::main_args, CEFManager::settings, NULL, NULL);
+
+		UCEFUIComponent::StaticClass();
+
+		UE_LOG(LogCEF, Log, TEXT(" STATUS: Loaded"));
 	}
 
 	virtual void ShutdownModule() override
 	{
-		UE_LOG(LogCEF, Warning, TEXT("STATUS: Shutdown"));
+		UE_LOG(LogCEF, Log, TEXT(" STATUS: Shutdown"));
 		CefShutdown();
 	}
 
 };
+
+
+
 
 IMPLEMENT_MODULE( FCEF, CEF )
 DEFINE_LOG_CATEGORY(LogCEF);

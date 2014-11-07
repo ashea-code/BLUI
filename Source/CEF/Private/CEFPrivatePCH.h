@@ -14,6 +14,8 @@ DECLARE_LOG_CATEGORY_EXTERN(LogCEF, Log, All);
 // Classes
 #include "../Classes/CEFInstance.h"
 #include "../Classes/CEFViewPort.h"
+#include "../Classes/CEFManager.h"
+#include "../Classes/CEFUIComponent.h"
 
 // CEF Things
 #include "AllowWindowsPlatformTypes.h"

@@ -1,11 +1,11 @@
 {
     "FileVersion" : 3,
  
-    "FriendlyName" : "Chrome Embedded Framework Bindings",
+    "FriendlyName" : "CEF-UI",
     "Version" : 1,
     "VersionName": "1.0",
     "EngineVersion" : 1579795,
-    "Description" : "Bindings for CFE",
+    "Description" : "Chrome powered HTML UI for Unreal Engine 4",
     "Category" : "CFE",
     "CreatedBy" : "Aaron M. Shea",
     "CreatedByURL" : "http://aaronshea.me",

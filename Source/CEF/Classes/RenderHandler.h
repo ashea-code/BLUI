@@ -6,6 +6,9 @@
 class RenderHandler : public CefRenderHandler
 {
 public:
+
+	UCHAR* buffer_data;
+
 	// CefRenderHandler interface
 	bool GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect)
 	{
@@ -15,7 +18,7 @@ public:
 
 	void OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer, int width, int height)
 	{
-		//memcpy(texBuf->getCurrentLock().data, buffer, width*height*4);
+		FMemory::Memcpy(buffer_data, buffer, width*height*sizeof(uint32));
 	};
 
 	// CefBase interface
@@ -37,7 +40,11 @@ public:
 		return m_renderHandler;
 	};
 
-	CefRefPtr<CefRenderHandler> m_renderHandler;
+	CefRefPtr<RenderHandler> m_renderHandler;
+
+	virtual CefRefPtr<RenderHandler> GetRenderHandlerCustom() {
+		return m_renderHandler;
+	};
 
 	// NOTE: Must be at bottom
 public:

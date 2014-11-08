@@ -72,6 +72,9 @@ private:
 
 };
 
+typedef TSharedPtr<TextureData, ESPMode::ThreadSafe> TextureDataPtr;
+typedef TSharedRef<TextureData, ESPMode::ThreadSafe> TextureDataRef;
+
 UCLASS(ClassGroup = CEF, editinlinenew, meta = (BlueprintSpawnableComponent))
 class UCEFUIComponent : public UActorComponent
 {
@@ -80,10 +83,26 @@ class UCEFUIComponent : public UActorComponent
 	public:
 		UCEFUIComponent();
 
+		void InitializeComponent() override;
+		void BeginDestroy() override;
+
 		/* The default URL this UI component will load */
 		UPROPERTY(EditAnywhere, Category = "View")
 		FString DefaultURL;
 
+		/* Is this UI component current active? */
+		UPROPERTY(EditAnywhere, Category = "View")
+		bool bIsEnabled;
+
+		/* Width of the view resolution */
+		UPROPERTY(EditAnywhere, Category = "View")
+		uint32 Width;
+
+		/* Height of the view resolution */
+		UPROPERTY(EditAnywhere, Category = "View")
+		uint32 Height;
+
+		/* Required to be called when the scene is loaded, or when you want the UI to activate at first */
 		UFUNCTION(BlueprintCallable, Category = "UI|CEF")
 		void initComponent();
 
@@ -92,6 +111,13 @@ class UCEFUIComponent : public UActorComponent
 		CefRefPtr<CefBrowser> browser;
 		CefBrowserSettings browserSettings;
 		RenderHandler* renderer = new RenderHandler();
+
+		void TextureUpdate();
+		void ResetTexture();
+		void DestroyTexture();
+
+		// Store UI state in this UTexture2D
+		UTexture2D* Texture;
 
 	
 };

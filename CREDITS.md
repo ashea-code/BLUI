@@ -1,6 +1,6 @@
 # CEF-UI third-party Licenses
 
-CEF-UI makes uses of various third-party code and libraries. Below are the names and their appropriate licenses:
+CEF-UI makes use of various third-party code and libraries. Below are the names and their appropriate licenses:
 
 ## VaQuoleUI
 

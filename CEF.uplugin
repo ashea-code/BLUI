@@ -6,7 +6,7 @@
     "VersionName": "1.0",
     "EngineVersion" : 1579795,
     "Description" : "Chrome powered HTML UI for Unreal Engine 4",
-    "Category" : "CFE",
+    "Category" : "CEF",
     "CreatedBy" : "Aaron M. Shea",
     "CreatedByURL" : "http://aaronshea.me",
     "CanContainContent" : "true",

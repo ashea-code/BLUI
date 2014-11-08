@@ -59,7 +59,10 @@ void UCEFUIComponent::BeginDestroy()
 	DestroyTexture();
 
 	// Close our browser for this component
-	browser->GetHost()->CloseBrowser(true);
+	if (browser)
+	{
+		browser->GetHost()->CloseBrowser(true);
+	}
 
 	Super::BeginDestroy();
 }

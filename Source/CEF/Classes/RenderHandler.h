@@ -1,25 +1,20 @@
+#pragma once
 #include "AllowWindowsPlatformTypes.h"
 #include "include/cef_client.h"
 #include "include/cef_app.h"
 #include "HideWindowsPlatformTypes.h"
+//#include "../Private/CEFPrivatePCH.h"
 
 class RenderHandler : public CefRenderHandler
 {
 public:
 
-	UCHAR* buffer_data;
+	void* buffer_data = NULL;
 
 	// CefRenderHandler interface
-	bool GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect)
-	{
-		rect = CefRect(0, 0, 800, 600);
-		return true;
-	};
+	bool GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect) override;
 
-	void OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer, int width, int height)
-	{
-		FMemory::Memcpy(buffer_data, buffer, width*height*sizeof(uint32));
-	};
+	void OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer, int width, int height) override;
 
 	// CefBase interface
 	// NOTE: Must be at bottom
@@ -33,7 +28,7 @@ class BrowserClient : public CefClient
 public:
 	BrowserClient(RenderHandler* renderHandler) : m_renderHandler(renderHandler)
 	{
-		// BOOST_LOG_TRIVIAL(info) << "here 1b";
+		
 	};
 
 	virtual CefRefPtr<CefRenderHandler> GetRenderHandler() {

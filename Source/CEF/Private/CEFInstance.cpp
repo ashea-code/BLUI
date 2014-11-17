@@ -15,8 +15,6 @@ CEFInstance::CEFInstance()
 	// CefString(&settings.locales_dir_path).FromASCII("");
 
 	info.SetAsWindowless(nullptr, true);
-	g_handler = new BrowserClient(renderer);
-	CefBrowserHost::CreateBrowser(info, g_handler.get(), "http://google.com", browserSettings, NULL);
 
 	settings.windowless_rendering_enabled = true;
 	settings.log_severity = LOGSEVERITY_VERBOSE;
@@ -31,9 +29,5 @@ CEFInstance::CEFInstance()
 
 CEFInstance::~CEFInstance()
 {
-	UE_LOG(LogCEF, Warning, TEXT("CEF Instance: Close Browser"));
-	if (browser.get())
-	{
-		browser.get()->GetHost()->CloseBrowser(true);
-	}
+	UE_LOG(LogCEF, Warning, TEXT("CEF Instance Closing"));
 }

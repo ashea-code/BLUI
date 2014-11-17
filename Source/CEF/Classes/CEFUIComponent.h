@@ -86,6 +86,9 @@ class UCEFUIComponent : public UActorComponent
 		void InitializeComponent() override;
 		void BeginDestroy() override;
 
+		/* Override our tick function for updating the Texture */
+		virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
+
 		/* The default URL this UI component will load */
 		UPROPERTY(EditAnywhere, Category = "View")
 		FString DefaultURL;

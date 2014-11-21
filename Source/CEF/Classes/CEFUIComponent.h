@@ -105,7 +105,20 @@ class UCEFUIComponent : public UActorComponent
 		UPROPERTY(EditAnywhere, Category = "View")
 		uint32 Height;
 
-	private:
+		/** Material that will be instanced to load UI texture into it */
+		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Material")
+		UMaterialInterface* BaseMaterial;
+
+		/** Name of parameter to load UI texture into material */
+		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Material")
+		FName TextureParameterName;
+
+		/* Get the material instance, apply this to the display mesh */
+		UFUNCTION(BlueprintCallable, Category = "UI|CEF-UI")
+		UMaterialInstanceDynamic* GetMaterialInstance() const;
+
+
+	protected:
 		CefRefPtr<BrowserClient> g_handler;
 		CefRefPtr<CefBrowser> browser;
 		CefBrowserSettings browserSettings;
@@ -114,9 +127,13 @@ class UCEFUIComponent : public UActorComponent
 		void TextureUpdate();
 		void ResetTexture();
 		void DestroyTexture();
+		void ResetMaterialInstance();
 
 		// Store UI state in this UTexture2D
 		UTexture2D* Texture;
+
+		// Material instance 
+		UMaterialInstanceDynamic* MaterialInstance;
 
 	
 };

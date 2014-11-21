@@ -83,8 +83,8 @@ class UCEFUIComponent : public UActorComponent
 	public:
 		UCEFUIComponent();
 
-		void InitializeComponent() override;
-		void BeginDestroy() override;
+		virtual void InitializeComponent() override;
+		virtual void BeginDestroy() override;
 
 		/* Override our tick function for updating the Texture */
 		virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;
@@ -104,10 +104,6 @@ class UCEFUIComponent : public UActorComponent
 		/* Height of the view resolution */
 		UPROPERTY(EditAnywhere, Category = "View")
 		uint32 Height;
-
-		/* Required to be called when the scene is loaded, or when you want the UI to activate at first */
-		UFUNCTION(BlueprintCallable, Category = "UI|CEF")
-		void initComponent();
 
 	private:
 		CefRefPtr<BrowserClient> g_handler;

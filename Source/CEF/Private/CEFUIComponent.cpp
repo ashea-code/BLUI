@@ -21,6 +21,9 @@ UCEFUIComponent::UCEFUIComponent(const class FPostConstructInitializeProperties&
 	Width = 800;
 	Height = 600;
 
+	// Initial Texture Name
+	TextureParameterName = TEXT("CEFTexture");
+
 }
 
 void UCEFUIComponent::InitializeComponent()
@@ -36,7 +39,7 @@ void UCEFUIComponent::InitializeComponent()
 void UCEFUIComponent::ResetTexture()
 {
 
-	UE_LOG(LogCEF, Warning, TEXT("****Texture RESET"));
+	UE_LOG(LogCEF, Warning, TEXT("Texture Reset"));
 
 	// Here we init the texture to its initial state
 	DestroyTexture();
@@ -46,7 +49,7 @@ void UCEFUIComponent::ResetTexture()
 	Texture->AddToRoot();
 	Texture->UpdateResource();
 
-	// ResetMaterialInstance();
+	ResetMaterialInstance();
 
 }
 
@@ -68,12 +71,63 @@ void UCEFUIComponent::DestroyTexture()
 	}
 }
 
+void UCEFUIComponent::ResetMaterialInstance()
+{
+
+	// Check we have all the requirements
+	if (!Texture || !BaseMaterial || TextureParameterName.IsNone())
+	{
+		return;
+	}
+
+	UE_LOG(LogCEF, Warning, TEXT("Material Instance Reset"));
+
+	if (!MaterialInstance)
+	{
+		// we need to create a new one
+		MaterialInstance = UMaterialInstanceDynamic::Create(BaseMaterial, NULL);
+
+
+		// Do some checking to ensure the material instance was actually created! We need this!
+		if (!MaterialInstance)
+		{
+			UE_LOG(LogCEF, Warning, TEXT("Material instance could not be created, trying once again!"));
+			return;
+		}
+
+		// Try once more
+		if (!MaterialInstance)
+		{
+			UE_LOG(LogCEF, Error, TEXT("Failed to create the material instance, fail!"));
+			return;
+		}
+
+		// Ensure we have the correct parameter name
+		UTexture* Tex = nullptr;
+		if (!MaterialInstance->GetTextureParameterValue(TextureParameterName, Tex))
+		{
+			UE_LOG(LogCEF, Warning, TEXT("Material instance Texture parameter not found"));
+			return;
+		}
+
+		// Give them our CEF painted texture
+		MaterialInstance->SetTextureParameterValue(TextureParameterName, Texture);
+
+	}
+
+}
+
+UMaterialInstanceDynamic* UCEFUIComponent::GetMaterialInstance() const
+{
+	return MaterialInstance;
+}
+
 void UCEFUIComponent::BeginDestroy()
 {
 	// Destroy our texture
 	DestroyTexture();
 
-	// Close our browser for this component
+	// Close our browser for this component if it had a running browser
 	if (browser)
 	{
 		browser->GetHost()->CloseBrowser(true);
@@ -93,7 +147,6 @@ void UCEFUIComponent::TextureUpdate()
 	if (browser->IsLoading())
 	{
 		// The browser is not ready yet
-		UE_LOG(LogCEF, Warning, TEXT("Browser Loading"));
 		return;
 	}
 

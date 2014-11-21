@@ -4,35 +4,47 @@
 UCEFUIComponent::UCEFUIComponent(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
+
 	g_handler = new BrowserClient(renderer);
 	browser = CefBrowserHost::CreateBrowserSync(CEFManager::info, g_handler.get(), "about:blank", browserSettings, NULL);
 
 	// Ensure the component will tick
 	PrimaryComponentTick.bCanEverTick = true;
-}
+	
+	// Make sure this compoenent will Initialize
+	bWantsInitializeComponent = true;
 
-void UCEFUIComponent::initComponent()
-{
-	CefString str = *DefaultURL;
-	UE_LOG(LogCEF, Warning, TEXT("TEST: %s"), *DefaultURL);
-	browser->GetMainFrame()->LoadURL(*DefaultURL);
-	ResetTexture();
+	// Tick with the pre phyics group
+	PrimaryComponentTick.TickGroup = TG_PrePhysics;
+
+	// Initial w/h
+	Width = 800;
+	Height = 600;
+
 }
 
 void UCEFUIComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
+	UE_LOG(LogCEF, Warning, TEXT("CEFUI Component Initialized"));
+	CefString str = *DefaultURL;
+	UE_LOG(LogCEF, Warning, TEXT("Loading URL: %s"), *DefaultURL);
+	browser->GetMainFrame()->LoadURL(*DefaultURL);
+	ResetTexture();
 }
 
 void UCEFUIComponent::ResetTexture()
 {
+
+	UE_LOG(LogCEF, Warning, TEXT("****Texture RESET"));
+
 	// Here we init the texture to its initial state
 	DestroyTexture();
-
+	
 	// init the new Texture2D
 	Texture = UTexture2D::CreateTransient(Width, Height);
 	Texture->AddToRoot();
-	Texture->UpdateResourceW();
+	Texture->UpdateResource();
 
 	// ResetMaterialInstance();
 
@@ -53,7 +65,6 @@ void UCEFUIComponent::DestroyTexture()
 
 		Texture->MarkPendingKill();
 		Texture = nullptr;
-
 	}
 }
 
@@ -75,21 +86,19 @@ void UCEFUIComponent::TextureUpdate()
 {
 	if (!browser || !bIsEnabled)
 	{
-		UE_LOG(LogCEF, Warning, TEXT("No browesr, or component is not enabled"));
+		// UE_LOG(LogCEF, Warning, TEXT("No browesr, or component is not enabled"));
 		return;
 	}
 
 	if (browser->IsLoading())
 	{
 		// The browser is not ready yet
-		UE_LOG(LogCEF, Warning, TEXT("Texture Browser Loading"));
+		UE_LOG(LogCEF, Warning, TEXT("Browser Loading"));
 		return;
 	}
 
-	if (Texture && Texture->Resource)
+	if (Texture)
 	{
-
-		UE_LOG(LogCEF, Warning, TEXT("Texture & Resource"));
 
 		// Is our texture ready?
 		auto ref = static_cast<FTexture2DResource*>(Texture->Resource)->GetTexture2DRHI();
@@ -97,8 +106,6 @@ void UCEFUIComponent::TextureUpdate()
 		{
 			return;
 		}
-
-		UE_LOG(LogCEF, Warning, TEXT("Texture Ready"));
 
 		// Get the view from the browser
 		const void* texData = g_handler->GetRenderHandlerCustom()->buffer_data;
@@ -115,8 +122,6 @@ void UCEFUIComponent::TextureUpdate()
 		// Clean up from the per-render
 		ViewBuffer.Empty();
 		texData = 0;
-
-		UE_LOG(LogCEF, Warning, TEXT("Texture Render Cleanup"));
 
 		ENQUEUE_UNIQUE_RENDER_COMMAND_THREEPARAMETER(
 			TextureData,
@@ -136,8 +141,6 @@ void UCEFUIComponent::TextureUpdate()
 			ImageData.Reset();
 		});
 
-	} else {
-		UE_LOG(LogCEF, Warning, TEXT("Texture && Texture->Resource fail"));
 	}
 	
 }

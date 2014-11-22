@@ -6,5 +6,4 @@ void CEFManager::doCEFMessageLoop()
 }
 
 CefSettings CEFManager::settings;
-CefWindowInfo CEFManager::info;
 CefMainArgs CEFManager::main_args;

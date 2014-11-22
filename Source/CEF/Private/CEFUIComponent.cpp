@@ -5,12 +5,9 @@ UCEFUIComponent::UCEFUIComponent(const class FPostConstructInitializeProperties&
 	: Super(PCIP)
 {
 
-	g_handler = new BrowserClient(renderer);
-	browser = CefBrowserHost::CreateBrowserSync(CEFManager::info, g_handler.get(), "about:blank", browserSettings, NULL);
-
 	// Ensure the component will tick
 	PrimaryComponentTick.bCanEverTick = true;
-	
+
 	// Make sure this compoenent will Initialize
 	bWantsInitializeComponent = true;
 
@@ -22,24 +19,29 @@ UCEFUIComponent::UCEFUIComponent(const class FPostConstructInitializeProperties&
 	Height = 600;
 
 	// Initial Texture Name
-	TextureParameterName = TEXT("CEFTexture");
+	TextureParameterName = TEXT("UITexture");
+
+	info.width = Width;
+	info.height = Height;
+	info.SetAsWindowless(NULL, true);
+
+	g_handler = new BrowserClient(renderer);
+	browser = CefBrowserHost::CreateBrowserSync(info, g_handler.get(), "about:blank", browserSettings, NULL);
 
 }
 
 void UCEFUIComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
-	UE_LOG(LogCEF, Warning, TEXT("CEFUI Component Initialized"));
+	UE_LOG(LogCEF, Log, TEXT("Component Initialized"));
 	CefString str = *DefaultURL;
-	UE_LOG(LogCEF, Warning, TEXT("Loading URL: %s"), *DefaultURL);
+	UE_LOG(LogCEF, Log, TEXT("Loading URL: %s"), *DefaultURL);
 	browser->GetMainFrame()->LoadURL(*DefaultURL);
 	ResetTexture();
 }
 
 void UCEFUIComponent::ResetTexture()
 {
-
-	UE_LOG(LogCEF, Warning, TEXT("Texture Reset"));
 
 	// Here we init the texture to its initial state
 	DestroyTexture();
@@ -79,8 +81,6 @@ void UCEFUIComponent::ResetMaterialInstance()
 	{
 		return;
 	}
-
-	UE_LOG(LogCEF, Warning, TEXT("Material Instance Reset"));
 
 	if (!MaterialInstance)
 	{
@@ -196,6 +196,13 @@ void UCEFUIComponent::TextureUpdate()
 
 	}
 	
+}
+
+void UCEFUIComponent::ExecuteJS(FString code)
+{
+	CefString codeStr = *code;
+	UE_LOG(LogCEF, Warning, TEXT("Execute JS: %s"), *code)
+	browser->GetMainFrame()->ExecuteJavaScript(codeStr, "", 0);
 }
 
 void UCEFUIComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)

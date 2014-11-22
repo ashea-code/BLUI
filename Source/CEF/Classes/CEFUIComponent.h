@@ -99,26 +99,30 @@ class UCEFUIComponent : public UActorComponent
 
 		/* Width of the view resolution */
 		UPROPERTY(EditAnywhere, Category = "View")
-		uint32 Width;
+		int32 Width;
 
 		/* Height of the view resolution */
 		UPROPERTY(EditAnywhere, Category = "View")
-		uint32 Height;
+		int32 Height;
 
-		/** Material that will be instanced to load UI texture into it */
+		/* Material that will be instanced to load UI texture into it */
 		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Material")
 		UMaterialInterface* BaseMaterial;
 
-		/** Name of parameter to load UI texture into material */
+		/* Name of parameter to load UI texture into material */
 		UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Material")
 		FName TextureParameterName;
 
 		/* Get the material instance, apply this to the display mesh */
-		UFUNCTION(BlueprintCallable, Category = "UI|CEF-UI")
+		UFUNCTION(BlueprintCallable, Category = "UI")
 		UMaterialInstanceDynamic* GetMaterialInstance() const;
 
+		/* Execute JS code inside the browser */
+		UFUNCTION(BlueprintCallable, Category = "UI")
+		void ExecuteJS(FString code);
 
 	protected:
+		CefWindowInfo info;
 		CefRefPtr<BrowserClient> g_handler;
 		CefRefPtr<CefBrowser> browser;
 		CefBrowserSettings browserSettings;

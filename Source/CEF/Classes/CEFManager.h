@@ -10,7 +10,6 @@ class CEF_API CEFManager {
 	public:
 		static void doCEFMessageLoop();
 		static CefSettings settings;
-		static CefWindowInfo info;
 		static CefMainArgs main_args;
 
 };

@@ -7,8 +7,6 @@ class FCEF : public ICEF
 	virtual void StartupModule() override
 	{
 		// Setup the default settings from CEFManager
-
-		CEFManager::info.SetAsWindowless(nullptr, true);
 		CEFManager::settings.windowless_rendering_enabled = true;
 		CEFManager::settings.log_severity = LOGSEVERITY_VERBOSE;
 		CefString(&CEFManager::settings.log_file).FromASCII("./CEF.log");

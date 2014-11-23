@@ -1,7 +1,7 @@
-#include "../Private/CEFPrivatePCH.h"
-#include "../classes/CEFUIComponent.h"
+#include "../Private/BluPrivatePCH.h"
+#include "../classes/BluUIComponent.h"
 
-UCEFUIComponent::UCEFUIComponent(const class FPostConstructInitializeProperties& PCIP)
+UBluUIComponent::UBluUIComponent(const class FPostConstructInitializeProperties& PCIP)
 	: Super(PCIP)
 {
 
@@ -19,7 +19,7 @@ UCEFUIComponent::UCEFUIComponent(const class FPostConstructInitializeProperties&
 	Height = 600;
 
 	// Initial Texture Name
-	TextureParameterName = TEXT("UITexture");
+	TextureParameterName = TEXT("BluTexture");
 
 	info.width = Width;
 	info.height = Height;
@@ -30,17 +30,17 @@ UCEFUIComponent::UCEFUIComponent(const class FPostConstructInitializeProperties&
 
 }
 
-void UCEFUIComponent::InitializeComponent()
+void UBluUIComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
-	UE_LOG(LogCEF, Log, TEXT("Component Initialized"));
+	UE_LOG(LogBlu, Log, TEXT("Component Initialized"));
 	CefString str = *DefaultURL;
-	UE_LOG(LogCEF, Log, TEXT("Loading URL: %s"), *DefaultURL);
+	UE_LOG(LogBlu, Log, TEXT("Loading URL: %s"), *DefaultURL);
 	browser->GetMainFrame()->LoadURL(*DefaultURL);
 	ResetTexture();
 }
 
-void UCEFUIComponent::ResetTexture()
+void UBluUIComponent::ResetTexture()
 {
 
 	// Here we init the texture to its initial state
@@ -55,7 +55,7 @@ void UCEFUIComponent::ResetTexture()
 
 }
 
-void UCEFUIComponent::DestroyTexture()
+void UBluUIComponent::DestroyTexture()
 {
 	// Here we destory the texture and its resource
 	if (Texture)
@@ -73,7 +73,7 @@ void UCEFUIComponent::DestroyTexture()
 	}
 }
 
-void UCEFUIComponent::ResetMaterialInstance()
+void UBluUIComponent::ResetMaterialInstance()
 {
 
 	// Check we have all the requirements
@@ -91,14 +91,14 @@ void UCEFUIComponent::ResetMaterialInstance()
 		// Do some checking to ensure the material instance was actually created! We need this!
 		if (!MaterialInstance)
 		{
-			UE_LOG(LogCEF, Warning, TEXT("Material instance could not be created, trying once again!"));
+			UE_LOG(LogBlu, Warning, TEXT("Material instance could not be created, trying once again!"));
 			return;
 		}
 
 		// Try once more
 		if (!MaterialInstance)
 		{
-			UE_LOG(LogCEF, Error, TEXT("Failed to create the material instance, fail!"));
+			UE_LOG(LogBlu, Error, TEXT("Failed to create the material instance, fail!"));
 			return;
 		}
 
@@ -106,23 +106,23 @@ void UCEFUIComponent::ResetMaterialInstance()
 		UTexture* Tex = nullptr;
 		if (!MaterialInstance->GetTextureParameterValue(TextureParameterName, Tex))
 		{
-			UE_LOG(LogCEF, Warning, TEXT("Material instance Texture parameter not found"));
+			UE_LOG(LogBlu, Warning, TEXT("Material instance Texture parameter not found"));
 			return;
 		}
 
-		// Give them our CEF painted texture
+		// Give them our Blu painted texture
 		MaterialInstance->SetTextureParameterValue(TextureParameterName, Texture);
 
 	}
 
 }
 
-UMaterialInstanceDynamic* UCEFUIComponent::GetMaterialInstance() const
+UMaterialInstanceDynamic* UBluUIComponent::GetMaterialInstance() const
 {
 	return MaterialInstance;
 }
 
-void UCEFUIComponent::BeginDestroy()
+void UBluUIComponent::BeginDestroy()
 {
 	// Destroy our texture
 	DestroyTexture();
@@ -136,11 +136,11 @@ void UCEFUIComponent::BeginDestroy()
 	Super::BeginDestroy();
 }
 
-void UCEFUIComponent::TextureUpdate()
+void UBluUIComponent::TextureUpdate()
 {
 	if (!browser || !bIsEnabled)
 	{
-		// UE_LOG(LogCEF, Warning, TEXT("No browesr, or component is not enabled"));
+		// UE_LOG(LogBlu, Warning, TEXT("No browesr, or component is not enabled"));
 		return;
 	}
 
@@ -198,14 +198,14 @@ void UCEFUIComponent::TextureUpdate()
 	
 }
 
-void UCEFUIComponent::ExecuteJS(FString code)
+void UBluUIComponent::ExecuteJS(FString code)
 {
 	CefString codeStr = *code;
-	UE_LOG(LogCEF, Log, TEXT("Execute JS: %s"), *code)
+	UE_LOG(LogBlu, Log, TEXT("Execute JS: %s"), *code)
 	browser->GetMainFrame()->ExecuteJavaScript(codeStr, "", 0);
 }
 
-void UCEFUIComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
+void UBluUIComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
 	// Super tick
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);

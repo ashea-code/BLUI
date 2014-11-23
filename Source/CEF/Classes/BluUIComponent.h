@@ -1,6 +1,6 @@
 #pragma once
-#include "../Private/CEFPrivatePCH.h"
-#include "CEFUIComponent.generated.h"
+#include "../Private/BluPrivatePCH.h"
+#include "BluUIComponent.generated.h"
 
 /*
 * Struct for Texture data
@@ -75,13 +75,13 @@ private:
 typedef TSharedPtr<TextureData, ESPMode::ThreadSafe> TextureDataPtr;
 typedef TSharedRef<TextureData, ESPMode::ThreadSafe> TextureDataRef;
 
-UCLASS(ClassGroup = CEF, editinlinenew, meta = (BlueprintSpawnableComponent))
-class UCEFUIComponent : public UActorComponent
+UCLASS(ClassGroup = Blu, editinlinenew, meta = (BlueprintSpawnableComponent))
+class UBluUIComponent : public UActorComponent
 {
 	GENERATED_UCLASS_BODY()
 
 	public:
-		UCEFUIComponent();
+		UBluUIComponent();
 
 		virtual void InitializeComponent() override;
 		virtual void BeginDestroy() override;

@@ -1,6 +1,6 @@
-# CEF-UI third-party Licenses
+# BluI third-party Licenses
 
-CEF-UI makes use of various third-party code and libraries. Below are the names and their appropriate licenses:
+BluI makes use of various third-party code and libraries. Below are the names and their appropriate licenses:
 
 ## VaQuoleUI
 

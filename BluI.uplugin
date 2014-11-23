@@ -1,12 +1,12 @@
 {
     "FileVersion" : 3,
  
-    "FriendlyName" : "CEF-UI",
+    "FriendlyName" : "BLuI",
     "Version" : 1,
     "VersionName": "1.0",
     "EngineVersion" : 1579795,
-    "Description" : "Chrome powered HTML UI for Unreal Engine 4",
-    "Category" : "CEF",
+    "Description" : "Chrome powered HTML UI and HUD for Unreal Engine 4",
+    "Category" : "UI",
     "CreatedBy" : "Aaron M. Shea",
     "CreatedByURL" : "http://aaronshea.me",
     "CanContainContent" : "true",
@@ -14,7 +14,7 @@
     "Modules" :
     [
         {
-            "Name" : "CEF",
+            "Name" : "Blu",
             "Type" : "Runtime",
             "LoadingPhase" : "PreDefault"
         } 

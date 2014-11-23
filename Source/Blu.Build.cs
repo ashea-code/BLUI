@@ -2,7 +2,7 @@ using UnrealBuildTool;
 using System.IO;
 using System;
 
-public class CEF : ModuleRules
+public class Blu : ModuleRules
 {
 
     private string ModulePath
@@ -15,7 +15,7 @@ public class CEF : ModuleRules
         get { return Path.GetFullPath(Path.Combine(ModulePath, "../ThirdParty/")); }
     }
 
-	public CEF(TargetInfo Target)
+	public Blu(TargetInfo Target)
 	{
 		PrivateIncludePaths.AddRange(
 			new string[] {

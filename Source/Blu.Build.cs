@@ -23,10 +23,11 @@ public class Blu : ModuleRules
 				// ... add other private include paths required here ...
 			});
 
-        PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef\\Win\\Release", "libcef.lib"));
-        PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef\\Win\\Release", "libcef_dll_wrapper.lib"));
-        PrivateIncludePaths.Add(Path.Combine(ThirdPartyPath, "cef\\Win"));
+
+        PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef\\Win\\lib", "libcef.lib"));
+        PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef\\Win\\lib", "libcef_dll_wrapper.lib"));
         PublicIncludePaths.Add(Path.Combine(ThirdPartyPath, "cef\\Win"));
+
 
 
 		PublicDependencyModuleNames.AddRange(

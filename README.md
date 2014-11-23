@@ -30,7 +30,7 @@ You can find it here: https://docs.unrealengine.com/latest/INT/Programming/Devel
 ------------
 <img src="http://www.w3.org/html/logo/downloads/HTML5_Logo_512.png" width="128px" height="128px" />
 <img src="http://i.imgur.com/klDp42x.png" width="128px" height="128px" />
-<img src="https://raw.githubusercontent.com/svn2github/cef3/master/tests/cefclient/res/logo.png" width="168px" height="168px"/>
+<img src="http://upload.wikimedia.org/wikipedia/commons/3/3d/Chromium_11_Logo.png" width="128px" height="128px"/>
 
 ##License and Credits
 ---------------------

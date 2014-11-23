@@ -1,7 +1,7 @@
 #pragma once
-#include "CEFPrivatePCH.h"
+#include "BluPrivatePCH.h"
 
-CEFInstance::CEFInstance()
+BluInstance::BluInstance()
 {
 
 	// checkout detailed settings options http://magpcss.org/ceforum/apidocs/projects/%28default%29/_cef_settings_t.html
@@ -18,7 +18,7 @@ CEFInstance::CEFInstance()
 
 	settings.windowless_rendering_enabled = true;
 	settings.log_severity = LOGSEVERITY_VERBOSE;
-	CefString(&settings.log_file).FromASCII("./CEF.log");
+	CefString(&settings.log_file).FromASCII("./Blu.log");
 	CefString(&settings.browser_subprocess_path).FromASCII("cef_ue4_process.exe");
 
 	CefMainArgs main_args;
@@ -27,7 +27,7 @@ CEFInstance::CEFInstance()
 
 }
 
-CEFInstance::~CEFInstance()
+BluInstance::~BluInstance()
 {
-	UE_LOG(LogCEF, Warning, TEXT("CEF Instance Closing"));
+	UE_LOG(LogBlu, Warning, TEXT("Blu Instance Closing"));
 }

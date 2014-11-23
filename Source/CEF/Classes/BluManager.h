@@ -1,14 +1,14 @@
 #pragma once
-#include "../Private/CEFPrivatePCH.h"
+#include "../Private/BluPrivatePCH.h"
 #include "AllowWindowsPlatformTypes.h"
 #include "include/cef_client.h"
 #include "include/cef_app.h"
 #include "HideWindowsPlatformTypes.h"
 
-class CEF_API CEFManager {
+class BLU_API BluManager {
 
 	public:
-		static void doCEFMessageLoop();
+		static void doBluMessageLoop();
 		static CefSettings settings;
 		static CefMainArgs main_args;
 

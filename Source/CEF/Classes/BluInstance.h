@@ -5,7 +5,7 @@
 #include "include/cef_app.h"
 #include "HideWindowsPlatformTypes.h"
 
-class CEF_API CEFInstance
+class BLU_API BluInstance
 {
 	private:
 		CefBrowserSettings browserSettings;
@@ -13,7 +13,7 @@ class CEF_API CEFInstance
 		CefWindowInfo info;
 	
 	public:
-		CEFInstance();
-		~CEFInstance();
+		BluInstance();
+		~BluInstance();
 
 };

@@ -4,7 +4,7 @@
 #pragma once
 #include "ModuleManager.h"
 
-class ICEF : public IModuleInterface
+class IBlu : public IModuleInterface
 {
 public:
 
@@ -14,9 +14,9 @@ public:
 	*
 	* @return Returns singleton instance, loading the module on demand if needed
 	*/
-	static inline ICEF& Get()
+	static inline IBlu& Get()
 	{
-		return FModuleManager::LoadModuleChecked<ICEF>("CEF");
+		return FModuleManager::LoadModuleChecked<IBlu>("Blu");
 	}
 
 	/**
@@ -26,7 +26,7 @@ public:
 	*/
 	static inline bool IsAvailable()
 	{
-		return FModuleManager::Get().IsModuleLoaded("CEF");
+		return FModuleManager::Get().IsModuleLoaded("Blu");
 	}
 
 };

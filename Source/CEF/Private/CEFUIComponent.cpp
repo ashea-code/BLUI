@@ -201,7 +201,7 @@ void UCEFUIComponent::TextureUpdate()
 void UCEFUIComponent::ExecuteJS(FString code)
 {
 	CefString codeStr = *code;
-	UE_LOG(LogCEF, Warning, TEXT("Execute JS: %s"), *code)
+	UE_LOG(LogCEF, Log, TEXT("Execute JS: %s"), *code)
 	browser->GetMainFrame()->ExecuteJavaScript(codeStr, "", 0);
 }
 

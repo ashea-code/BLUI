@@ -25,17 +25,30 @@ UBluUIComponent::UBluUIComponent(const class FPostConstructInitializeProperties&
 	info.height = Height;
 	info.SetAsWindowless(NULL, true);
 
-	g_handler = new BrowserClient(renderer);
-	browser = CefBrowserHost::CreateBrowserSync(info, g_handler.get(), "about:blank", browserSettings, NULL);
-
 }
 
 void UBluUIComponent::InitializeComponent()
 {
 	Super::InitializeComponent();
+
+	// Load up the browser
+
+	// Modify a few settings to allow local file loading
+	browserSettings.universal_access_from_file_urls = STATE_ENABLED;
+	browserSettings.file_access_from_file_urls = STATE_ENABLED;
+
+	renderer = new RenderHandler(Width, Height);
+	g_handler = new BrowserClient(renderer);
+	browser = CefBrowserHost::CreateBrowserSync(info, g_handler.get(), "about:blank", browserSettings, NULL);
+
+	// Setup JS event emitter
+	g_handler->SetEventEmitter(&ScriptEventEmitter);
+
 	UE_LOG(LogBlu, Log, TEXT("Component Initialized"));
 	CefString str = *DefaultURL;
 	UE_LOG(LogBlu, Log, TEXT("Loading URL: %s"), *DefaultURL);
+
+	// Load the URL
 	browser->GetMainFrame()->LoadURL(*DefaultURL);
 	ResetTexture();
 }
@@ -150,7 +163,7 @@ void UBluUIComponent::TextureUpdate()
 		return;
 	}
 
-	if (Texture)
+	if (Texture && Texture->Resource)
 	{
 
 		// Is our texture ready?
@@ -162,6 +175,12 @@ void UBluUIComponent::TextureUpdate()
 
 		// Get the view from the browser
 		const void* texData = g_handler->GetRenderHandlerCustom()->buffer_data;
+
+		if (texData == NULL)
+		{
+			return;
+		}
+
 		const size_t size = Width * Height * sizeof(uint32);
 
 		// @TODO This is a bit heavy to keep reallocating/deallocating, but not a big deal. Maybe we can ping pong between buffers instead.
@@ -203,6 +222,14 @@ void UBluUIComponent::ExecuteJS(FString code)
 	CefString codeStr = *code;
 	UE_LOG(LogBlu, Log, TEXT("Execute JS: %s"), *code)
 	browser->GetMainFrame()->ExecuteJavaScript(codeStr, "", 0);
+	// create an event function that can be called from JS
+}
+
+void UBluUIComponent::ListenForJSEvents()
+{
+#if !WITH_EDITORONLY_DATA
+	browser->GetMainFrame()->GetV8Context()->GetGlobal();
+#endif
 }
 
 void UBluUIComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)

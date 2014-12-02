@@ -1,5 +1,4 @@
 #pragma once
-
 #include "CoreUObject.h"
 #include "Engine.h"
 #include "Engine/Console.h"
@@ -11,17 +10,15 @@
 
 DECLARE_LOG_CATEGORY_EXTERN(LogBlu, Log, All);
 
-// Classes
-#include "../Classes/BluInstance.h"
-#include "../Classes/BluViewPort.h"
-#include "../Classes/BluManager.h"
-#include "../Classes/BluUIComponent.h"
-#include "../Classes/RenderHandler.h"
-
-// Blu Things
+// CEF
 #include "AllowWindowsPlatformTypes.h"
 #include "include/cef_client.h"
 #include "include/cef_app.h"
 #include "HideWindowsPlatformTypes.h"
 
-
+// Blu Classes
+#include "../Classes/BluInstance.h"
+#include "../Classes/BluViewPort.h"
+#include "../Classes/BluManager.h"
+#include "../Classes/BluUIComponent.h"
+#include "../Classes/RenderHandler.h"

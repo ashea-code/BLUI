@@ -1,47 +1,57 @@
 #pragma once
-#include "AllowWindowsPlatformTypes.h"
-#include "include/cef_client.h"
-#include "include/cef_app.h"
-#include "HideWindowsPlatformTypes.h"
-//#include "../Private/BluPrivatePCH.h"
+#include "../Private/BluPrivatePCH.h"
 
 class RenderHandler : public CefRenderHandler
 {
-public:
+	public:
 
-	void* buffer_data = NULL;
+		void* buffer_data = NULL;
 
-	// CefRenderHandler interface
-	bool GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect) override;
+		int32 width;
+		int32 height;
 
-	void OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer, int width, int height) override;
+		// CefRenderHandler interface
+		bool GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect) override;
 
-	// CefBase interface
-	// NOTE: Must be at bottom
-public:
-	IMPLEMENT_REFCOUNTING(RenderHandler)
+		void OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer, int width, int height) override;
+
+		RenderHandler::RenderHandler(int32 width, int32 height);
+
+		// CefBase interface
+		// NOTE: Must be at bottom
+	public:
+		IMPLEMENT_REFCOUNTING(RenderHandler)
 };
 
 // for manual render handler
 class BrowserClient : public CefClient
 {
-public:
-	BrowserClient(RenderHandler* renderHandler) : m_renderHandler(renderHandler)
-	{
+
+	private:
+		FScriptEvent* event_emitter;
+
+	public:
+		BrowserClient(RenderHandler* renderHandler) : m_renderHandler(renderHandler)
+		{
 		
-	};
+		};
 
-	virtual CefRefPtr<CefRenderHandler> GetRenderHandler() {
-		return m_renderHandler;
-	};
+		virtual CefRefPtr<CefRenderHandler> GetRenderHandler() 
+		{
+			return m_renderHandler;
+		};
 
-	CefRefPtr<RenderHandler> m_renderHandler;
+		CefRefPtr<RenderHandler> m_renderHandler;
 
-	virtual CefRefPtr<RenderHandler> GetRenderHandlerCustom() {
-		return m_renderHandler;
-	};
+		virtual CefRefPtr<RenderHandler> GetRenderHandlerCustom() 
+		{
+			return m_renderHandler;
+		};
 
-	// NOTE: Must be at bottom
-public:
-	IMPLEMENT_REFCOUNTING(BrowserClient)
+		virtual bool OnProcessMessageReceived(CefRefPtr<CefBrowser> browser, CefProcessId source_process, CefRefPtr<CefProcessMessage> message) override;
+		void SetEventEmitter(FScriptEvent* emitter);
+
+		// NOTE: Must be at bottom
+	public:
+		IMPLEMENT_REFCOUNTING(BrowserClient)
 };

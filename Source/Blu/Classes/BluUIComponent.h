@@ -2,6 +2,9 @@
 #include "../Private/BluPrivatePCH.h"
 #include "BluUIComponent.generated.h"
 
+class BrowserClient;
+class RenderHandler;
+
 /*
 * Struct for Texture data
 * Based on code from VaQuoleUI by Vladimir Alyamkin
@@ -75,6 +78,8 @@ private:
 typedef TSharedPtr<TextureData, ESPMode::ThreadSafe> TextureDataPtr;
 typedef TSharedRef<TextureData, ESPMode::ThreadSafe> TextureDataRef;
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FScriptEvent, const FString&, EventName, const FString&, EventMessage);
+
 UCLASS(ClassGroup = Blu, editinlinenew, meta = (BlueprintSpawnableComponent))
 class UBluUIComponent : public UActorComponent
 {
@@ -121,12 +126,20 @@ class UBluUIComponent : public UActorComponent
 		UFUNCTION(BlueprintCallable, Category = "UI")
 		void ExecuteJS(FString code);
 
+		UFUNCTION(BlueprintCallable, Category = "UI")
+		void ListenForJSEvents();
+
+		/* Javascript event emitter */
+		UPROPERTY(BlueprintAssignable)
+		FScriptEvent ScriptEventEmitter;
+
+		CefRefPtr<CefBrowser> browser;
+
 	protected:
 		CefWindowInfo info;
 		CefRefPtr<BrowserClient> g_handler;
-		CefRefPtr<CefBrowser> browser;
 		CefBrowserSettings browserSettings;
-		RenderHandler* renderer = new RenderHandler();
+		RenderHandler* renderer;
 
 		void TextureUpdate();
 		void ResetTexture();

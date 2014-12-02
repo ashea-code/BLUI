@@ -6,10 +6,15 @@ class FBlu : public IBlu
 	/** IModuleInterface implementation */
 	virtual void StartupModule() override
 	{
-		// Setup the default settings from BluManager
+		// Setup the default settings for BluManager
 		BluManager::settings.windowless_rendering_enabled = true;
+
+#if !UE_BUILD_SHIPPING
+		BluManager::settings.remote_debugging_port = 4888;
 		BluManager::settings.log_severity = LOGSEVERITY_VERBOSE;
 		CefString(&BluManager::settings.log_file).FromASCII("./Blu.log");
+#endif
+
 		CefString(&BluManager::settings.browser_subprocess_path).FromASCII("blu_ue4_process.exe");
 
 		CefExecuteProcess(BluManager::main_args, NULL, NULL);

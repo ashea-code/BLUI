@@ -126,9 +126,6 @@ class UBluUIComponent : public UActorComponent
 		UFUNCTION(BlueprintCallable, Category = "UI")
 		void ExecuteJS(FString code);
 
-		UFUNCTION(BlueprintCallable, Category = "UI")
-		void ListenForJSEvents();
-
 		/* Javascript event emitter */
 		UPROPERTY(BlueprintAssignable)
 		FScriptEvent ScriptEventEmitter;

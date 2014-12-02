@@ -225,13 +225,6 @@ void UBluUIComponent::ExecuteJS(FString code)
 	// create an event function that can be called from JS
 }
 
-void UBluUIComponent::ListenForJSEvents()
-{
-#if !WITH_EDITORONLY_DATA
-	browser->GetMainFrame()->GetV8Context()->GetGlobal();
-#endif
-}
-
 void UBluUIComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
 	// Super tick

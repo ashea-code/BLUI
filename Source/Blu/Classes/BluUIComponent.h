@@ -102,6 +102,10 @@ class UBluUIComponent : public UActorComponent
 		UPROPERTY(EditAnywhere, Category = "View")
 		bool bIsEnabled;
 
+		/* Should this be rendered in game to be transparent? */
+		UPROPERTY(EditAnywhere, Category = "View")
+		bool bIsTransparent;
+
 		/* Width of the view resolution */
 		UPROPERTY(EditAnywhere, Category = "View")
 		int32 Width;

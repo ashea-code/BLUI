@@ -23,7 +23,6 @@ UBluUIComponent::UBluUIComponent(const class FPostConstructInitializeProperties&
 
 	info.width = Width;
 	info.height = Height;
-	info.SetAsWindowless(NULL, true);
 
 }
 
@@ -36,6 +35,9 @@ void UBluUIComponent::InitializeComponent()
 	// Modify a few settings to allow local file loading
 	browserSettings.universal_access_from_file_urls = STATE_ENABLED;
 	browserSettings.file_access_from_file_urls = STATE_ENABLED;
+
+	// Set transparant option
+	info.SetAsWindowless(NULL, bIsTransparent);
 
 	renderer = new RenderHandler(Width, Height);
 	g_handler = new BrowserClient(renderer);

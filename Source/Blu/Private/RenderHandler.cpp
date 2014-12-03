@@ -1,9 +1,10 @@
 #include "../Private/BluPrivatePCH.h"
 
-RenderHandler::RenderHandler(int32 width, int32 height)
+RenderHandler::RenderHandler(int32 width, int32 height, UBluUIComponent* ui)
 {
 	this->width = width;
 	this->height = height;
+	this->parentUI = ui;
 }
 
 bool RenderHandler::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect)
@@ -41,6 +42,10 @@ void RenderHandler::OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type
 
 	// Copy buffer into new bitmap in buffer_data
 	memcpy(buffer_data, buffer, width * height * 4);
+
+	// Trigger our parent UIs Texture to update
+	parentUI->TextureUpdate();
+
 }
 
 bool BrowserClient::OnProcessMessageReceived(CefRefPtr<CefBrowser> browser, CefProcessId source_process, CefRefPtr<CefProcessMessage> message)

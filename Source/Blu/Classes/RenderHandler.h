@@ -3,6 +3,9 @@
 
 class RenderHandler : public CefRenderHandler
 {
+	private:
+		UBluUIComponent* parentUI;
+
 	public:
 
 		void* buffer_data = NULL;
@@ -15,7 +18,7 @@ class RenderHandler : public CefRenderHandler
 
 		void OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer, int width, int height) override;
 
-		RenderHandler::RenderHandler(int32 width, int32 height);
+		RenderHandler::RenderHandler(int32 width, int32 height, UBluUIComponent* ui);
 
 		// CefBase interface
 		// NOTE: Must be at bottom

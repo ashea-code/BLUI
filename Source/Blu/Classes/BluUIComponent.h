@@ -136,13 +136,14 @@ class UBluUIComponent : public UActorComponent
 
 		CefRefPtr<CefBrowser> browser;
 
+		void TextureUpdate();
+
 	protected:
 		CefWindowInfo info;
 		CefRefPtr<BrowserClient> g_handler;
 		CefBrowserSettings browserSettings;
 		RenderHandler* renderer;
 
-		void TextureUpdate();
 		void ResetTexture();
 		void DestroyTexture();
 		void ResetMaterialInstance();

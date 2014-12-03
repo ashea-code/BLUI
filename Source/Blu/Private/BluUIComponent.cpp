@@ -39,7 +39,7 @@ void UBluUIComponent::InitializeComponent()
 	// Set transparant option
 	info.SetAsWindowless(NULL, bIsTransparent);
 
-	renderer = new RenderHandler(Width, Height);
+	renderer = new RenderHandler(Width, Height, this);
 	g_handler = new BrowserClient(renderer);
 	browser = CefBrowserHost::CreateBrowserSync(info, g_handler.get(), "about:blank", browserSettings, NULL);
 
@@ -231,8 +231,4 @@ void UBluUIComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, F
 {
 	// Super tick
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-	
-	// Redraw our Texture for the UI
-	TextureUpdate();
-
 }

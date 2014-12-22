@@ -1,7 +1,7 @@
 #include "../Private/BluPrivatePCH.h"
 #include "../classes/BluUIComponent.h"
 
-UBluUIComponent::UBluUIComponent(const class FPostConstructInitializeProperties& PCIP)
+UBluUIComponent::UBluUIComponent(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 
@@ -155,12 +155,14 @@ void UBluUIComponent::TextureUpdate()
 {
 	if (!browser || !bIsEnabled)
 	{
+		UE_LOG(LogBlu, Warning, TEXT("NO BROWSER ACCESS OR NOT ENABLED"))
 		// UE_LOG(LogBlu, Warning, TEXT("No browesr, or component is not enabled"));
 		return;
 	}
 
 	if (browser->IsLoading())
 	{
+		UE_LOG(LogBlu, Warning, TEXT("BROWSER LOADING"))
 		// The browser is not ready yet
 		return;
 	}
@@ -172,6 +174,7 @@ void UBluUIComponent::TextureUpdate()
 		auto ref = static_cast<FTexture2DResource*>(Texture->Resource)->GetTexture2DRHI();
 		if (!ref)
 		{
+			UE_LOG(LogBlu, Warning, TEXT("NO REF"))
 			return;
 		}
 
@@ -180,6 +183,7 @@ void UBluUIComponent::TextureUpdate()
 
 		if (texData == NULL)
 		{
+			UE_LOG(LogBlu, Warning, TEXT("NO TEXTDATA"))
 			return;
 		}
 
@@ -216,6 +220,9 @@ void UBluUIComponent::TextureUpdate()
 		});
 
 	}
+	else {
+		UE_LOG(LogBlu, Warning, TEXT("no Texture or Texture->resource"))
+	}
 	
 }
 
@@ -227,8 +234,15 @@ void UBluUIComponent::ExecuteJS(FString code)
 	// create an event function that can be called from JS
 }
 
+UTexture2D* UBluUIComponent::GetTexture() const
+{
+	check(Texture);
+	return Texture;
+}
+
 void UBluUIComponent::TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction)
 {
 	// Super tick
 	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
 }
+

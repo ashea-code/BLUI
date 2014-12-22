@@ -58,7 +58,7 @@ struct TextureData
 	const TArray<uint32>& GetRawBytes() const { return Bytes; }
 
 	/** Accesses the raw bytes of already sized texture data */
-	uint32* GetRawBytesPtr() { return Bytes.GetTypedData(); }
+	uint32* GetRawBytesPtr() { return Bytes.GetData(); }
 
 private:
 	/** Raw uncompressed texture data */
@@ -123,11 +123,15 @@ class UBluUIComponent : public UActorComponent
 		FName TextureParameterName;
 
 		/* Get the material instance, apply this to the display mesh */
-		UFUNCTION(BlueprintCallable, Category = "UI")
+		UFUNCTION(BlueprintCallable, Category = "Blu")
 		UMaterialInstanceDynamic* GetMaterialInstance() const;
 
+		/* Get the texture data from our UI component */
+		UFUNCTION(BlueprintCallable, Category = "Blu")
+		UTexture2D* GetTexture() const;
+
 		/* Execute JS code inside the browser */
-		UFUNCTION(BlueprintCallable, Category = "UI")
+		UFUNCTION(BlueprintCallable, Category = "Blu")
 		void ExecuteJS(FString code);
 
 		/* Javascript event emitter */

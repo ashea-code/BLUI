@@ -38,9 +38,13 @@ public class Blu : ModuleRules
 				"Engine",
 				"InputCore",
 				"RenderCore",
-				"RHI"
+				"RHI",
+                "Slate",
+                "SlateCore",
+                "UMG"
 				// ... add other public dependencies that you statically link with here ...
 			});
+
 	}
 
 }

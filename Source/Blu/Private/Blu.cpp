@@ -10,7 +10,7 @@ class FBlu : public IBlu
 		BluManager::settings.windowless_rendering_enabled = true;
 
 #if !UE_BUILD_SHIPPING
-		BluManager::settings.remote_debugging_port = 4888;
+		BluManager::settings.remote_debugging_port = 4848;
 		BluManager::settings.log_severity = LOGSEVERITY_VERBOSE;
 		CefString(&BluManager::settings.log_file).FromASCII("./Blu.log");
 #endif

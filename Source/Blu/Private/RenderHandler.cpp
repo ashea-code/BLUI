@@ -1,6 +1,6 @@
 #include "../Private/BluPrivatePCH.h"
 
-RenderHandler::RenderHandler(int32 width, int32 height, UBluUIComponent* ui)
+RenderHandler::RenderHandler(int32 width, int32 height, UBluWidget* ui)
 {
 	this->width = width;
 	this->height = height;

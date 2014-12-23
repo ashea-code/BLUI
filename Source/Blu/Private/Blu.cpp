@@ -20,7 +20,7 @@ class FBlu : public IBlu
 		CefExecuteProcess(BluManager::main_args, NULL, NULL);
 		CefInitialize(BluManager::main_args, BluManager::settings, NULL, NULL);
 
-		UBluUIComponent::StaticClass();
+		UBluWidget::StaticClass();
 
 		UE_LOG(LogBlu, Log, TEXT(" STATUS: Loaded"));
 	}

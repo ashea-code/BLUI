@@ -8,8 +8,6 @@ class RenderHandler : public CefRenderHandler
 
 	public:
 
-		void* buffer_data = NULL;
-
 		int32 width;
 		int32 height;
 
@@ -46,7 +44,7 @@ class BrowserClient : public CefClient
 
 		CefRefPtr<RenderHandler> m_renderHandler;
 
-		virtual CefRefPtr<RenderHandler> GetRenderHandlerCustom() 
+		virtual CefRefPtr<RenderHandler> GetRenderHandlerCustom()
 		{
 			return m_renderHandler;
 		};

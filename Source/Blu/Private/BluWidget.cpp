@@ -51,8 +51,6 @@ void UBluWidget::ResetTexture()
 	Texture->AddToRoot();
 	Texture->UpdateResource();
 
-	// ResetMaterialInstance();
-
 }
 
 void UBluWidget::DestroyTexture()
@@ -73,7 +71,7 @@ void UBluWidget::DestroyTexture()
 	}
 }
 
-void UBluWidget::TextureUpdate()
+void UBluWidget::TextureUpdate(const void *buffer)
 {
 	if (!browser || !bEnabled)
 	{
@@ -93,10 +91,7 @@ void UBluWidget::TextureUpdate()
 				return;
 		}
 
-		// Get the view from the browser
-		const void* texData = g_handler->GetRenderHandlerCustom()->buffer_data;
-
-		if (texData == NULL)
+		if (buffer == nullptr)
 		{
 			UE_LOG(LogBlu, Warning, TEXT("NO TEXTDATA"))
 				return;
@@ -107,14 +102,15 @@ void UBluWidget::TextureUpdate()
 		// @TODO This is a bit heavy to keep reallocating/deallocating, but not a big deal. Maybe we can ping pong between buffers instead.
 		TArray<uint32> ViewBuffer;
 		ViewBuffer.Init(Width * Height);
-		FMemory::Memcpy(ViewBuffer.GetData(), texData, size);
+		FMemory::Memcpy(ViewBuffer.GetData(), buffer, size);
 
 		TextureDataPtr dataPtr = MakeShareable(new TextureData);
+
 		dataPtr->SetRawData(Width, Height, sizeof(uint32), ViewBuffer);
 
 		// Clean up from the per-render
 		ViewBuffer.Empty();
-		texData = 0;
+		buffer = 0;
 
 		ENQUEUE_UNIQUE_RENDER_COMMAND_THREEPARAMETER(
 			TextureData,
@@ -147,6 +143,81 @@ void UBluWidget::ExecuteJS(FString code)
 	UE_LOG(LogBlu, Log, TEXT("Execute JS: %s"), *code)
 	browser->GetMainFrame()->ExecuteJavaScript(codeStr, "", 0);
 	// create an event function that can be called from JS
+}
+
+void UBluWidget::TriggerMouseMove(FVector2D pos)
+{
+
+	mouse_event.x = pos.X;
+	mouse_event.y = pos.Y;
+
+	UE_LOG(LogBlu, Warning, TEXT("Mouse Update pos: %s"), *pos.ToString())
+
+	browser->GetHost()->SendFocusEvent(true);
+	browser->GetHost()->SendMouseMoveEvent(mouse_event, false);
+}
+
+void UBluWidget::TriggerLeftClickDown(FVector2D pos)
+{
+
+	mouse_event.x = pos.X;
+	mouse_event.y = pos.Y;
+
+	browser->GetHost()->SendFocusEvent(true);
+	browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_LEFT, false, 1);
+
+	UE_LOG(LogBlu, Warning, TEXT("Left Click %s"), *pos.ToString())
+}
+
+void UBluWidget::TriggerRightClickDown(FVector2D pos)
+{
+
+	mouse_event.x = pos.X;
+	mouse_event.y = pos.Y;
+
+	browser->GetHost()->SendFocusEvent(true);
+	browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_RIGHT, false, 1);
+
+	UE_LOG(LogBlu, Warning, TEXT("Right click %s"), *pos.ToString())
+}
+
+void UBluWidget::KeyDown(FGeometry Geometry, FKeyEvent InKeyEvent)
+{
+
+
+	CefRefPtr<CefProcessMessage> msg = CefProcessMessage::Create("key_event");
+	msg->GetArgumentList()->SetInt(0, InKeyEvent.GetKeyCode());
+	msg->GetArgumentList()->SetInt(1, InKeyEvent.GetCharacter());
+
+
+	// Check key mod flags!
+	// We'll check alt first
+	if (InKeyEvent.IsAltDown())
+	{
+		msg->GetArgumentList()->SetBool(0, true);
+	} else {
+		msg->GetArgumentList()->SetBool(0, false);
+	}
+
+	// Then control takes priority
+	if (InKeyEvent.IsControlDown())
+	{
+		msg->GetArgumentList()->SetBool(1, true);
+	} else {
+		msg->GetArgumentList()->SetBool(1, false);
+	}
+
+	// Shift should be checked last, more important!
+	if (InKeyEvent.IsShiftDown())
+	{
+		msg->GetArgumentList()->SetBool(2, true);
+	} else {
+		msg->GetArgumentList()->SetBool(2, false);
+	}
+
+	browser->SendProcessMessage(PID_RENDERER, msg);
+
+	UE_LOG(LogBlu, Warning, TEXT("SEND KEY EVENT"))
 }
 
 UTexture2D* UBluWidget::GetTexture() const

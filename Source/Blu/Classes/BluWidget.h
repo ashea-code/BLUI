@@ -103,11 +103,11 @@ class BLU_API UBluWidget : public UUserWidget
 		bool bIsTransparent;
 
 	/* Width of the view resolution */
-	UPROPERTY(EditAnywhere, Category = "Blu")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blu")
 		int32 Width;
 
 	/* Height of the view resolution */
-	UPROPERTY(EditAnywhere, Category = "Blu")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blu")
 		int32 Height;
 
 	/* Material that will be instanced to load UI texture into it */
@@ -118,10 +118,6 @@ class BLU_API UBluWidget : public UUserWidget
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Blu")
 		FName TextureParameterName;
 
-	/* Get the material instance, apply this to the display mesh */
-	//UFUNCTION(BlueprintCallable, Category = "Blu")
-	//	UMaterialInstanceDynamic* GetMaterialInstance() const;
-
 	/* Get the texture data from our UI component */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		UTexture2D* GetTexture() const;
@@ -130,13 +126,29 @@ class BLU_API UBluWidget : public UUserWidget
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void ExecuteJS(FString code);
 
+	/* Trigger a mouse-down LEFT click in the browser via a Vector2D */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void TriggerLeftClickDown(FVector2D pos);
+
+	/* Trigger a mouse-down RIGHT click in the browser via a Vector2D */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void TriggerRightClickDown(FVector2D pos);
+
+	/* Move the mouse in the browser */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void TriggerMouseMove(FVector2D pos);
+
 	/* Javascript event emitter */
 	UPROPERTY(BlueprintAssignable)
 		FScriptEvent ScriptEventEmitter;
 
+	/* Override key input */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void KeyDown(FGeometry Geometry, FKeyEvent InKeyEvent);
+
 	CefRefPtr<CefBrowser> browser;
 
-	void TextureUpdate();
+	void TextureUpdate(const void* buffer);
 
 	protected:
 		CefWindowInfo info;
@@ -146,12 +158,10 @@ class BLU_API UBluWidget : public UUserWidget
 
 		void ResetTexture();
 		void DestroyTexture();
-		// void ResetMaterialInstance();
 
 		// Store UI state in this UTexture2D
 		UTexture2D* Texture;
 
-		// Material instance 
-		UMaterialInstanceDynamic* MaterialInstance;
+		CefMouseEvent mouse_event;
 
 };

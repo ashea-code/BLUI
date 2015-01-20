@@ -128,11 +128,11 @@ class BLU_API UBluWidget : public UUserWidget
 
 	/* Trigger a mouse-down LEFT click in the browser via a Vector2D */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
-		void TriggerLeftClickDown(FVector2D pos);
+		void TriggerLeftClick(FVector2D pos);
 
 	/* Trigger a mouse-down RIGHT click in the browser via a Vector2D */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
-		void TriggerRightClickDown(FVector2D pos);
+		void TriggerRightClick(FVector2D pos);
 
 	/* Move the mouse in the browser */
 	UFUNCTION(BlueprintCallable, Category = "Blu")

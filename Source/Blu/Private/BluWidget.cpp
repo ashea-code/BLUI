@@ -50,7 +50,6 @@ void UBluWidget::ResetTexture()
 	Texture = UTexture2D::CreateTransient(Width, Height);
 	Texture->AddToRoot();
 	Texture->UpdateResource();
-
 }
 
 void UBluWidget::DestroyTexture()
@@ -76,8 +75,7 @@ void UBluWidget::TextureUpdate(const void *buffer)
 	if (!browser || !bEnabled)
 	{
 		UE_LOG(LogBlu, Warning, TEXT("NO BROWSER ACCESS OR NOT ENABLED"))
-			// UE_LOG(LogBlu, Warning, TEXT("No browesr, or component is not enabled"));
-			return;
+		return;
 	}
 
 	if (Texture && Texture->Resource)
@@ -157,7 +155,7 @@ void UBluWidget::TriggerMouseMove(FVector2D pos)
 	browser->GetHost()->SendMouseMoveEvent(mouse_event, false);
 }
 
-void UBluWidget::TriggerLeftClickDown(FVector2D pos)
+void UBluWidget::TriggerLeftClick(FVector2D pos)
 {
 
 	mouse_event.x = pos.X;
@@ -170,7 +168,7 @@ void UBluWidget::TriggerLeftClickDown(FVector2D pos)
 	UE_LOG(LogBlu, Warning, TEXT("Left Click %s"), *pos.ToString())
 }
 
-void UBluWidget::TriggerRightClickDown(FVector2D pos)
+void UBluWidget::TriggerRightClick(FVector2D pos)
 {
 
 	mouse_event.x = pos.X;

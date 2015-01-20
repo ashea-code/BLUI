@@ -163,8 +163,9 @@ void UBluWidget::TriggerLeftClickDown(FVector2D pos)
 	mouse_event.x = pos.X;
 	mouse_event.y = pos.Y;
 
-	browser->GetHost()->SendFocusEvent(true);
+	//browser->GetHost()->SendFocusEvent(true);
 	browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_LEFT, false, 1);
+	browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_LEFT, true, 1);
 
 	UE_LOG(LogBlu, Warning, TEXT("Left Click %s"), *pos.ToString())
 }
@@ -175,8 +176,9 @@ void UBluWidget::TriggerRightClickDown(FVector2D pos)
 	mouse_event.x = pos.X;
 	mouse_event.y = pos.Y;
 
-	browser->GetHost()->SendFocusEvent(true);
+	//browser->GetHost()->SendFocusEvent(true);
 	browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_RIGHT, false, 1);
+	browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_RIGHT, true, 1);
 
 	UE_LOG(LogBlu, Warning, TEXT("Right click %s"), *pos.ToString())
 }

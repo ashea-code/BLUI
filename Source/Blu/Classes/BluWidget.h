@@ -150,6 +150,8 @@ class BLU_API UBluWidget : public UUserWidget
 
 	void TextureUpdate(const void* buffer);
 
+	void BeginDestroy() override;
+
 	protected:
 		CefWindowInfo info;
 		CefRefPtr<BrowserClient> g_handler;

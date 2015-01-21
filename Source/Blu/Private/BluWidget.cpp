@@ -225,3 +225,14 @@ UTexture2D* UBluWidget::GetTexture() const
 	check(Texture)
 	return Texture;
 }
+
+void UBluWidget::BeginDestroy()
+{
+	if (browser)
+	{
+		browser->GetHost()->CloseBrowser(true);
+	}
+	
+	DestroyTexture();
+	Super::BeginDestroy();
+}

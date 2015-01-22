@@ -17,21 +17,28 @@ public class Blu : ModuleRules
 
 	public Blu(TargetInfo Target)
 	{
-		PrivateIncludePaths.AddRange(
-			new string[] {
+
+        bool isLibrarySupported = false;
+
+        if ((Target.Platform == UnrealTargetPlatform.Win64))
+        {
+            isLibrarySupported = true;
+
+            PrivateIncludePaths.AddRange(
+            new string[] {
 				Path.Combine(ModulePath, "Private")
 				// ... add other private include paths required here ...
 			});
 
 
-        PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef\\Win\\lib", "libcef.lib"));
-        PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef\\Win\\lib", "libcef_dll_wrapper.lib"));
-        PublicIncludePaths.Add(Path.Combine(ThirdPartyPath, "cef\\Win"));
+            PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef\\Win\\lib", "libcef.lib"));
+            PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef\\Win\\lib", "libcef_dll_wrapper.lib"));
+            PublicIncludePaths.Add(Path.Combine(ThirdPartyPath, "cef\\Win"));
 
 
 
-		PublicDependencyModuleNames.AddRange(
-			new string[]
+            PublicDependencyModuleNames.AddRange(
+                new string[]
 			{
 				"Core",
 				"CoreUObject",
@@ -44,6 +51,11 @@ public class Blu : ModuleRules
                 "UMG"
 				// ... add other public dependencies that you statically link with here ...
 			});
+
+        }
+
+        Definitions.Add(string.Format("WITH_BLUI_BINDING={0}", isLibrarySupported ? 1 : 0));
+
 
 	}
 

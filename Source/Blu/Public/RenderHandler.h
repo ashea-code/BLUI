@@ -1,5 +1,12 @@
 #pragma once
-#include "../Private/BluPrivatePCH.h"
+
+#include "AllowWindowsPlatformTypes.h"
+#include "include/cef_client.h"
+#include "include/cef_app.h"
+#include "HideWindowsPlatformTypes.h"
+
+#include "../Public/BluWidget.h"
+
 
 class RenderHandler : public CefRenderHandler
 {

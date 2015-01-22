@@ -15,15 +15,8 @@
 
 DECLARE_LOG_CATEGORY_EXTERN(LogBlu, Log, All);
 
-// CEF
-#include "AllowWindowsPlatformTypes.h"
-#include "include/cef_client.h"
-#include "include/cef_app.h"
-#include "HideWindowsPlatformTypes.h"
-
 // Blu Classes
-#include "../Classes/BluInstance.h"
-#include "../Classes/BluManager.h"
-#include "../Classes/BluWidget.h"
-#include "../Classes/RenderHandler.h"
-#include "../Classes/BluViewPort.h"
+#include "../Public/BluInstance.h"
+#include "../Public/BluManager.h"
+#include "../Public/BluWidget.h"
+#include "../Public/RenderHandler.h"

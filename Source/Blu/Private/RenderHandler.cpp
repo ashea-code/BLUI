@@ -1,4 +1,4 @@
-#include "../Private/BluPrivatePCH.h"
+#include "BluPrivatePCH.h"
 
 RenderHandler::RenderHandler(int32 width, int32 height, UBluWidget* ui)
 {

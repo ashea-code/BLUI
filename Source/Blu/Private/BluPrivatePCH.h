@@ -18,5 +18,6 @@ DECLARE_LOG_CATEGORY_EXTERN(LogBlu, Log, All);
 // Blu Classes
 #include "../Public/BluInstance.h"
 #include "../Public/BluManager.h"
-#include "../Public/BluWidget.h"
+#include "../Public/BluEye.h"
 #include "../Public/RenderHandler.h"
+#include "../Public/BluBlueprintFunctionLibrary.h"

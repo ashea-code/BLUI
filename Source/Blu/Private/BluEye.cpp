@@ -1,6 +1,6 @@
 #include "BluPrivatePCH.h"
 
-UBluWidget::UBluWidget(const class FObjectInitializer& PCIP)
+UBluEye::UBluEye(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
 
@@ -11,7 +11,7 @@ UBluWidget::UBluWidget(const class FObjectInitializer& PCIP)
 
 }
 
-void UBluWidget::init()
+void UBluEye::init()
 {
 
 	browserSettings.universal_access_from_file_urls = STATE_ENABLED;
@@ -40,7 +40,7 @@ void UBluWidget::init()
 
 }
 
-void UBluWidget::ResetTexture()
+void UBluEye::ResetTexture()
 {
 
 	// Here we init the texture to its initial state
@@ -50,9 +50,12 @@ void UBluWidget::ResetTexture()
 	Texture = UTexture2D::CreateTransient(Width, Height);
 	Texture->AddToRoot();
 	Texture->UpdateResource();
+
+	ResetMatInstance();
+
 }
 
-void UBluWidget::DestroyTexture()
+void UBluEye::DestroyTexture()
 {
 	// Here we destory the texture and its resource
 	if (Texture)
@@ -70,7 +73,7 @@ void UBluWidget::DestroyTexture()
 	}
 }
 
-void UBluWidget::TextureUpdate(const void *buffer)
+void UBluEye::TextureUpdate(const void *buffer)
 {
 	if (!browser || !bEnabled)
 	{
@@ -135,7 +138,7 @@ void UBluWidget::TextureUpdate(const void *buffer)
 
 }
 
-void UBluWidget::ExecuteJS(FString code)
+void UBluEye::ExecuteJS(FString code)
 {
 	CefString codeStr = *code;
 	UE_LOG(LogBlu, Log, TEXT("Execute JS: %s"), *code)
@@ -143,7 +146,7 @@ void UBluWidget::ExecuteJS(FString code)
 	// create an event function that can be called from JS
 }
 
-void UBluWidget::TriggerMouseMove(FVector2D pos)
+void UBluEye::TriggerMouseMove(FVector2D pos)
 {
 
 	mouse_event.x = pos.X;
@@ -155,7 +158,7 @@ void UBluWidget::TriggerMouseMove(FVector2D pos)
 	browser->GetHost()->SendMouseMoveEvent(mouse_event, false);
 }
 
-void UBluWidget::TriggerLeftClick(FVector2D pos)
+void UBluEye::TriggerLeftClick(FVector2D pos)
 {
 
 	mouse_event.x = pos.X;
@@ -168,7 +171,7 @@ void UBluWidget::TriggerLeftClick(FVector2D pos)
 	UE_LOG(LogBlu, Warning, TEXT("Left Click %s"), *pos.ToString())
 }
 
-void UBluWidget::TriggerRightClick(FVector2D pos)
+void UBluEye::TriggerRightClick(FVector2D pos)
 {
 
 	mouse_event.x = pos.X;
@@ -181,7 +184,7 @@ void UBluWidget::TriggerRightClick(FVector2D pos)
 	UE_LOG(LogBlu, Warning, TEXT("Right click %s"), *pos.ToString())
 }
 
-void UBluWidget::KeyDown(FGeometry Geometry, FKeyEvent InKeyEvent)
+void UBluEye::KeyDown(FGeometry Geometry, FKeyEvent InKeyEvent)
 {
 
 
@@ -220,13 +223,54 @@ void UBluWidget::KeyDown(FGeometry Geometry, FKeyEvent InKeyEvent)
 	UE_LOG(LogBlu, Warning, TEXT("SEND KEY EVENT"))
 }
 
-UTexture2D* UBluWidget::GetTexture() const
+UTexture2D* UBluEye::GetTexture() const
 {
 	check(Texture)
 	return Texture;
 }
 
-void UBluWidget::BeginDestroy()
+UMaterialInstanceDynamic* UBluEye::GetMaterialInstance() const
+{
+	return MaterialInstance;
+}
+
+void UBluEye::ResetMatInstance()
+{
+	if (!Texture || !BaseMaterial || TextureParameterName.IsNone())
+	{
+		return;
+	}
+
+	// Create material instance
+	if (!MaterialInstance)
+	{
+		MaterialInstance = UMaterialInstanceDynamic::Create(BaseMaterial, NULL);
+		if (!MaterialInstance)
+		{
+			UE_LOG(LogBlu, Warning, TEXT("UI Material instance can't be created"));
+			return;
+		}
+	}
+
+	// Check again, we must have material instance
+	if (!MaterialInstance)
+	{
+		UE_LOG(LogBlu, Error, TEXT("UI Material instance wasn't created"));
+		return;
+	}
+
+	// Check we have desired parameter
+	UTexture* Tex = nullptr;
+	if (!MaterialInstance->GetTextureParameterValue(TextureParameterName, Tex))
+	{
+		UE_LOG(LogBlu, Warning, TEXT("UI Material instance Texture parameter not found"));
+		return;
+	}
+
+	MaterialInstance->SetTextureParameterValue(TextureParameterName, GetTexture());
+}
+
+void UBluEye::BeginDestroy()
 {
 	if (browser)
 	{

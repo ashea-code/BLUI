@@ -5,7 +5,8 @@
 #include "include/cef_app.h"
 #include "HideWindowsPlatformTypes.h"
 
-class BLU_API BluManager {
+class BLU_API BluManager 
+{
 
 	public:
 		static void doBluMessageLoop();

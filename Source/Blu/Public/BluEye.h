@@ -1,5 +1,5 @@
 #pragma once
-#include "BluWidget.generated.h"
+#include "BluEye.generated.h"
 
 class BrowserClient;
 class RenderHandler;
@@ -79,8 +79,8 @@ typedef TSharedRef<TextureData, ESPMode::ThreadSafe> TextureDataRef;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FScriptEvent, const FString&, EventName, const FString&, EventMessage);
 
-UCLASS()
-class BLU_API UBluWidget : public UUserWidget
+UCLASS(ClassGroup = Blu, Blueprintable)
+class BLU_API UBluEye : public UObject
 {
 
 	GENERATED_UCLASS_BODY()
@@ -121,6 +121,10 @@ class BLU_API UBluWidget : public UUserWidget
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		UTexture2D* GetTexture() const;
 
+	/** Material instance that contains texture inside it */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		UMaterialInstanceDynamic* GetMaterialInstance() const;
+
 	/* Execute JS code inside the browser */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void ExecuteJS(FString code);
@@ -159,9 +163,11 @@ class BLU_API UBluWidget : public UUserWidget
 
 		void ResetTexture();
 		void DestroyTexture();
+		void ResetMatInstance();
 
 		// Store UI state in this UTexture2D
 		UTexture2D* Texture;
+		UMaterialInstanceDynamic* MaterialInstance;
 
 		CefMouseEvent mouse_event;
 

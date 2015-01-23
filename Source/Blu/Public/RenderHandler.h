@@ -5,13 +5,13 @@
 #include "include/cef_app.h"
 #include "HideWindowsPlatformTypes.h"
 
-#include "../Public/BluWidget.h"
+#include "../Public/BluEye.h"
 
 
 class RenderHandler : public CefRenderHandler
 {
 	private:
-		UBluWidget* parentUI;
+		UBluEye* parentUI;
 
 	public:
 
@@ -23,7 +23,7 @@ class RenderHandler : public CefRenderHandler
 
 		void OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer, int width, int height) override;
 
-		RenderHandler::RenderHandler(int32 width, int32 height, UBluWidget* ui);
+		RenderHandler::RenderHandler(int32 width, int32 height, UBluEye* ui);
 
 		// CefBase interface
 		// NOTE: Must be at bottom

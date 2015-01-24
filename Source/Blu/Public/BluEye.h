@@ -110,12 +110,12 @@ class BLU_API UBluEye : public UObject
 		int32 Height;
 
 	/* Material that will be instanced to load UI texture into it */
-	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Blu")
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blu")
 		UMaterialInterface* BaseMaterial;
 
 	/* Name of parameter to load UI texture into material */
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Blu")
-		FName TextureParameterName;
+		FName TextureParameterName = "BluTexture";
 
 	/* Get the texture data from our UI component */
 	UFUNCTION(BlueprintCallable, Category = "Blu")

@@ -131,15 +131,15 @@ class BLU_API UBluEye : public UObject
 
 	/* Trigger a mouse-down LEFT click in the browser via a Vector2D */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
-		void TriggerLeftClick(FVector2D pos);
+		void TriggerLeftClick(const FVector2D& pos, const float scale = 1);
 
 	/* Trigger a mouse-down RIGHT click in the browser via a Vector2D */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
-		void TriggerRightClick(FVector2D pos);
+		void TriggerRightClick(const FVector2D& pos, const float scale = 1);
 
 	/* Move the mouse in the browser */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
-		void TriggerMouseMove(FVector2D pos);
+		void TriggerMouseMove(const FVector2D& pos, const float scale = 1);
 
 	/* Javascript event emitter */
 	UPROPERTY(BlueprintAssignable)
@@ -147,7 +147,7 @@ class BLU_API UBluEye : public UObject
 
 	/* Override key input */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
-		void KeyDown(FGeometry Geometry, FKeyEvent InKeyEvent);
+		void KeyDown(FKeyEvent InKeyEvent);
 
 	CefRefPtr<CefBrowser> browser;
 

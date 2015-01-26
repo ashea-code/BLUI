@@ -17,6 +17,7 @@ BluInstance::BluInstance()
 
 	settings.windowless_rendering_enabled = true;
 	settings.log_severity = LOGSEVERITY_VERBOSE;
+	
 	CefString(&settings.log_file).FromASCII("./Blu.log");
 	CefString(&settings.browser_subprocess_path).FromASCII("cef_ue4_process.exe");
 

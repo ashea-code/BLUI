@@ -1,4 +1,5 @@
 #include "BluPrivatePCH.h"
+#include "Runtime/UMG/Public/Blueprint/WidgetLayoutLibrary.h"
 
 UBluEye::UBluEye(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
@@ -146,23 +147,23 @@ void UBluEye::ExecuteJS(FString code)
 	// create an event function that can be called from JS
 }
 
-void UBluEye::TriggerMouseMove(FVector2D pos)
+void UBluEye::TriggerMouseMove(const FVector2D& pos, const float scale)
 {
 
-	mouse_event.x = pos.X;
-	mouse_event.y = pos.Y;
+	mouse_event.x = pos.X / scale;
+	mouse_event.y = pos.Y / scale;
 
-	UE_LOG(LogBlu, Warning, TEXT("Mouse Update pos: %s"), *pos.ToString())
+	// UE_LOG(LogBlu, Warning, TEXT("Mouse Update pos: %s"), *pos.ToString())
 
 	browser->GetHost()->SendFocusEvent(true);
 	browser->GetHost()->SendMouseMoveEvent(mouse_event, false);
 }
 
-void UBluEye::TriggerLeftClick(FVector2D pos)
+void UBluEye::TriggerLeftClick(const FVector2D& pos, const float scale)
 {
 
-	mouse_event.x = pos.X;
-	mouse_event.y = pos.Y;
+	mouse_event.x = pos.X / scale;
+	mouse_event.y = pos.Y / scale;
 
 	//browser->GetHost()->SendFocusEvent(true);
 	browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_LEFT, false, 1);
@@ -171,11 +172,11 @@ void UBluEye::TriggerLeftClick(FVector2D pos)
 	UE_LOG(LogBlu, Warning, TEXT("Left Click %s"), *pos.ToString())
 }
 
-void UBluEye::TriggerRightClick(FVector2D pos)
+void UBluEye::TriggerRightClick(const FVector2D& pos, const float scale)
 {
 
-	mouse_event.x = pos.X;
-	mouse_event.y = pos.Y;
+	mouse_event.x = pos.X / scale;
+	mouse_event.y = pos.Y / scale;
 
 	//browser->GetHost()->SendFocusEvent(true);
 	browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_RIGHT, false, 1);
@@ -184,7 +185,7 @@ void UBluEye::TriggerRightClick(FVector2D pos)
 	UE_LOG(LogBlu, Warning, TEXT("Right click %s"), *pos.ToString())
 }
 
-void UBluEye::KeyDown(FGeometry Geometry, FKeyEvent InKeyEvent)
+void UBluEye::KeyDown(FKeyEvent InKeyEvent)
 {
 
 

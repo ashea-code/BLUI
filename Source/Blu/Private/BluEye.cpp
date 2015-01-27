@@ -1,5 +1,4 @@
 #include "BluPrivatePCH.h"
-#include "Runtime/UMG/Public/Blueprint/WidgetLayoutLibrary.h"
 
 UBluEye::UBluEye(const class FObjectInitializer& PCIP)
 	: Super(PCIP)

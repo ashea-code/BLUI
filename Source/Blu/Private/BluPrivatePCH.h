@@ -11,13 +11,13 @@
 // You should place include statements to your module's private header files here.  You only need to
 // add includes for headers that are used in most of your module's source files though.
 #include "ModuleManager.h"
-#include "../Public/IBlu.h"
+#include "IBlu.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(LogBlu, Log, All);
 
 // Blu Classes
-#include "../Public/BluInstance.h"
-#include "../Public/BluManager.h"
-#include "../Public/BluEye.h"
-#include "../Public/RenderHandler.h"
-#include "../Public/BluBlueprintFunctionLibrary.h"
+#include "BluInstance.h"
+#include "BluManager.h"
+#include "BluEye.h"
+#include "RenderHandler.h"
+#include "BluBlueprintFunctionLibrary.h"

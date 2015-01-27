@@ -16,7 +16,8 @@
         {
             "Name" : "Blu",
             "Type" : "Runtime",
-            "LoadingPhase" : "PreDefault"
+            "LoadingPhase" : "PreDefault",
+			"BlacklistPlatforms" : [ "HTML5", "Android", "iOS", "Xbox One", "Playstation 4" ]
         } 
     ]
 }

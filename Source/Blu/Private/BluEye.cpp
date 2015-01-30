@@ -152,10 +152,9 @@ void UBluEye::TriggerMouseMove(const FVector2D& pos, const float scale)
 	mouse_event.x = pos.X / scale;
 	mouse_event.y = pos.Y / scale;
 
-	// UE_LOG(LogBlu, Warning, TEXT("Mouse Update pos: %s"), *pos.ToString())
-
 	browser->GetHost()->SendFocusEvent(true);
 	browser->GetHost()->SendMouseMoveEvent(mouse_event, false);
+
 }
 
 void UBluEye::TriggerLeftClick(const FVector2D& pos, const float scale)
@@ -164,11 +163,9 @@ void UBluEye::TriggerLeftClick(const FVector2D& pos, const float scale)
 	mouse_event.x = pos.X / scale;
 	mouse_event.y = pos.Y / scale;
 
-	//browser->GetHost()->SendFocusEvent(true);
 	browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_LEFT, false, 1);
 	browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_LEFT, true, 1);
 
-	UE_LOG(LogBlu, Warning, TEXT("Left Click %s"), *pos.ToString())
 }
 
 void UBluEye::TriggerRightClick(const FVector2D& pos, const float scale)
@@ -177,50 +174,104 @@ void UBluEye::TriggerRightClick(const FVector2D& pos, const float scale)
 	mouse_event.x = pos.X / scale;
 	mouse_event.y = pos.Y / scale;
 
-	//browser->GetHost()->SendFocusEvent(true);
 	browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_RIGHT, false, 1);
 	browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_RIGHT, true, 1);
 
-	UE_LOG(LogBlu, Warning, TEXT("Right click %s"), *pos.ToString())
 }
 
-void UBluEye::KeyDown(FKeyEvent InKeyEvent)
+void UBluEye::KeyDown(FKeyEvent InKey)
 {
 
+	processKeyMods(InKey);
+	processKeyCode(InKey);
 
-	CefRefPtr<CefProcessMessage> msg = CefProcessMessage::Create("key_event");
-	msg->GetArgumentList()->SetInt(0, InKeyEvent.GetKeyCode());
-	msg->GetArgumentList()->SetInt(1, InKeyEvent.GetCharacter());
+	key_event.type = KEYEVENT_KEYDOWN;
+	browser->GetHost()->SendKeyEvent(key_event);
 
+}
 
-	// Check key mod flags!
-	// We'll check alt first
-	if (InKeyEvent.IsAltDown())
+void UBluEye::KeyUp(FKeyEvent InKey)
+{
+
+	processKeyMods(InKey);
+	processKeyCode(InKey);
+
+	key_event.type = KEYEVENT_KEYUP;
+	browser->GetHost()->SendKeyEvent(key_event);
+
+	// And also a char event on key ups if it's a char key
+	if (InKey.GetCharacter() != 0)
 	{
-		msg->GetArgumentList()->SetBool(0, true);
-	} else {
-		msg->GetArgumentList()->SetBool(0, false);
+		key_event.type = KEYEVENT_CHAR;
+		browser->GetHost()->SendKeyEvent(key_event);
 	}
 
-	// Then control takes priority
-	if (InKeyEvent.IsControlDown())
+}
+
+void UBluEye::KeyPress(FKeyEvent InKey)
+{
+
+	// Simply trigger down, then up key events
+	KeyDown(InKey);
+	KeyUp(InKey);
+
+}
+
+void UBluEye::processKeyCode(FKeyEvent InKey)
+{
+
+	// Get ready to parse key code
+	const uint16 *KeyCode = 0;
+	const uint16 *CharCode = 0;
+	FInputKeyManager::Get().GetCodesFromKey(InKey.GetKey(), KeyCode, CharCode);
+
+	// Assing key code
+	if (KeyCode == 0)
 	{
-		msg->GetArgumentList()->SetBool(1, true);
-	} else {
-		msg->GetArgumentList()->SetBool(1, false);
+		key_event.native_key_code = InKey.GetKeyCode();
+		key_event.windows_key_code = InKey.GetKeyCode();
+	}
+	else
+	{
+		key_event.native_key_code = *KeyCode;
+		key_event.windows_key_code = *KeyCode;
 	}
 
-	// Shift should be checked last, more important!
-	if (InKeyEvent.IsShiftDown())
+	// Is this going to be a char?
+	if (KeyCode != 0)
 	{
-		msg->GetArgumentList()->SetBool(2, true);
-	} else {
-		msg->GetArgumentList()->SetBool(2, false);
+		key_event.character = *KeyCode;
 	}
 
-	browser->SendProcessMessage(PID_RENDERER, msg);
 
-	UE_LOG(LogBlu, Warning, TEXT("SEND KEY EVENT"))
+}
+
+void UBluEye::processKeyMods(FKeyEvent InKey)
+{
+
+	// Test alt
+	if (InKey.IsAltDown())
+	{
+		key_event.modifiers = cef_event_flags_t::EVENTFLAG_ALT_DOWN;
+	}
+	else
+	// Test control
+	if (InKey.IsControlDown())
+	{
+		key_event.modifiers = cef_event_flags_t::EVENTFLAG_CONTROL_DOWN;
+	} 
+	else
+	// Test shift
+	if (InKey.IsShiftDown())
+	{
+		key_event.modifiers = cef_event_flags_t::EVENTFLAG_SHIFT_DOWN;
+	}
+	else
+	{
+		key_event.modifiers = cef_event_flags_t::EVENTFLAG_NONE;
+	}
+
+
 }
 
 UTexture2D* UBluEye::GetTexture() const

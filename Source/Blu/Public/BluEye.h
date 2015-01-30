@@ -145,9 +145,17 @@ class BLU_API UBluEye : public UObject
 	UPROPERTY(BlueprintAssignable)
 		FScriptEvent ScriptEventEmitter;
 
-	/* Override key input */
+	/* Trigger a key down event */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
-		void KeyDown(FKeyEvent InKeyEvent);
+		void KeyDown(FKeyEvent InKey);
+
+	/* Trigger a key down event */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void KeyUp(FKeyEvent InKey);
+
+	/* Trigger a key press event */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void KeyPress(FKeyEvent InKey);
 
 	CefRefPtr<CefBrowser> browser;
 
@@ -164,11 +172,18 @@ class BLU_API UBluEye : public UObject
 		void ResetTexture();
 		void DestroyTexture();
 		void ResetMatInstance();
+		
+		// Parse UE4 key events, helper
+		void processKeyCode(FKeyEvent InKey);
+
+		// Helper for processing key modifiers
+		void processKeyMods(FKeyEvent InKey);
 
 		// Store UI state in this UTexture2D
 		UTexture2D* Texture;
 		UMaterialInstanceDynamic* MaterialInstance;
 
 		CefMouseEvent mouse_event;
+		CefKeyEvent key_event;
 
 };

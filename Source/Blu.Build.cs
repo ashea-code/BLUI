@@ -36,8 +36,6 @@ public class Blu : ModuleRules
                 Path.Combine(ModulePath, "Blu/Public")
 			});
 
-            Console.WriteLine(Path.Combine(ThirdPartyPath, "cef/Win"));
-
             PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef/Win/lib", "libcef.lib"));
             PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef/Win/lib", "libcef_dll_wrapper.lib"));
 

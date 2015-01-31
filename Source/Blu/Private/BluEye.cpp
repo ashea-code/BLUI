@@ -34,7 +34,7 @@ void UBluEye::init()
 	CefString str = *DefaultURL;
 	UE_LOG(LogBlu, Log, TEXT("Loading URL: %s"), *DefaultURL);
 
-	// Load the URL
+	// Load the default URL
 	browser->GetMainFrame()->LoadURL(*DefaultURL);
 	ResetTexture();
 
@@ -138,12 +138,41 @@ void UBluEye::TextureUpdate(const void *buffer)
 
 }
 
-void UBluEye::ExecuteJS(FString code)
+void UBluEye::ExecuteJS(const FString& code)
 {
 	CefString codeStr = *code;
 	UE_LOG(LogBlu, Log, TEXT("Execute JS: %s"), *code)
 	browser->GetMainFrame()->ExecuteJavaScript(codeStr, "", 0);
 	// create an event function that can be called from JS
+}
+
+void UBluEye::LoadURL(const FString& newURL)
+{
+
+	// Check if we want to load a local file
+
+	if (newURL.Contains(TEXT("blui://"), ESearchCase::IgnoreCase, ESearchDir::FromStart))
+	{
+
+		// Get the current working directory
+		FString GameDir = FPaths::ConvertRelativePathToFull(FPaths::GameDir());
+
+		// We're loading a local file, so replace the proto with our game directory path
+		FString LocalFile = newURL.Replace(TEXT("blui://"), *GameDir, ESearchCase::IgnoreCase);
+
+		// Now we use the file proto
+		LocalFile = FString(TEXT("file:///")) + LocalFile;
+
+		// Load it up 
+		browser->GetMainFrame()->LoadURL(*LocalFile);
+
+		return;
+
+	}
+
+	// Load as usual
+	browser->GetMainFrame()->LoadURL(*newURL);
+
 }
 
 void UBluEye::TriggerMouseMove(const FVector2D& pos, const float scale)

@@ -127,7 +127,10 @@ class BLU_API UBluEye : public UObject
 
 	/* Execute JS code inside the browser */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
-		void ExecuteJS(FString code);
+		void ExecuteJS(const FString& code);
+
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void LoadURL(const FString& newURL);
 
 	/* Trigger a mouse-down LEFT click in the browser via a Vector2D */
 	UFUNCTION(BlueprintCallable, Category = "Blu")

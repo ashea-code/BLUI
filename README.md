@@ -1,5 +1,3 @@
-### Release incoming later today!
-
 ![BLUI-logo](https://cloud.githubusercontent.com/assets/1334174/5969395/201a1202-a7f1-11e4-98a4-12bc6793f830.png)
 
 ## HTML powered UI and HUD for Unreal Engine 4
@@ -35,6 +33,10 @@ To YouProject.Build.cs
 
 
 Re-generate your project's Visual Studio file and load up the editor. Then check the plugin list to ensure it has been loaded!
+
+Updating the CEF event loop
+---------------------------------------
+You must call the `BluManager::doBluMessageLoop();` method every tick in order for the CEF process to update properly. To do this, override the default GameMode's Tick function and include the `Blu/Public/BluManager.h` header file. You can then call the appropriate method.
 
 
 Loading Local Files

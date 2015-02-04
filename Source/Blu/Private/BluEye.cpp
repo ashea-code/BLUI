@@ -35,7 +35,7 @@ void UBluEye::init()
 	UE_LOG(LogBlu, Log, TEXT("Loading URL: %s"), *DefaultURL);
 
 	// Load the default URL
-	browser->GetMainFrame()->LoadURL(*DefaultURL);
+	LoadURL(DefaultURL);
 	ResetTexture();
 
 }
@@ -162,6 +162,8 @@ void UBluEye::LoadURL(const FString& newURL)
 
 		// Now we use the file proto
 		LocalFile = FString(TEXT("file:///")) + LocalFile;
+
+		UE_LOG(LogBlu, Log, TEXT("Load Local File: %s"), *LocalFile)
 
 		// Load it up 
 		browser->GetMainFrame()->LoadURL(*LocalFile);

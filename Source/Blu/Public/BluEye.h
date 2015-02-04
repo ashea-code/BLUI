@@ -160,6 +160,10 @@ class BLU_API UBluEye : public UObject
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void KeyPress(FKeyEvent InKey);
 
+	/* Trigger a character key event */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void CharKeyPress(FCharacterEvent CharEvent);
+
 	CefRefPtr<CefBrowser> browser;
 
 	void TextureUpdate(const void* buffer);
@@ -180,7 +184,7 @@ class BLU_API UBluEye : public UObject
 		void processKeyCode(FKeyEvent InKey);
 
 		// Helper for processing key modifiers
-		void processKeyMods(FKeyEvent InKey);
+		void processKeyMods(FInputEvent InKey);
 
 		// Store UI state in this UTexture2D
 		UTexture2D* Texture;

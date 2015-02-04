@@ -228,13 +228,6 @@ void UBluEye::KeyUp(FKeyEvent InKey)
 	key_event.type = KEYEVENT_KEYUP;
 	browser->GetHost()->SendKeyEvent(key_event);
 
-	// And also a char event on key ups if it's a char key
-	if (InKey.GetCharacter() != 0)
-	{
-		key_event.type = KEYEVENT_CHAR;
-		browser->GetHost()->SendKeyEvent(key_event);
-	}
-
 }
 
 void UBluEye::KeyPress(FKeyEvent InKey)
@@ -248,58 +241,57 @@ void UBluEye::KeyPress(FKeyEvent InKey)
 
 void UBluEye::processKeyCode(FKeyEvent InKey)
 {
+	key_event.native_key_code = InKey.GetKeyCode();
+	key_event.windows_key_code = InKey.GetKeyCode();
+}
 
-	// Get ready to parse key code
-	const uint16 *KeyCode = 0;
-	const uint16 *CharCode = 0;
-	FInputKeyManager::Get().GetCodesFromKey(InKey.GetKey(), KeyCode, CharCode);
+void UBluEye::CharKeyPress(FCharacterEvent CharEvent)
+{
 
-	// Assing key code
-	if (KeyCode == 0)
-	{
-		key_event.native_key_code = InKey.GetKeyCode();
-		key_event.windows_key_code = InKey.GetKeyCode();
-	}
-	else
-	{
-		key_event.native_key_code = *KeyCode;
-		key_event.windows_key_code = *KeyCode;
-	}
+	// Process keymods like usual
+	processKeyMods(CharEvent);
 
-	// Is this going to be a char?
-	if (KeyCode != 0)
-	{
-		key_event.character = *KeyCode;
-	}
+	// Below char input needs some special treatment, se we can't use the normal key down/up methods
 
+	key_event.windows_key_code = CharEvent.GetCharacter();
+	key_event.native_key_code = CharEvent.GetCharacter();
+	//key_event.type = KEYEVENT_KEYDOWN;
+	browser->GetHost()->SendKeyEvent(key_event);
+	key_event.type = KEYEVENT_CHAR;
+	browser->GetHost()->SendKeyEvent(key_event);
+
+	key_event.windows_key_code = CharEvent.GetCharacter();
+	key_event.native_key_code = CharEvent.GetCharacter();
+	// bits 30 and 31 should be always 1 for WM_KEYUP
+	key_event.type = KEYEVENT_KEYUP;
+	browser->GetHost()->SendKeyEvent(key_event);
 
 }
 
-void UBluEye::processKeyMods(FKeyEvent InKey)
+void UBluEye::processKeyMods(FInputEvent InKey)
 {
+
+	int mods = 0;
 
 	// Test alt
 	if (InKey.IsAltDown())
 	{
-		key_event.modifiers = cef_event_flags_t::EVENTFLAG_ALT_DOWN;
+		mods |= cef_event_flags_t::EVENTFLAG_ALT_DOWN;
 	}
 	else
 	// Test control
 	if (InKey.IsControlDown())
 	{
-		key_event.modifiers = cef_event_flags_t::EVENTFLAG_CONTROL_DOWN;
+		mods |= cef_event_flags_t::EVENTFLAG_CONTROL_DOWN;
 	} 
 	else
 	// Test shift
 	if (InKey.IsShiftDown())
 	{
-		key_event.modifiers = cef_event_flags_t::EVENTFLAG_SHIFT_DOWN;
-	}
-	else
-	{
-		key_event.modifiers = cef_event_flags_t::EVENTFLAG_NONE;
+		mods |= cef_event_flags_t::EVENTFLAG_SHIFT_DOWN;
 	}
 
+	key_event.modifiers = mods;
 
 }
 

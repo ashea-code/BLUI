@@ -35,3 +35,18 @@ To YouProject.Build.cs
 
 
 Re-generate your project's Visual Studio file and load up the editor. Then check the plugin list to ensure it has been loaded!
+
+
+Loading Local Files
+---------------------------------------
+Set your default URL or use the "Load URL" node/method to load a URL that starts with `blui://` this will point to the directory root of the project or the game (if packaged). So if you wanted to load an HTML file from `YourProject/UI/file.html`, set the URL to `blui://UI/file.html`
+
+
+HUD Example Blueprint
+---------------------------------------
+Within the release, you'll find an ExampleHUD blueprint file, place this into your project's blueprints directory to try it out! (It's a simple UMG widget pre-configures to accept keyboard and mouse input, with a BluEye instance hooked up to a canvas)
+
+
+Shipping Your Game
+---------------------------------------
+Copy all contents of `shipping` into your packaged game's `GameName/Binaries/Win64`, these are the required files for the Chromium process.

@@ -52,3 +52,7 @@ Within the release, you'll find an ExampleHUD blueprint file, place this into yo
 Shipping Your Game
 ---------------------------------------
 Copy all contents of `shipping` into your packaged game's `GameName/Binaries/Win64`, these are the required files for the Chromium process.
+
+Videos for a little more help!
+---------------------------------------
+[![YoutubeVideo](http://img.youtube.com/vi/VCPhsxd5rTE/0.jpg)](https://www.youtube.com/watch?v=VCPhsxd5rTE)

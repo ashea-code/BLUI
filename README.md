@@ -1,6 +1,7 @@
 ![BLUI-logo](https://cloud.githubusercontent.com/assets/1334174/5969395/201a1202-a7f1-11e4-98a4-12bc6793f830.png)
 
 ## HTML powered UI and HUD for Unreal Engine 4
+(Hit up the wiki for a quick start guide!)
 
 License: MIT
 

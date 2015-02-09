@@ -3,6 +3,7 @@
 */
 #pragma once
 #include "ModuleManager.h"
+#include "LevelEditor.h"
 
 class IBlu : public IModuleInterface
 {
@@ -28,5 +29,13 @@ public:
 	{
 		return FModuleManager::Get().IsModuleLoaded("Blu");
 	}
+
+protected:
+	void AddToolbarExtension(FToolBarBuilder &);
+
+	TSharedPtr<FUICommandList> PluginCommands;
+	TSharedPtr<FExtensibilityManager> ExtensionManager;
+	TSharedPtr< const FExtensionBase > ToolbarExtension;
+	TSharedPtr<FExtender> ToolbarExtender;
 
 };

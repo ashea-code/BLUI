@@ -348,7 +348,7 @@ void UBluEye::BeginDestroy()
 {
 	if (browser)
 	{
-		browser->GetHost()->CloseBrowser(true);
+		browser->GetHost()->CloseBrowser(false);
 	}
 	
 	DestroyTexture();

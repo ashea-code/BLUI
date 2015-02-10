@@ -3,6 +3,8 @@
 ## HTML powered UI and HUD for Unreal Engine 4
 (Hit up the wiki for a quick start guide!)
 
+Do you use BLUI in your project? I'd really love it if you credit me and it! You can even use the [logo right here!](https://res.cloudinary.com/aaronshea/image/upload/v1423576170/BLUI-Transparent_eu582n.png)
+
 License: MIT
 
 What is it?

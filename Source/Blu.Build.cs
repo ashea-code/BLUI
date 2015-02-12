@@ -50,8 +50,7 @@ public class Blu : ModuleRules
 				"RHI",
                 "Slate",
                 "SlateCore",
-                "UMG",
-                "EditorStyle"
+                "UMG"
 				// ... add other public dependencies that you statically link with here ...
 			});
 

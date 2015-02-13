@@ -22,7 +22,7 @@ void UBluEye::init()
 	{
 		if (GEngine->IsEditor() && !GWorld->IsPlayInEditor())
 		{
-			UE_LOG(LogBlu, Log, TEXT("Notice: not playing - Component Will Not Initialized"));
+			UE_LOG(LogBlu, Log, TEXT("Notice: not playing - Component Will Not Initialize"));
 			return;
 		}
 	}

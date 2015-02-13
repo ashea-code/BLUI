@@ -14,6 +14,20 @@ UBluEye::UBluEye(const class FObjectInitializer& PCIP)
 void UBluEye::init()
 {
 
+	/** 
+	 * We don't want this running in editor unless it's PIE
+	 * If we don't check this, CEF will spawn infinit processes with widget components
+	 **/
+	if (GEngine)
+	{
+		if (GEngine->IsEditor() && !GWorld->IsPlayInEditor())
+		{
+			UE_LOG(LogBlu, Log, TEXT("Notice: not playing - Component Will Not Initialized"));
+			return;
+		}
+	}
+
+	
 	browserSettings.universal_access_from_file_urls = STATE_ENABLED;
 	browserSettings.file_access_from_file_urls = STATE_ENABLED;
 
@@ -299,7 +313,12 @@ void UBluEye::processKeyMods(FInputEvent InKey)
 
 UTexture2D* UBluEye::GetTexture() const
 {
-	check(Texture)
+
+	if (!Texture)
+	{
+		return Texture->CreateTransient(Width, Height);
+	}
+
 	return Texture;
 }
 

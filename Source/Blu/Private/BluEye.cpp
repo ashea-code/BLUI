@@ -313,10 +313,9 @@ void UBluEye::processKeyMods(FInputEvent InKey)
 
 UTexture2D* UBluEye::GetTexture() const
 {
-
 	if (!Texture)
 	{
-		return Texture->CreateTransient(Width, Height);
+		return UTexture2D::CreateTransient(Width, Height);
 	}
 
 	return Texture;

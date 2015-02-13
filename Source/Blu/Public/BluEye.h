@@ -164,6 +164,10 @@ class BLU_API UBluEye : public UObject
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void CharKeyPress(FCharacterEvent CharEvent);
 
+	/* Close the browser */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void CloseBrowser();
+
 	CefRefPtr<CefBrowser> browser;
 
 	void TextureUpdate(const void* buffer);

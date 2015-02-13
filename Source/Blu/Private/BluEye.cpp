@@ -344,6 +344,11 @@ void UBluEye::ResetMatInstance()
 	MaterialInstance->SetTextureParameterValue(TextureParameterName, GetTexture());
 }
 
+void UBluEye::CloseBrowser()
+{
+	BeginDestroy();
+}
+
 void UBluEye::BeginDestroy()
 {
 	if (browser)

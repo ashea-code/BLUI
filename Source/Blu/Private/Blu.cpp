@@ -7,7 +7,7 @@ class FBlu : public IBlu
 	virtual void StartupModule() override
 	{
 
-		FString GameDir = FPaths::ConvertRelativePathToFull(FPaths::GameDir() + "/BluCache");
+		FString GameDir = FPaths::ConvertRelativePathToFull(FPaths::GameDir() + "BluCache");
 		CefString GameDirCef = *GameDir;
 
 		// Setup the default settings for BluManager

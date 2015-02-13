@@ -132,13 +132,29 @@ class BLU_API UBluEye : public UObject
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void LoadURL(const FString& newURL);
 
-	/* Trigger a mouse-down LEFT click in the browser via a Vector2D */
+	/* Trigger a LEFT click in the browser via a Vector2D */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void TriggerLeftClick(const FVector2D& pos, const float scale = 1);
 
-	/* Trigger a mouse-down RIGHT click in the browser via a Vector2D */
+	/* Trigger a RIGHT click in the browser via a Vector2D */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void TriggerRightClick(const FVector2D& pos, const float scale = 1);
+
+	/* Trigger a LEFT MOUSE DOWN in the browser via a Vector2D */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void TriggerLeftMouseDown(const FVector2D& pos, const float scale = 1);
+
+	/* Trigger a RIGHT MOUSE DOWN in the browser via a Vector2D */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void TriggerRightMouseDown(const FVector2D& pos, const float scale = 1);
+
+	/* Trigger a LEFT MOUSE DOWN in the browser via a Vector2D */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void TriggerLeftMouseUp(const FVector2D& pos, const float scale = 1);
+
+	/* Trigger a RIGHT MOUSE DOWN in the browser via a Vector2D */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void TriggerRightMouseUp(const FVector2D& pos, const float scale = 1);
 
 	/* Move the mouse in the browser */
 	UFUNCTION(BlueprintCallable, Category = "Blu")

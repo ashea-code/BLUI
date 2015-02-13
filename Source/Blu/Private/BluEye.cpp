@@ -204,24 +204,46 @@ void UBluEye::TriggerMouseMove(const FVector2D& pos, const float scale)
 
 void UBluEye::TriggerLeftClick(const FVector2D& pos, const float scale)
 {
-
-	mouse_event.x = pos.X / scale;
-	mouse_event.y = pos.Y / scale;
-
-	browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_LEFT, false, 1);
-	browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_LEFT, true, 1);
-
+	TriggerLeftMouseDown(pos, scale);
+	TriggerLeftMouseUp(pos, scale);
 }
 
 void UBluEye::TriggerRightClick(const FVector2D& pos, const float scale)
 {
+	TriggerRightMouseDown(pos, scale);
+	TriggerRightMouseUp(pos, scale);
+}
 
+void UBluEye::TriggerLeftMouseDown(const FVector2D& pos, const float scale)
+{
+	mouse_event.x = pos.X / scale;
+	mouse_event.y = pos.Y / scale;
+
+	browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_LEFT, false, 1);
+}
+
+void UBluEye::TriggerRightMouseDown(const FVector2D& pos, const float scale)
+{
 	mouse_event.x = pos.X / scale;
 	mouse_event.y = pos.Y / scale;
 
 	browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_RIGHT, false, 1);
-	browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_RIGHT, true, 1);
+}
 
+void UBluEye::TriggerLeftMouseUp(const FVector2D& pos, const float scale)
+{
+	mouse_event.x = pos.X / scale;
+	mouse_event.y = pos.Y / scale;
+
+	browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_LEFT, true, 1);
+}
+
+void UBluEye::TriggerRightMouseUp(const FVector2D& pos, const float scale)
+{
+	mouse_event.x = pos.X / scale;
+	mouse_event.y = pos.Y / scale;
+
+	browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_RIGHT, true, 1);
 }
 
 void UBluEye::KeyDown(FKeyEvent InKey)

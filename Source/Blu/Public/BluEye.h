@@ -168,7 +168,7 @@ class BLU_API UBluEye : public UObject
 
 	void TextureUpdate(const void* buffer);
 
-	void BeginDestroy() override;
+	void BeginDestroy() override; //
 
 	protected:
 		CefWindowInfo info;

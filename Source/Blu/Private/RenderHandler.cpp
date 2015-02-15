@@ -23,11 +23,24 @@ bool BrowserClient::OnProcessMessageReceived(CefRefPtr<CefBrowser> browser, CefP
 {
 	
 	FString name = message->GetArgumentList()->GetString(0).c_str();
-	FString data = message->GetArgumentList()->GetString(1).c_str();
+	FString data;
 	FString type = message->GetArgumentList()->GetString(2).c_str();
+	FString data_type = message->GetArgumentList()->GetString(3).c_str();
 
 	if (type == "js_event")
 	{
+
+		// Check the datatype
+
+		if (data_type == "bool")
+			data = message->GetArgumentList()->GetBool(1) ? TEXT("true") : TEXT("false");
+		else if (data_type == "int")
+			data = FString::FromInt(message->GetArgumentList()->GetInt(1));
+		else if (data_type == "string")
+			data = message->GetArgumentList()->GetString(1).c_str();
+		else if (data_type == "double")
+			data = FString::SanitizeFloat(message->GetArgumentList()->GetDouble(1));
+
 		event_emitter->Broadcast(name, data);
 	}
 

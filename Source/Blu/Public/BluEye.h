@@ -180,15 +180,19 @@ class BLU_API UBluEye : public UObject
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void CharKeyPress(FCharacterEvent CharEvent);
 
+	/* Trigger texture update, should be called every tick */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void RunTick();
+
 	/* Close the browser */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void CloseBrowser();
 
 	CefRefPtr<CefBrowser> browser;
 
-	void TextureUpdate(const void* buffer);
+	void BeginDestroy() override;
 
-	void BeginDestroy() override; //
+	void updateBuffer(const void *newBuffer);
 
 	protected:
 		CefWindowInfo info;
@@ -199,6 +203,7 @@ class BLU_API UBluEye : public UObject
 		void ResetTexture();
 		void DestroyTexture();
 		void ResetMatInstance();
+		void TextureUpdate();
 		
 		// Parse UE4 key events, helper
 		void processKeyCode(FKeyEvent InKey);
@@ -212,5 +217,7 @@ class BLU_API UBluEye : public UObject
 
 		CefMouseEvent mouse_event;
 		CefKeyEvent key_event;
+
+		const void *texBuffer;
 
 };

@@ -61,9 +61,11 @@ void UBluEye::ResetTexture()
 	DestroyTexture();
 
 	// init the new Texture2D
-	Texture = UTexture2D::CreateTransient(Width, Height);
-	Texture->Filter = TF_MAX;
+	Texture = UTexture2D::CreateTransient(Width, Height, PF_B8G8R8A8);
 	Texture->AddToRoot();
+	Texture->LODGroup = TEXTUREGROUP_UI;
+	Texture->CompressionSettings = TC_EditorIcon;
+	Texture->Filter = TF_Default;
 	Texture->UpdateResource();
 
 	ResetMatInstance();

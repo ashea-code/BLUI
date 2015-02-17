@@ -63,18 +63,10 @@ void UBluEye::ResetTexture()
 	// init the new Texture2D
 	Texture = UTexture2D::CreateTransient(Width, Height, PF_B8G8R8A8);
 	Texture->AddToRoot();
-	Texture->LODGroup = TEXTUREGROUP_UI;
-	Texture->CompressionSettings = TC_EditorIcon;
-	Texture->Filter = TF_Default;
-	Texture->UpdateResource();
+	Texture->UpdateResourceW();
 
 	ResetMatInstance();
 
-}
-
-void UBluEye::updateBuffer(const void* buffer)
-{
-	texBuffer = buffer;
 }
 
 void UBluEye::DestroyTexture()
@@ -95,7 +87,7 @@ void UBluEye::DestroyTexture()
 	}
 }
 
-void UBluEye::TextureUpdate()
+void UBluEye::TextureUpdate(const void *buffer)
 {
 	if (!browser || !bEnabled)
 	{
@@ -114,7 +106,7 @@ void UBluEye::TextureUpdate()
 				return;
 		}
 
-		if (texBuffer == nullptr)
+		if (buffer == nullptr)
 		{
 			UE_LOG(LogBlu, Warning, TEXT("NO TEXTDATA"))
 				return;
@@ -125,7 +117,7 @@ void UBluEye::TextureUpdate()
 		// @TODO This is a bit heavy to keep reallocating/deallocating, but not a big deal. Maybe we can ping pong between buffers instead.
 		TArray<uint32> ViewBuffer;
 		ViewBuffer.Init(Width * Height);
-		FMemory::Memcpy(ViewBuffer.GetData(), texBuffer, size);
+		FMemory::Memcpy(ViewBuffer.GetData(), buffer, size);
 
 		TextureDataPtr dataPtr = MakeShareable(new TextureData);
 
@@ -133,7 +125,7 @@ void UBluEye::TextureUpdate()
 
 		// Clean up from the per-render
 		ViewBuffer.Empty();
-		//texBuffer = 0;
+		buffer = 0;
 
 		ENQUEUE_UNIQUE_RENDER_COMMAND_THREEPARAMETER(
 			TextureData,
@@ -406,9 +398,4 @@ void UBluEye::BeginDestroy()
 	
 	DestroyTexture();
 	Super::BeginDestroy();
-}
-
-void UBluEye::RunTick()
-{
-	TextureUpdate();
 }

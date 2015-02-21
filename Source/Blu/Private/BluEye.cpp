@@ -393,7 +393,8 @@ void UBluEye::BeginDestroy()
 {
 	if (browser)
 	{
-		browser->GetHost()->CloseBrowser(false);
+		browser->GetHost()->CloseBrowser(true);
+		UE_LOG(LogBlu, Warning, TEXT("Browser Closing"));
 	}
 	
 	DestroyTexture();

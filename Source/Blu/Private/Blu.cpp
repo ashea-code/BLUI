@@ -30,7 +30,7 @@ class FBlu : public IBlu
 	virtual void ShutdownModule() override
 	{
 		UE_LOG(LogBlu, Log, TEXT(" STATUS: Shutdown"));
-		return CefShutdown();
+		CefShutdown();
 	}
 
 };

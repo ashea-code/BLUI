@@ -12,4 +12,7 @@ class BLU_API UBluBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, meta = (HidePin = "WorldContextObject", DefaultToSelf = "WorldContextObject", FriendlyName = "Create BluEye", CompactNodeTitle = "BluEye", Keywords = "new create blu eye blui"), Category = Blu)
 		static UBluEye* NewBluEye(UObject* WorldContextObject);
 
+	UFUNCTION(BlueprintCallable, meta = (FriendlyName = "Run BLUI Tick", Keywords = "new create blu eye blui tick"), Category = Blu)
+		static void RunBluEventLoop();
+
 };

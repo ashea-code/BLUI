@@ -12,6 +12,7 @@ class FBlu : public IBlu
 
 		// Setup the default settings for BluManager
 		BluManager::settings.windowless_rendering_enabled = true;
+		BluManager::settings.no_sandbox = true;
 
 		BluManager::settings.remote_debugging_port = 7777;
 

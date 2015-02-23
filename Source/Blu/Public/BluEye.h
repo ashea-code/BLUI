@@ -160,6 +160,10 @@ class BLU_API UBluEye : public UObject
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void TriggerMouseMove(const FVector2D& pos, const float scale = 1);
 
+	/* Move the mouse in the browser */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void TriggerMouseWheel(const float MouseWheelDelta, const FVector2D& pos, const float scale = 1);
+
 	/* Javascript event emitter */
 	UPROPERTY(BlueprintAssignable)
 		FScriptEvent ScriptEventEmitter;

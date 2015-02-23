@@ -246,6 +246,14 @@ void UBluEye::TriggerRightMouseUp(const FVector2D& pos, const float scale)
 	browser->GetHost()->SendMouseClickEvent(mouse_event, MBT_RIGHT, true, 1);
 }
 
+void UBluEye::TriggerMouseWheel(const float MouseWheelDelta, const FVector2D& pos, const float scale)
+{
+	mouse_event.x = pos.X / scale;
+	mouse_event.y = pos.Y / scale;
+
+	browser->GetHost()->SendMouseWheelEvent(mouse_event, MouseWheelDelta * 10, MouseWheelDelta * 10);
+}
+
 void UBluEye::KeyDown(FKeyEvent InKey)
 {
 

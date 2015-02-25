@@ -20,4 +20,5 @@ DECLARE_LOG_CATEGORY_EXTERN(LogBlu, Log, All);
 #include "BluManager.h"
 #include "BluEye.h"
 #include "RenderHandler.h"
+#include "BluJsonObj.h"
 #include "BluBlueprintFunctionLibrary.h"

@@ -50,7 +50,9 @@ public class Blu : ModuleRules
 				"RHI",
                 "Slate",
                 "SlateCore",
-                "UMG"
+                "UMG",
+                "Json", 
+                "JsonUtilities"
 				// ... add other public dependencies that you statically link with here ...
 			});
 

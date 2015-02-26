@@ -19,10 +19,11 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		bool getBooleanValue(const FString &index);
 
-	//UFUNCTION(BlueprintCallable, Category = "Blu")
-		//UBluJsonObj* getNestedObject(const FString &index);
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		UBluJsonObj* getNestedObject(const FString &index);
 
 	void init(const FString &dataString);
+	void setJsonObj(TSharedPtr<FJsonObject> NewJson);
 
 private:
 

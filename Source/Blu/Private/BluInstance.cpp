@@ -13,8 +13,6 @@ BluInstance::BluInstance()
 	// CefString(&settings.resources_dir_path).FromASCII("");
 	// CefString(&settings.locales_dir_path).FromASCII("");
 
-	info.SetAsWindowless(nullptr, true);
-
 	settings.windowless_rendering_enabled = true;
 	settings.log_severity = LOGSEVERITY_VERBOSE;
 	

@@ -1,9 +1,13 @@
 #pragma once
 
+#if PLATFORM_WINDOWS
 #include "AllowWindowsPlatformTypes.h"
+#endif
 #include "include/cef_client.h"
 #include "include/cef_app.h"
+#if PLATFORM_WINDOWS
 #include "HideWindowsPlatformTypes.h"
+#endif
 
 #include "../Public/BluEye.h"
 
@@ -23,7 +27,7 @@ class RenderHandler : public CefRenderHandler
 
 		void OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer, int width, int height) override;
 
-		RenderHandler::RenderHandler(int32 width, int32 height, UBluEye* ui);
+		RenderHandler(int32 width, int32 height, UBluEye* ui);
 
 		// CefBase interface
 		// NOTE: Must be at bottom

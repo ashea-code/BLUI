@@ -20,24 +20,53 @@ public class Blu : ModuleRules
 
         bool isLibrarySupported = false;
 
-        if ((Target.Platform == UnrealTargetPlatform.Win64))
+        if ((Target.Platform == UnrealTargetPlatform.Win64) || (Target.Platform == UnrealTargetPlatform.Linux))
         {
             isLibrarySupported = true;
+
+
+            /** //// Start Windows platform //// **/
+
+            if ((Target.Platform == UnrealTargetPlatform.Win64))
+            {
+                PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef/Win/lib", "libcef.lib"));
+                PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef/Win/lib", "libcef_dll_wrapper.lib"));
+
+                PublicIncludePaths.AddRange(
+                    new string[] {
+				        Path.Combine(ThirdPartyPath, "cef/Win"),
+                        Path.Combine(ModulePath, "Blu/Public")
+			    });
+            }
+
+            /** //// End Windows platform //// **/
+
+
+            /** //// Start Linux 64 platform //// **/
+
+            else if ((Target.Platform == UnrealTargetPlatform.Linux))
+            {
+
+                PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef/Linux/lib", "libcef.so"));
+                PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef/Linux/lib", "libcef_dll_wrapper.a"));
+
+                PublicIncludePaths.AddRange(
+                    new string[] {
+				        Path.Combine(ThirdPartyPath, "cef/Linux"),
+                        Path.Combine(ModulePath, "Blu/Public")
+			    });
+
+            }
+
+            /** //// End Linux 64 platform //// **/
+
+
+            /** //// General Libs + Includes //// **/
 
             PrivateIncludePaths.AddRange(
             new string[] {
 				Path.Combine(ModulePath, "Private")
-				// ... add other private include paths required here ...
 			});
-
-            PublicIncludePaths.AddRange(
-            new string[] {
-				Path.Combine(ThirdPartyPath, "cef/Win"),
-                Path.Combine(ModulePath, "Blu/Public")
-			});
-
-            PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef/Win/lib", "libcef.lib"));
-            PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef/Win/lib", "libcef_dll_wrapper.lib"));
 
             PublicDependencyModuleNames.AddRange(
                 new string[]
@@ -53,7 +82,6 @@ public class Blu : ModuleRules
                 "UMG",
                 "Json", 
                 "JsonUtilities"
-				// ... add other public dependencies that you statically link with here ...
 			});
 
         }

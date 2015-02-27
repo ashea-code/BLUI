@@ -35,7 +35,7 @@ void UBluEye::init()
 	info.height = Height;
 
 	// Set transparant option
-	info.SetAsWindowless(NULL, bIsTransparent);
+	info.SetAsWindowless(0, bIsTransparent);
 
 	renderer = new RenderHandler(Width, Height, this);
 	g_handler = new BrowserClient(renderer);
@@ -63,7 +63,7 @@ void UBluEye::ResetTexture()
 	// init the new Texture2D
 	Texture = UTexture2D::CreateTransient(Width, Height, PF_B8G8R8A8);
 	Texture->AddToRoot();
-	Texture->UpdateResourceW();
+	Texture->UpdateResource();
 
 	ResetMatInstance();
 

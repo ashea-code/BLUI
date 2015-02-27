@@ -15,8 +15,13 @@ class FBlu : public IBlu
 		BluManager::settings.no_sandbox = true;
 
 		BluManager::settings.remote_debugging_port = 7777;
-
-		CefString(&BluManager::settings.browser_subprocess_path).FromASCII("blu_ue4_process.exe");
+		
+#if PLATFORM_LINUX
+		CefString(&BluManager::settings.browser_subprocess_path).FromASCII("./blu_ue4_process");
+#endif
+#if PLATFORM_WINDOWS
+		CefString(&BluManager::settings.browser_subprocess_path).FromASCII("./blu_ue4_process.exe");
+#endif
 		CefString(&BluManager::settings.cache_path).FromString(GameDirCef);
 
 		CefExecuteProcess(BluManager::main_args, NULL, NULL);

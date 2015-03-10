@@ -42,7 +42,9 @@ Re-generate your project's Visual Studio file and load up the editor. Then check
 
 Updating the CEF event loop
 ---------------------------------------
-You must call the `BluManager::doBluMessageLoop();` method every tick in order for the CEF process to update properly. To do this, override the default GameMode's Tick function and include the `Blu/Public/BluManager.h` header file. You can then call the appropriate method.
+~~You must call the `BluManager::doBluMessageLoop();` method every tick in order for the CEF process to update properly. To do this, override the default GameMode's Tick function and include the `Blu/Public/BluManager.h` header file. You can then call the appropriate method.~~
+
+As of now, you no longer need to do this. You can simply call a blueprint node to Tick the CEF loop every tick of the level blueprint.
 
 
 Loading Local Files

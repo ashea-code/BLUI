@@ -80,8 +80,7 @@ public class Blu : ModuleRules
                 "Slate",
                 "SlateCore",
                 "UMG",
-                "Json", 
-                "JsonUtilities"
+                "Json"
 			});
 
         }

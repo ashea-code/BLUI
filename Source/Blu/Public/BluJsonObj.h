@@ -24,6 +24,8 @@ public:
 
 	void init(const FString &dataString);
 	void setJsonObj(TSharedPtr<FJsonObject> NewJson);
+	
+	TSharedPtr<FJsonObject> getJsonObj();
 
 private:
 

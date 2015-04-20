@@ -65,6 +65,13 @@ void UBluJsonObj::setJsonObj(TSharedPtr<FJsonObject> NewJson)
 
 }
 
+TSharedPtr<FJsonObject> UBluJsonObj::getJsonObj()
+{
+
+	return JsonParsed;
+
+}
+
 void UBluJsonObj::doParseJson(TSharedRef<TJsonReader<TCHAR>> JsonReader)
 {
 

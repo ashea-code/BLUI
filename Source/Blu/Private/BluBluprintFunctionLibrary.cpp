@@ -32,3 +32,17 @@ UBluJsonObj* UBluBlueprintFunctionLibrary::ParseJSON(const FString& JSONString)
 	return tempObj;
 
 }
+
+FString UBluBlueprintFunctionLibrary::JSONObjToString(UBluJsonObj *ObjectToParse)
+{
+
+	// Create the JSON reader
+	FString returnString;
+	TSharedRef<TJsonWriter<TCHAR>> writer = TJsonWriterFactory<TCHAR>::Create(&returnString);
+
+	// Convert the JSON object to an FString
+	FJsonSerializer::Serialize(ObjectToParse->getJsonObj().ToSharedRef(), writer);
+
+	return returnString;
+
+}

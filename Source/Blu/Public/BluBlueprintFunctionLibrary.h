@@ -17,4 +17,7 @@ class BLU_API UBluBlueprintFunctionLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintCallable, meta = (FriendlyName = "Parse JSON String", Keywords = "blui blu eye json parse"), Category = Blu)
 		static UBluJsonObj* ParseJSON(const FString& JSONString);
 
+	UFUNCTION(BlueprintCallable, meta = (FriendlyName = "UBluJsonObj to String", Keywords = "blui blu eye json parse string"), Category = Blu)
+		static FString JSONObjToString(UBluJsonObj *ObjectToParse);
+
 };

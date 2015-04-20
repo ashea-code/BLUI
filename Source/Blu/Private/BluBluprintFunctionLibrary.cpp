@@ -33,7 +33,7 @@ UBluJsonObj* UBluBlueprintFunctionLibrary::ParseJSON(const FString& JSONString)
 
 }
 
-FString UBluBlueprintFunctionLibrary::JSONObjToString(UBluJsonObj *ObjectToParse)
+FString UBluBlueprintFunctionLibrary::JSONToString(UBluJsonObj *ObjectToParse)
 {
 
 	// Create the JSON reader

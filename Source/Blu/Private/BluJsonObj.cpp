@@ -57,6 +57,34 @@ UBluJsonObj* UBluJsonObj::getNestedObject(const FString &index)
 
 }
 
+void UBluJsonObj::setStringValue(const FString &value, const FString &index)
+{
+
+	JsonParsed->SetStringField(index, value);
+
+}
+
+void UBluJsonObj::setNumValue(const float value, const FString &index)
+{
+
+	JsonParsed->SetNumberField(index, value);
+
+}
+
+void UBluJsonObj::setBooleanValue(const bool value, const FString &index)
+{
+
+	JsonParsed->SetBoolField(index, value);
+
+}
+
+void UBluJsonObj::setNestedObject(UBluJsonObj *value, const FString &index)
+{
+
+	JsonParsed->SetObjectField(index, value->getJsonObj());
+
+}
+
 void UBluJsonObj::setJsonObj(TSharedPtr<FJsonObject> NewJson)
 {
 

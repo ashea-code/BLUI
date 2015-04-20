@@ -10,17 +10,41 @@ class BLU_API UBluJsonObj : public UObject
 
 public:
 
+	//// Get Values ////
+
+	/* Gets a String value for the key given */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		FString getStringValue(const FString &index);
 
+	/* Gets a Numerical value for the key given */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		float getNumValue(const FString &index);
 
+	/* Gets a Boolean value for the key given */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		bool getBooleanValue(const FString &index);
 
+	/* Gets a Nested JSON Object value for the key given */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		UBluJsonObj* getNestedObject(const FString &index);
+
+	//// Set Values ////
+
+	/* Sets or Adds a String value to this JSON object */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void setStringValue(const FString &value, const FString &index);
+
+	/* Sets or Adds a Numerical value to this JSON object */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void setNumValue(const float value, const FString &index);
+
+	/* Sets or Adds a Boolean value to this JSON object */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void setBooleanValue(const bool value, const FString &index);
+
+	/* Sets or Adds a Nested JSON Object value to this JSON object */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void setNestedObject(UBluJsonObj *value, const FString &index);
 
 	void init(const FString &dataString);
 	void setJsonObj(TSharedPtr<FJsonObject> NewJson);

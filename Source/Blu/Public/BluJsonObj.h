@@ -28,6 +28,20 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		UBluJsonObj* getNestedObject(const FString &index);
 
+	//// Get Array Values ////
+
+	/* Gets an Array of floats or numbers for the key given */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		TArray<float> getNumArray(const FString &index);
+
+	/* Gets an Array of booleans for the key given */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		TArray<bool> getBooleanArray(const FString &index);
+
+	/* Gets an Array of strings for the key given */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		TArray<FString> getStringArray(const FString &index);
+
 	//// Set Values ////
 
 	/* Sets or Adds a String value to this JSON object */

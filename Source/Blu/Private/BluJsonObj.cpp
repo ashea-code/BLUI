@@ -57,6 +57,55 @@ UBluJsonObj* UBluJsonObj::getNestedObject(const FString &index)
 
 }
 
+TArray<float> UBluJsonObj::getNumArray(const FString &index)
+{
+
+	TArray<float> temp;
+
+	for (TSharedPtr<FJsonValue> val : JsonParsed->GetArrayField(index))
+	{
+
+		temp.Add(val->AsNumber());
+
+	}
+
+	return temp;
+
+}
+
+TArray<bool> UBluJsonObj::getBooleanArray(const FString &index)
+{
+
+	TArray<bool> temp;
+
+	for (TSharedPtr<FJsonValue> val : JsonParsed->GetArrayField(index))
+	{
+
+		temp.Add(val->AsBool());
+
+	}
+
+	return temp;
+
+}
+
+TArray<FString> UBluJsonObj::getStringArray(const FString &index)
+{
+
+	TArray<FString> temp;
+
+	for (TSharedPtr<FJsonValue> val : JsonParsed->GetArrayField(index))
+	{
+
+		temp.Add(val->AsString());
+
+	}
+
+	return temp;
+
+}
+
+
 void UBluJsonObj::setStringValue(const FString &value, const FString &index)
 {
 

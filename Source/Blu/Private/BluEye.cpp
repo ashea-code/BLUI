@@ -124,8 +124,9 @@ void UBluEye::TextureUpdate(const void *buffer)
 			if (MipData)
 			{
 				FMemory::Memcpy(MipData, ImageData, DataSize);
-				GDynamicRHI->RHIUnlockTexture2D(TargetTexture, 0, false);
 			}
+
+			GDynamicRHI->RHIUnlockTexture2D(TargetTexture, 0, false);
 		});
 
 	}

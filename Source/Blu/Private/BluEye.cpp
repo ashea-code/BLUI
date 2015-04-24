@@ -112,37 +112,20 @@ void UBluEye::TextureUpdate(const void *buffer)
 				return;
 		}
 
-		const size_t size = Width * Height * sizeof(uint32);
-
-		// @TODO This is a bit heavy to keep reallocating/deallocating, but not a big deal. Maybe we can ping pong between buffers instead.
-		TArray<uint32> ViewBuffer;
-		ViewBuffer.Init(Width * Height);
-		FMemory::Memcpy(ViewBuffer.GetData(), buffer, size);
-
-		TextureDataPtr dataPtr = MakeShareable(new TextureData);
-
-		dataPtr->SetRawData(Width, Height, sizeof(uint32), ViewBuffer);
-
-		// Clean up from the per-render
-		ViewBuffer.Empty();
-		buffer = 0;
-
 		ENQUEUE_UNIQUE_RENDER_COMMAND_THREEPARAMETER(
-			TextureData,
-			TextureDataPtr, ImageData, dataPtr,
-			FTexture2DRHIRef, TargetTexture, ref,
-			const size_t, DataSize, size,
+			void,                                                       // Return value?
+			const void*, ImageData, buffer,                             // const void* ImageData = buffer;
+			FTexture2DRHIRef, TargetTexture, ref,                       // FTexture2DRHIRef TargetTexture = ref;
+			const size_t, DataSize, Width * Height * sizeof(uint32),    // const size_t DataSize = Width * Height * sizeof(uint32);
 			{
 			uint32 stride = 0;
 			void* MipData = GDynamicRHI->RHILockTexture2D(TargetTexture, 0, RLM_WriteOnly, stride, false);
 
 			if (MipData)
 			{
-				FMemory::Memcpy(MipData, ImageData->GetRawBytesPtr(), ImageData->GetDataSize());
+				FMemory::Memcpy(MipData, ImageData, DataSize);
 				GDynamicRHI->RHIUnlockTexture2D(TargetTexture, 0, false);
 			}
-
-			ImageData.Reset();
 		});
 
 	}

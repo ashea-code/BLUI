@@ -1,5 +1,4 @@
 #include "BluPrivatePCH.h"
-#include "BluManager.h"
 #include "Json.h"
 
 UBluBlueprintFunctionLibrary::UBluBlueprintFunctionLibrary(const class FObjectInitializer& PCIP)
@@ -20,7 +19,7 @@ UBluEye* UBluBlueprintFunctionLibrary::NewBluEye(UObject* WorldContextObject)
 
 void UBluBlueprintFunctionLibrary::RunBluEventLoop()
 {
-	BluManager::doBluMessageLoop();
+	CefDoMessageLoopWork();
 }
 
 UBluJsonObj* UBluBlueprintFunctionLibrary::ParseJSON(const FString& JSONString)

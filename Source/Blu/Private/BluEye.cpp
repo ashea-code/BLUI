@@ -141,7 +141,6 @@ void UBluEye::ExecuteJS(const FString& code)
 	CefString codeStr = *code;
 	UE_LOG(LogBlu, Log, TEXT("Execute JS: %s"), *code)
 	browser->GetMainFrame()->ExecuteJavaScript(codeStr, "", 0);
-	// create an event function that can be called from JS
 }
 
 void UBluEye::LoadURL(const FString& newURL)

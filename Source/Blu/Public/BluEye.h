@@ -6,6 +6,17 @@ class RenderHandler;
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FScriptEvent, const FString&, EventName, const FString&, EventMessage);
 
+struct FBluTextureParams
+{
+
+	// Pointer to our Texture's resource
+	FTexture2DResource* Texture2DResource;
+
+	// Regions we need to update (for now, the whole image)
+	FUpdateTextureRegion2D* UpdateRegions;
+
+};
+
 UCLASS(ClassGroup = Blu, Blueprintable)
 class BLU_API UBluEye : public UObject
 {
@@ -143,5 +154,9 @@ class BLU_API UBluEye : public UObject
 
 		CefMouseEvent mouse_event;
 		CefKeyEvent key_event;
+
+	private:
+
+		FBluTextureParams RenderParams;
 
 };

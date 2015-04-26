@@ -34,6 +34,9 @@ void UBluEye::init()
 	info.width = Width;
 	info.height = Height;
 
+	// Set the texture update region (for now the whole image)
+	RenderParams.UpdateRegions = new FUpdateTextureRegion2D(0, 0, 0, 0, Width, Height);
+
 	// Set transparant option
 	info.SetAsWindowless(0, bIsTransparent);
 
@@ -64,6 +67,8 @@ void UBluEye::ResetTexture()
 	Texture = UTexture2D::CreateTransient(Width, Height, PF_B8G8R8A8);
 	Texture->AddToRoot();
 	Texture->UpdateResource();
+
+	RenderParams.Texture2DResource = (FTexture2DResource*)Texture->Resource;
 
 	ResetMatInstance();
 
@@ -110,24 +115,19 @@ void UBluEye::TextureUpdate(const void *buffer)
 		{
 			UE_LOG(LogBlu, Warning, TEXT("NO TEXTDATA"))
 				return;
-		}
+		}	
 
-		ENQUEUE_UNIQUE_RENDER_COMMAND_THREEPARAMETER(
-			void,                                                       // Return value?
-			const void*, ImageData, buffer,                             // const void* ImageData = buffer;
-			FTexture2DRHIRef, TargetTexture, ref,                       // FTexture2DRHIRef TargetTexture = ref;
-			const size_t, DataSize, Width * Height * sizeof(uint32),    // const size_t DataSize = Width * Height * sizeof(uint32);
+		ENQUEUE_UNIQUE_RENDER_COMMAND_FOURPARAMETER(
+			void,
+			const void*, ImageData, buffer,
+			UTexture2D*, TargetTexture, Texture,
+			int32, Stride, Width * 4,
+			FBluTextureParams, Params, RenderParams,
 			{
-			uint32 stride = 0;
-			void* MipData = GDynamicRHI->RHILockTexture2D(TargetTexture, 0, RLM_WriteOnly, stride, false);
 
-			if (MipData)
-			{
-				FMemory::Memcpy(MipData, ImageData, DataSize);
-			}
+				RHIUpdateTexture2D(Params.Texture2DResource->GetTexture2DRHI(), 0, *Params.UpdateRegions, Stride, (uint8*)ImageData);
 
-			GDynamicRHI->RHIUnlockTexture2D(TargetTexture, 0, false);
-		});
+			});
 
 	}
 	else {

@@ -3,7 +3,7 @@
  
     "FriendlyName" : "BLUI",
     "Version" : 1,
-    "VersionName": "1.0",
+    "VersionName": "2.4",
     "EngineVersion" : 1579795,
     "Description" : "Chrome powered HTML UI and HUD for Unreal Engine 4",
     "Category" : "UI",

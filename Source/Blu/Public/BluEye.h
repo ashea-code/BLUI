@@ -122,6 +122,18 @@ class BLU_API UBluEye : public UObject
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void CharKeyPress(FCharacterEvent CharEvent);
 
+	UFUNCTION(BlueprintCallable, Category = "Blu", meta = (AdvancedDisplay = "2"))
+		void RawCharKeyPress(const FString charToPress, bool isRepeat,
+								bool LeftShiftDown,
+								bool RightShiftDown,
+								bool LeftControlDown,
+								bool RightControlDown,
+								bool LeftAltDown,
+								bool RightAltDown,
+								bool LeftCommandDown,
+								bool RightCommandDown,
+								bool CapsLocksOn);
+
 	/* Close the browser */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void CloseBrowser();

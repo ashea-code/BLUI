@@ -297,6 +297,26 @@ void UBluEye::CharKeyPress(FCharacterEvent CharEvent)
 
 }
 
+void UBluEye::RawCharKeyPress(const FString charToPress, bool isRepeat,
+	bool LeftShiftDown,
+	bool RightShiftDown,
+	bool LeftControlDown,
+	bool RightControlDown,
+	bool LeftAltDown,
+	bool RightAltDown,
+	bool LeftCommandDown,
+	bool RightCommandDown,
+	bool CapsLocksOn)
+{
+	FModifierKeysState* KeyState = new FModifierKeysState(LeftShiftDown, RightShiftDown, LeftControlDown, 
+		RightControlDown, LeftAltDown, RightAltDown, LeftCommandDown, RightCommandDown, CapsLocksOn);
+
+	FCharacterEvent* CharEvent = new FCharacterEvent(charToPress.GetCharArray()[0], *KeyState, 0, isRepeat);
+
+	CharKeyPress(*CharEvent);
+
+}
+
 void UBluEye::processKeyMods(FInputEvent InKey)
 {
 

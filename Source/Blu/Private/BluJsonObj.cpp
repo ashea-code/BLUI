@@ -45,7 +45,7 @@ UBluJsonObj* UBluJsonObj::getNestedObject(const FString &index)
 
 	if (!newJson.IsValid())
 	{
-		return NULL;
+		return nullptr;
 	}
 
 	// Make our new temp obj

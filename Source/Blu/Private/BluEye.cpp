@@ -139,7 +139,6 @@ void UBluEye::TextureUpdate(const void *buffer)
 void UBluEye::ExecuteJS(const FString& code)
 {
 	CefString codeStr = *code;
-	UE_LOG(LogBlu, Log, TEXT("Execute JS: %s"), *code)
 	browser->GetMainFrame()->ExecuteJavaScript(codeStr, "", 0);
 }
 

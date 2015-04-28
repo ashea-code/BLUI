@@ -27,8 +27,6 @@ class FBlu : public IBlu
 		CefExecuteProcess(BluManager::main_args, NULL, NULL);
 		CefInitialize(BluManager::main_args, BluManager::settings, NULL, NULL);
 
-		UBluEye::StaticClass();
-
 		UE_LOG(LogBlu, Log, TEXT(" STATUS: Loaded"));
 	}
 

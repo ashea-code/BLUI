@@ -56,6 +56,8 @@ HUD Example Blueprint
 ---------------------------------------
 Within the release, you'll find an ExampleHUD blueprint file, place this into your project's blueprints directory to try it out! (It's a simple UMG widget pre-configures to accept keyboard and mouse input, with a BluEye instance hooked up to a canvas)
 
+[A small demo project to get started!](http://bit.ly/1ODRiTO)
+
 
 Shipping Your Game
 ---------------------------------------

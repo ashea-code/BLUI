@@ -67,6 +67,7 @@ class BLU_API UBluEye : public UObject
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void ExecuteJS(const FString& code);
 
+	/** Load a new URL into the browser */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void LoadURL(const FString& newURL);
 
@@ -135,9 +136,19 @@ class BLU_API UBluEye : public UObject
 								bool RightCommandDown,
 								bool CapsLocksOn);
 
-	/* Close the browser */
+	/** Close the browser */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void CloseBrowser();
+
+	/** Check if the browser is still loading */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		bool IsBrowserLoading();
+
+	/** Resize the browser's viewport */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void ResizeBrowser(int32 NewWidth, int32 NewHeight);
+
+
 
 	CefRefPtr<CefBrowser> browser;
 

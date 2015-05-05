@@ -173,6 +173,40 @@ void UBluEye::LoadURL(const FString& newURL)
 
 }
 
+bool UBluEye::IsBrowserLoading()
+{
+
+	return browser->IsLoading();
+
+}
+
+
+void UBluEye::ResizeBrowser(int32 NewWidth, int32 NewHeight)
+{
+
+	// Disable the web view while we resize
+	bEnabled = false;
+
+	// Set our new Width and Height
+	Width = NewWidth;
+	Height = NewHeight;
+	
+	// Update our render handler
+	renderer->width = NewWidth;
+	renderer->height = NewHeight;
+
+	// Also update the Region definition
+	RenderParams.UpdateRegions->Height = NewHeight;
+	RenderParams.UpdateRegions->Width = NewWidth;
+
+	// Let the browser's host know we resized it
+	browser->GetHost()->WasResized();
+
+	// Now we can keep going
+	bEnabled = true;
+
+}
+
 void UBluEye::TriggerMouseMove(const FVector2D& pos, const float scale)
 {
 

@@ -144,6 +144,18 @@ class BLU_API UBluEye : public UObject
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		bool IsBrowserLoading();
 
+	/** Reloads the browser's current page */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void ReloadBrowser(bool IgnoreCache);
+
+	/** Navigate back in this web view's history */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void NavBack();
+
+	/** Navigate forward in this web view's history */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void NavForward();
+
 	/** Resize the browser's viewport */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void ResizeBrowser(int32 NewWidth, int32 NewHeight);

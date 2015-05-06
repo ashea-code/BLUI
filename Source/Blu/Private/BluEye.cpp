@@ -26,7 +26,6 @@ void UBluEye::init()
 			return;
 		}
 	}
-
 	
 	browserSettings.universal_access_from_file_urls = STATE_ENABLED;
 	browserSettings.file_access_from_file_urls = STATE_ENABLED;
@@ -180,6 +179,37 @@ bool UBluEye::IsBrowserLoading()
 
 }
 
+void UBluEye::ReloadBrowser(bool IgnoreCache)
+{
+
+	if (IgnoreCache)
+	{
+		return browser->ReloadIgnoreCache();
+	}
+
+	browser->Reload();
+
+}
+
+void UBluEye::NavBack()
+{
+
+	if (browser->CanGoBack())
+	{
+		browser->GoBack();
+	}
+
+}
+
+void UBluEye::NavForward()
+{
+
+	if (browser->CanGoForward())
+	{
+		browser->GoForward();
+	}
+
+}
 
 void UBluEye::ResizeBrowser(int32 NewWidth, int32 NewHeight)
 {
@@ -437,6 +467,7 @@ void UBluEye::BeginDestroy()
 {
 	if (browser)
 	{
+		browser->GetHost()->CloseDevTools();
 		browser->GetHost()->CloseBrowser(true);
 		UE_LOG(LogBlu, Warning, TEXT("Browser Closing"));
 	}

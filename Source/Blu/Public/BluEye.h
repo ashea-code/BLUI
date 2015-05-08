@@ -87,11 +87,11 @@ class BLU_API UBluEye : public UObject
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void TriggerRightMouseDown(const FVector2D& pos, const float scale = 1);
 
-	/** Trigger a LEFT MOUSE DOWN in the browser via a Vector2D */
+	/** Trigger a LEFT MOUSE UP in the browser via a Vector2D */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void TriggerLeftMouseUp(const FVector2D& pos, const float scale = 1);
 
-	/* Trigger a RIGHT MOUSE DOWN in the browser via a Vector2D */
+	/* Trigger a RIGHT MOUSE UP in the browser via a Vector2D */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void TriggerRightMouseUp(const FVector2D& pos, const float scale = 1);
 
@@ -111,7 +111,7 @@ class BLU_API UBluEye : public UObject
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void KeyDown(FKeyEvent InKey);
 
-	/** Trigger a key down event */
+	/** Trigger a key up event */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void KeyUp(FKeyEvent InKey);
 

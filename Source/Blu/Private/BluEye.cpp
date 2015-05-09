@@ -380,6 +380,90 @@ void UBluEye::RawCharKeyPress(const FString charToPress, bool isRepeat,
 
 }
 
+void UBluEye::SpecialKeyPress(EBluSpecialKeys key, bool LeftShiftDown,
+	bool RightShiftDown,
+	bool LeftControlDown,
+	bool RightControlDown,
+	bool LeftAltDown,
+	bool RightAltDown,
+	bool LeftCommandDown,
+	bool RightCommandDown,
+	bool CapsLocksOn)
+{
+	int keyValue = 0;
+	switch (key)
+	{
+	case backspacekey:
+		keyValue = 8;
+		break;
+	case tabkey:
+		keyValue = 9;
+		break;
+	case pausekey:
+		keyValue = 19;
+		break;
+	case escapekey:
+		keyValue = 27;
+		break;
+	case pageupkey:
+		keyValue = 33;
+		break;
+	case pagedownkey:
+		keyValue = 34;
+		break;
+	case endkey:
+		keyValue = 35;
+		break;
+	case homekey:
+		keyValue = 36;
+		break;
+	case leftarrowkey:
+		keyValue = 37;
+		break;
+	case rightarrowkey:
+		keyValue = 38;
+		break;
+	case downarrowkey:
+		keyValue = 39;
+		break;
+	case uparrowkey:
+		keyValue = 40;
+		break;
+	case insertkey:
+		keyValue = 45;
+		break;
+	case deletekey:
+		keyValue = 46;
+		break;
+	case numlockkey:
+		keyValue = 144;
+		break;
+	case scrolllockkey:
+		keyValue = 145;
+		break;
+	case enterkey:
+		keyValue = 13;
+		break;
+	default:
+		return;
+
+	}
+
+	// Below char input needs some special treatment, se we can't use the normal key down/up methods
+
+	key_event.windows_key_code = keyValue;
+	key_event.native_key_code = keyValue;
+	key_event.type = KEYEVENT_KEYDOWN;
+	browser->GetHost()->SendKeyEvent(key_event);
+
+	key_event.windows_key_code = keyValue;
+	key_event.native_key_code = keyValue;
+	// bits 30 and 31 should be always 1 for WM_KEYUP
+	key_event.type = KEYEVENT_KEYUP;
+	browser->GetHost()->SendKeyEvent(key_event);
+
+}
+
 void UBluEye::processKeyMods(FInputEvent InKey)
 {
 

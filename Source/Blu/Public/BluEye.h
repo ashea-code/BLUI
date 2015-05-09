@@ -17,6 +17,29 @@ struct FBluTextureParams
 
 };
 
+UENUM(BlueprintType)
+enum EBluSpecialKeys
+{ 
+	backspacekey UMETA(DisplayName = "Backspace"),
+	tabkey UMETA(DisplayName = "Tab"),
+	pausekey UMETA(DisplayName = "Pause"),
+	escapekey UMETA(DisplayName = "Escape"),
+	pageupkey UMETA(DisplayName = "Page Up"),
+	pagedownkey UMETA(DisplayName = "Page Down"),
+	endkey UMETA(DisplayName = "End"),
+	homekey UMETA(DisplayName = "Home"),
+	leftarrowkey UMETA(DisplayName = "Left Arrow"),
+	rightarrowkey UMETA(DisplayName = "Right Arrow"),
+	downarrowkey UMETA(DisplayName = "Down Arrow"),
+	uparrowkey UMETA(DisplayName = "Up Arrow"),
+	insertkey UMETA(DisplayName = "Insert"),
+	deletekey UMETA(DisplayName = "Delete"),
+	numlockkey UMETA(DisplayName = "Num Lock"),
+	scrolllockkey UMETA(DisplayName = "Scroll Lock"),
+	enterkey UMETA(DisplayName = "Enter")
+};
+
+
 UCLASS(ClassGroup = Blu, Blueprintable)
 class BLU_API UBluEye : public UObject
 {
@@ -126,6 +149,17 @@ class BLU_API UBluEye : public UObject
 	/** Trigger a raw keypress via a character */
 	UFUNCTION(BlueprintCallable, Category = "Blu", meta = (AdvancedDisplay = "2"))
 		void RawCharKeyPress(const FString charToPress, bool isRepeat,
+								bool LeftShiftDown,
+								bool RightShiftDown,
+								bool LeftControlDown,
+								bool RightControlDown,
+								bool LeftAltDown,
+								bool RightAltDown,
+								bool LeftCommandDown,
+								bool RightCommandDown,
+								bool CapsLocksOn);
+	UFUNCTION(BlueprintCallable, Category = "Blu", meta = (AdvancedDisplay = "2"))
+		void SpecialKeyPress(EBluSpecialKeys key,
 								bool LeftShiftDown,
 								bool RightShiftDown,
 								bool LeftControlDown,

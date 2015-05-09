@@ -158,6 +158,7 @@ class BLU_API UBluEye : public UObject
 								bool LeftCommandDown,
 								bool RightCommandDown,
 								bool CapsLocksOn);
+
 	UFUNCTION(BlueprintCallable, Category = "Blu", meta = (AdvancedDisplay = "2"))
 		void SpecialKeyPress(EBluSpecialKeys key,
 								bool LeftShiftDown,

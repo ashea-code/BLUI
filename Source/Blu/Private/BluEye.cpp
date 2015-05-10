@@ -390,66 +390,10 @@ void UBluEye::SpecialKeyPress(EBluSpecialKeys key, bool LeftShiftDown,
 	bool RightCommandDown,
 	bool CapsLocksOn)
 {
-	int keyValue = 0;
-	switch (key)
-	{
-	case backspacekey:
-		keyValue = 8;
-		break;
-	case tabkey:
-		keyValue = 9;
-		break;
-	case pausekey:
-		keyValue = 19;
-		break;
-	case escapekey:
-		keyValue = 27;
-		break;
-	case pageupkey:
-		keyValue = 33;
-		break;
-	case pagedownkey:
-		keyValue = 34;
-		break;
-	case endkey:
-		keyValue = 35;
-		break;
-	case homekey:
-		keyValue = 36;
-		break;
-	case leftarrowkey:
-		keyValue = 37;
-		break;
-	case rightarrowkey:
-		keyValue = 38;
-		break;
-	case downarrowkey:
-		keyValue = 39;
-		break;
-	case uparrowkey:
-		keyValue = 40;
-		break;
-	case insertkey:
-		keyValue = 45;
-		break;
-	case deletekey:
-		keyValue = 46;
-		break;
-	case numlockkey:
-		keyValue = 144;
-		break;
-	case scrolllockkey:
-		keyValue = 145;
-		break;
-	case enterkey:
-		keyValue = 13;
-		break;
-	default:
-		return;
 
-	}
+	int32 keyValue = key;
 
-	// Below char input needs some special treatment, se we can't use the normal key down/up methods
+	UE_LOG(LogBlu, Warning, TEXT("%d"), keyValue)
 
 	key_event.windows_key_code = keyValue;
 	key_event.native_key_code = keyValue;

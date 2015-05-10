@@ -20,23 +20,23 @@ struct FBluTextureParams
 UENUM(BlueprintType)
 enum EBluSpecialKeys
 { 
-	backspacekey UMETA(DisplayName = "Backspace"),
-	tabkey UMETA(DisplayName = "Tab"),
-	pausekey UMETA(DisplayName = "Pause"),
-	escapekey UMETA(DisplayName = "Escape"),
-	pageupkey UMETA(DisplayName = "Page Up"),
-	pagedownkey UMETA(DisplayName = "Page Down"),
-	endkey UMETA(DisplayName = "End"),
-	homekey UMETA(DisplayName = "Home"),
-	leftarrowkey UMETA(DisplayName = "Left Arrow"),
-	rightarrowkey UMETA(DisplayName = "Right Arrow"),
-	downarrowkey UMETA(DisplayName = "Down Arrow"),
-	uparrowkey UMETA(DisplayName = "Up Arrow"),
-	insertkey UMETA(DisplayName = "Insert"),
-	deletekey UMETA(DisplayName = "Delete"),
-	numlockkey UMETA(DisplayName = "Num Lock"),
-	scrolllockkey UMETA(DisplayName = "Scroll Lock"),
-	enterkey UMETA(DisplayName = "Enter")
+	backspacekey = 8 UMETA(DisplayName = "Backspace"),
+	tabkey = 9 UMETA(DisplayName = "Tab"),
+	enterkey = 13 UMETA(DisplayName = "Enter"),
+	pausekey = 19 UMETA(DisplayName = "Pause"),
+	escapekey = 27 UMETA(DisplayName = "Escape"),
+	pageupkey = 33 UMETA(DisplayName = "Page Up"),
+	pagedownkey = 34 UMETA(DisplayName = "Page Down"),
+	endkey = 35 UMETA(DisplayName = "End"),
+	homekey = 36 UMETA(DisplayName = "Home"),
+	leftarrowkey = 37 UMETA(DisplayName = "Left Arrow"),
+	rightarrowkey = 38 UMETA(DisplayName = "Right Arrow"),
+	downarrowkey = 39 UMETA(DisplayName = "Down Arrow"),
+	uparrowkey = 40 UMETA(DisplayName = "Up Arrow"),
+	insertkey = 45 UMETA(DisplayName = "Insert"),
+	deletekey = 46 UMETA(DisplayName = "Delete"),
+	numlockkey = 144 UMETA(DisplayName = "Num Lock"),
+	scrolllockkey = 145 UMETA(DisplayName = "Scroll Lock")
 };
 
 

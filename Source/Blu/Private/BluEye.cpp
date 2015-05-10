@@ -393,8 +393,6 @@ void UBluEye::SpecialKeyPress(EBluSpecialKeys key, bool LeftShiftDown,
 
 	int32 keyValue = key;
 
-	UE_LOG(LogBlu, Warning, TEXT("%d"), keyValue)
-
 	key_event.windows_key_code = keyValue;
 	key_event.native_key_code = keyValue;
 	key_event.type = KEYEVENT_KEYDOWN;

@@ -371,6 +371,7 @@ void UBluEye::RawCharKeyPress(const FString charToPress, bool isRepeat,
 	bool RightCommandDown,
 	bool CapsLocksOn)
 {
+
 	FModifierKeysState* KeyState = new FModifierKeysState(LeftShiftDown, RightShiftDown, LeftControlDown, 
 		RightControlDown, LeftAltDown, RightAltDown, LeftCommandDown, RightCommandDown, CapsLocksOn);
 

@@ -23,8 +23,11 @@ class FBlu : public IBlu
 #endif
 		CefString(&BluManager::settings.cache_path).FromString(GameDirCef);
 
-		CefExecuteProcess(BluManager::main_args, NULL, NULL);
-		CefInitialize(BluManager::main_args, BluManager::settings, NULL, NULL);
+		// Make a new manager instance
+		CefRefPtr<BluManager> BluApp = new BluManager();
+
+		CefExecuteProcess(BluManager::main_args, BluApp, NULL);
+		CefInitialize(BluManager::main_args, BluManager::settings, BluApp, NULL);
 
 		UE_LOG(LogBlu, Log, TEXT(" STATUS: Loaded"));
 	}

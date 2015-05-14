@@ -26,7 +26,7 @@ class FBlu : public IBlu
 		// Make a new manager instance
 		CefRefPtr<BluManager> BluApp = new BluManager();
 
-		CefExecuteProcess(BluManager::main_args, BluApp, NULL);
+		//CefExecuteProcess(BluManager::main_args, BluApp, NULL);
 		CefInitialize(BluManager::main_args, BluManager::settings, BluApp, NULL);
 
 		UE_LOG(LogBlu, Log, TEXT(" STATUS: Loaded"));

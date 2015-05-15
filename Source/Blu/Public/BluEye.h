@@ -43,8 +43,14 @@ enum EBluSpecialKeys
 UCLASS(ClassGroup = Blu, Blueprintable)
 class BLU_API UBluEye : public UObject
 {
-
-	GENERATED_UCLASS_BODY()
+	GENERATED_BODY()
+	//*****************************************************	
+	// You need to explicitly specify a constructor now.
+	// Cheerio to implicit skulduggery now.
+	//*****************************************************
+	UBluEye(const class FObjectInitializer& PCIP);
+public:
+	//GENERATED_UCLASS_BODY()
 
 	/** Initialize function, should be called after properties are set */
 	UFUNCTION(BlueprintCallable, Category = "Blu")

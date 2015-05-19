@@ -344,17 +344,14 @@ void UBluEye::CharKeyPress(FCharacterEvent CharEvent)
 	processKeyMods(CharEvent);
 
 	// Below char input needs some special treatment, se we can't use the normal key down/up methods
-
 	key_event.windows_key_code = CharEvent.GetCharacter();
 	key_event.native_key_code = CharEvent.GetCharacter();
-	//key_event.type = KEYEVENT_KEYDOWN;
-	browser->GetHost()->SendKeyEvent(key_event);
 	key_event.type = KEYEVENT_CHAR;
 	browser->GetHost()->SendKeyEvent(key_event);
 
 	key_event.windows_key_code = CharEvent.GetCharacter();
 	key_event.native_key_code = CharEvent.GetCharacter();
-	// bits 30 and 31 should be always 1 for WM_KEYUP
+
 	key_event.type = KEYEVENT_KEYUP;
 	browser->GetHost()->SendKeyEvent(key_event);
 

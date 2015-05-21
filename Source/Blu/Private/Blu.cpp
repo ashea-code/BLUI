@@ -18,6 +18,9 @@ class FBlu : public IBlu
 #if PLATFORM_LINUX
 		CefString(&BluManager::settings.browser_subprocess_path).FromASCII("./blu_ue4_process");
 #endif
+#if PLATFORM_MAC
+        CefString(&BluManager::settings.browser_subprocess_path).FromASCII("./blu_ue4_process.app/Contents/MacOS/blu_ue4_process");
+#endif
 #if PLATFORM_WINDOWS
 		CefString(&BluManager::settings.browser_subprocess_path).FromASCII("./blu_ue4_process.exe");
 #endif

@@ -59,8 +59,9 @@ public class Blu : ModuleRules
 		} else if(Target.Platform == UnrealTargetPlatform.Mac)
 		{
 				
-			PublicFrameworks.Add(Path.Combine(ThirdPartyPath, "cef/Mac/lib", "Chromium Embedded Framework.framework"));
+			//PublicFrameworks.Add(Path.Combine(ThirdPartyPath, "cef/Mac/lib", "Chromium Embedded Framework.framework"));
 			PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef/Mac/lib", "libcef_dll_wrapper.a"));
+			PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef/Mac/lib", "libcef.so"));
 			
 			PublicIncludePaths.AddRange(
 				new string[] {

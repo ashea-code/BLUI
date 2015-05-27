@@ -1,6 +1,4 @@
-[![tips](https://img.shields.io/gratipay/AaronShea.svg)](https://gratipay.com/AaronShea/)
 [![release](https://img.shields.io/github/release/AaronShea/BLUI.svg?style=flat-square)](https://github.com/AaronShea/BLUI/releases)
-
 ![BLUI-logo](https://cloud.githubusercontent.com/assets/1334174/5969395/201a1202-a7f1-11e4-98a4-12bc6793f830.png)
 
 ## HTML powered UI and HUD for Unreal Engine 4
@@ -58,10 +56,17 @@ Within the release, you'll find an ExampleHUD blueprint file, place this into yo
 
 [A small demo project to get started!](http://bit.ly/1ODRiTO)
 
-
-Shipping Your Game
+Shipping Your Game (Windows + Linux)
 ---------------------------------------
-Copy all contents of `shipping` into your packaged game's `GameName/Binaries/Win64`, these are the required files for the Chromium process.
+Copy all contents of `{Windows/Linux} Shipping` into your packaged game's `GameName/Binaries/{Win64/Linux}`, these are the required files for the Chromium process.
+
+Shipping Your Game (OSX)
+---------------------------------------
+Copy `ffmpegsumo.so` and `Chromium Embedded Framework`  from `Mac Shipping`  into your game's app `Contents/MacOS` folder. Then copy all content from `Resources` in `Mac Shipping` into your game's app `Contents/Resources`
+
+Then simply copy `blu_ue4_process.app` next to your game app, and ship!
+
+[Video for Shipping on OSX](http://youtu.be/yMkzinUhN2s)
 
 Videos for a little more help!
 ---------------------------------------

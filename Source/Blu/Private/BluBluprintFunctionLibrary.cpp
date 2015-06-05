@@ -18,6 +18,16 @@ UBluEye* UBluBlueprintFunctionLibrary::NewBluEye(UObject* WorldContextObject)
 
 }
 
+UBluJsonObj* UBluBlueprintFunctionLibrary::NewBluJSONObj(UObject* WorldContextObject)
+{
+
+	UBluJsonObj* tempObj = NewObject<UBluJsonObj>(GetTransientPackage(), UBluJsonObj::StaticClass());
+	tempObj->init("{}");
+	
+	return tempObj;
+
+}
+
 void UBluBlueprintFunctionLibrary::RunBluEventLoop()
 {
 	BluManager::doBluMessageLoop();

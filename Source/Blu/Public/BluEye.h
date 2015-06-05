@@ -95,6 +95,16 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void ExecuteJS(const FString& code);
 
+	/** 
+	 * Execute a JS function/method by name with FString Array as params.
+	 * Each element in the array will be passed into the function in order and separated by a ,
+	 * If you want to pass a JSON string as an object, simply don't put quotes around the outside braces {"foo" : "bar"}
+	 * If you want to pass a number, do similar: 10.5
+	 * To pass as a string, place quotes around the param when adding to the array: "10.5" and "hello" are strings
+	 */
+	UFUNCTION(BlueprintCallable, Category = "Blu", meta = (FriendlyName = "Execute Javascript With Params", Keywords = "js javascript parameters"))
+		void ExecuteJSMethodWithParams(const FString& methodName, const TArray<FString> params);
+
 	/** Load a new URL into the browser */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void LoadURL(const FString& newURL);

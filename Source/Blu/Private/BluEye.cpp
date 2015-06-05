@@ -141,6 +141,28 @@ void UBluEye::ExecuteJS(const FString& code)
 	browser->GetMainFrame()->ExecuteJavaScript(codeStr, "", 0);
 }
 
+void UBluEye::ExecuteJSMethodWithParams(const FString& methodName, const TArray<FString> params)
+{
+
+	// Empty param string
+	FString paramString = "(";
+
+	// Build the param string
+	for (FString param : params)
+	{
+		paramString += param;
+		paramString += ",";
+	}
+		
+	// Remove the last , it's not needed
+	paramString.RemoveFromEnd(",");
+	paramString += ");";
+
+	// time to call the function
+	ExecuteJS(methodName + paramString);
+
+}
+
 void UBluEye::LoadURL(const FString& newURL)
 {
 

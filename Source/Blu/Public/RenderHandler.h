@@ -19,8 +19,8 @@ class RenderHandler : public CefRenderHandler
 
 	public:
 
-		int32 width;
-		int32 height;
+		int32 Width;
+		int32 Height;
 
 		// CefRenderHandler interface
 		bool GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect) override;

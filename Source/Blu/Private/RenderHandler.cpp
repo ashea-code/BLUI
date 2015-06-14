@@ -2,14 +2,14 @@
 
 RenderHandler::RenderHandler(int32 width, int32 height, UBluEye* ui)
 {
-	this->width = width;
-	this->height = height;
+	this->Width = width;
+	this->Height = height;
 	this->parentUI = ui;
 }
 
 bool RenderHandler::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect)
 {
-	rect = CefRect(0, 0, width, height);
+	rect = CefRect(0, 0, Width, Height);
 	return true;
 }
 

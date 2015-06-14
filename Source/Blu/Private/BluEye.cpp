@@ -244,8 +244,8 @@ void UBluEye::ResizeBrowser(int32 NewWidth, int32 NewHeight)
 	Height = NewHeight;
 	
 	// Update our render handler
-	renderer->width = NewWidth;
-	renderer->height = NewHeight;
+	renderer->Width = NewWidth;
+	renderer->Height = NewHeight;
 
 	// Also update the Region definition
 	RenderParams.UpdateRegions->Height = NewHeight;

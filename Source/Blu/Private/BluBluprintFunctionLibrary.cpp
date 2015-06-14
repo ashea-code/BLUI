@@ -12,7 +12,7 @@ UBluEye* UBluBlueprintFunctionLibrary::NewBluEye(UObject* WorldContextObject)
 {
 
 	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject);
-	UBluEye* tempObject = Cast<UBluEye>(StaticConstructObject(UBluEye::StaticClass()));
+	UBluEye* tempObject = Cast<UBluEye>(StaticConstructObject_Internal(UBluEye::StaticClass()));
 
 	return tempObject;
 

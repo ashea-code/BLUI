@@ -102,7 +102,7 @@ public:
 	 * If you want to pass a number, do similar: 10.5
 	 * To pass as a string, place quotes around the param when adding to the array: "10.5" and "hello" are strings
 	 */
-	UFUNCTION(BlueprintCallable, Category = "Blu", meta = (FriendlyName = "Execute Javascript With Params", Keywords = "js javascript parameters"))
+	UFUNCTION(BlueprintCallable, Category = "Blu", meta = (DisplayName = "Execute Javascript With Params", Keywords = "js javascript parameters"))
 		void ExecuteJSMethodWithParams(const FString& methodName, const TArray<FString> params);
 
 	/** Load a new URL into the browser */

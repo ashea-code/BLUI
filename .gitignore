@@ -5,3 +5,4 @@ ThirdParty/cef/Win/*
 *.dll
 *.lib
 Intermediate/*
+ThirdParty/cef/LICENSE.txt

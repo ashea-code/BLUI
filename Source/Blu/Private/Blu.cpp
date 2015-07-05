@@ -13,15 +13,28 @@ class FBlu : public IBlu
 		BluManager::settings.windowless_rendering_enabled = true;
 		BluManager::settings.no_sandbox = true;
 		BluManager::settings.remote_debugging_port = 7777;
-		
+
+
 #if PLATFORM_LINUX
+	#if WITH_EDITOR
 		ExecutablePath += "Linux/shipping/blu_ue4_process";
+	#else
+		ExecutablePath = "./blu_ue4_process";
+	#endif
 #endif
 #if PLATFORM_MAC
+	#if WITH_EDITOR
 		ExecutablePath += "Mac/shipping/blu_ue4_process.app/Contents/MacOS/blu_ue4_process";
+	#else
+		ExecutablePath = "./blu_ue4_process.app/Contents/MacOS/blu_ue4_process";
+	#endif
 #endif
 #if PLATFORM_WINDOWS
+	#if WITH_EDITOR
 		ExecutablePath += "Win/shipping/blu_ue4_process.exe";
+	#else
+		ExecutablePath = "blu_ue4_process.exe";
+	#endif
 #endif
 
 		CefString realExePath = *ExecutablePath;

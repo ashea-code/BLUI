@@ -8,8 +8,8 @@ class FBluLoader : public IBluLoader
 	{
 		FString LibPath = FPaths::ConvertRelativePathToFull(FPaths::GameDir() + "Plugins/BLUI/ThirdParty/cef/");
 
-		// If we're on Windows in Editor we need to add a new path to load DLLs from
-		#if PLATFORM_WINDOWS && WITH_EDITOR
+		// If we're on Windows we need to load DLLs from our custom path
+		#if PLATFORM_WINDOWS
 			LibPath += "Win/shipping/";
 			SetDllDirectory(*LibPath);
 		#endif

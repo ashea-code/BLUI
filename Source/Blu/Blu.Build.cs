@@ -53,6 +53,13 @@ public class Blu : ModuleRules
 			PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef/Win/lib", "libcef.lib"));
 			PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef/Win/lib", "libcef_dll_wrapper.lib"));
 
+            PublicDelayLoadDLLs.Add("d3dcompiler_43.dll");
+            PublicDelayLoadDLLs.Add("d3dcompiler_47.dll");
+            PublicDelayLoadDLLs.Add("ffmpegsumo.dll");
+            PublicDelayLoadDLLs.Add("libcef.dll");
+            PublicDelayLoadDLLs.Add("libEGL.dll");
+            PublicDelayLoadDLLs.Add("libGLESv2.dll");
+
 			PublicIncludePaths.AddRange(
 				new string[] {
 					Path.Combine(ThirdPartyPath, "cef/Win")

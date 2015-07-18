@@ -15,8 +15,21 @@ bool RenderHandler::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect)
 
 void RenderHandler::OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer, int width, int height)
 {
+	FUpdateTextureRegion2D * updateRegions = static_cast<FUpdateTextureRegion2D*>(FMemory::Malloc(sizeof(FUpdateTextureRegion2D) * dirtyRects.size()));
+
+	int current = 0;
+	for (auto dirtyRect : dirtyRects)
+	{
+		updateRegions[current].DestX = updateRegions[current].SrcX = dirtyRect.x;
+		updateRegions[current].DestY = updateRegions[current].SrcY = dirtyRect.y;
+		updateRegions[current].Height = dirtyRect.height;
+		updateRegions[current].Width = dirtyRect.width;
+
+		current++;
+	}
+
 	// Trigger our parent UIs Texture to update
-	parentUI->TextureUpdate(buffer);
+	parentUI->TextureUpdate(buffer, updateRegions, dirtyRects.size());
 }
 
 bool BrowserClient::OnProcessMessageReceived(CefRefPtr<CefBrowser> browser, CefProcessId source_process, CefRefPtr<CefProcessMessage> message)

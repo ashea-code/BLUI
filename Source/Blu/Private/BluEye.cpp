@@ -91,7 +91,7 @@ void UBluEye::DestroyTexture()
 	}
 }
 
-void UBluEye::TextureUpdate(const void *buffer)
+void UBluEye::TextureUpdate(const void *buffer, FUpdateTextureRegion2D * updateRegions, uint32  regionCount)
 {
 	if (!browser || !bEnabled)
 	{
@@ -102,29 +102,45 @@ void UBluEye::TextureUpdate(const void *buffer)
 	if (Texture && Texture->Resource)
 	{
 
-		// Is our texture ready?
-		auto ref = static_cast<FTexture2DResource*>(Texture->Resource)->GetTexture2DRHI();
-		if (!ref)
-		{
-			UE_LOG(LogBlu, Warning, TEXT("NO REF"))
-				return;
-		}
-
 		if (buffer == nullptr)
 		{
 			UE_LOG(LogBlu, Warning, TEXT("NO TEXTDATA"))
 				return;
 		}	
+	 
+		struct FUpdateTextureRegionsData
+		{
+			FTexture2DResource * Texture2DResource;
+			uint32 NumRegions;
+			FUpdateTextureRegion2D * Regions;
+			uint32 SrcPitch;
+			uint32 SrcBpp;
+			uint8 * SrcData;
+		};
+	 
+		FUpdateTextureRegionsData * RegionData = new FUpdateTextureRegionsData;
+		RegionData->Texture2DResource = (FTexture2DResource*)Texture->Resource;
+		RegionData->NumRegions = regionCount;
+		RegionData->SrcBpp = 4;
+		RegionData->SrcPitch = Width * 4;
+		RegionData->SrcData = (uint8*)buffer;
+		RegionData->Regions = updateRegions;
 
-		ENQUEUE_UNIQUE_RENDER_COMMAND_FOURPARAMETER(
+
+		ENQUEUE_UNIQUE_RENDER_COMMAND_ONEPARAMETER(
 			void,
-			const void*, ImageData, buffer,
-			UTexture2D*, TargetTexture, Texture,
-			int32, Stride, Width * 4,
-			FBluTextureParams, Params, RenderParams,
+			FUpdateTextureRegionsData*, RegionData, RegionData,
 			{
+				for (uint32 RegionIndex = 0; RegionIndex < RegionData->NumRegions; RegionIndex++)
+				{
+					
+					RHIUpdateTexture2D(RegionData->Texture2DResource->GetTexture2DRHI(), 0, RegionData->Regions[RegionIndex], RegionData->SrcPitch, RegionData->SrcData
+						+ RegionData->Regions[RegionIndex].SrcY * RegionData->SrcPitch
+						+ RegionData->Regions[RegionIndex].SrcX * RegionData->SrcBpp);
+				}
 
-				RHIUpdateTexture2D(Params.Texture2DResource->GetTexture2DRHI(), 0, *Params.UpdateRegions, Stride, (uint8*)ImageData);
+				FMemory::Free(RegionData->Regions);
+				delete RegionData;
 
 			});
 

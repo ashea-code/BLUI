@@ -91,7 +91,7 @@ void UBluEye::DestroyTexture()
 	}
 }
 
-void UBluEye::TextureUpdate(const void *buffer, FUpdateTextureRegion2D * updateRegions, uint32  regionCount)
+void UBluEye::TextureUpdate(const void *buffer, FUpdateTextureRegion2D *updateRegions, uint32  regionCount)
 {
 	if (!browser || !bEnabled)
 	{

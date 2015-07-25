@@ -15,7 +15,7 @@ bool RenderHandler::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect)
 
 void RenderHandler::OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer, int width, int height)
 {
-	FUpdateTextureRegion2D * updateRegions = static_cast<FUpdateTextureRegion2D*>(FMemory::Malloc(sizeof(FUpdateTextureRegion2D) * dirtyRects.size()));
+	FUpdateTextureRegion2D *updateRegions = static_cast<FUpdateTextureRegion2D*>(FMemory::Malloc(sizeof(FUpdateTextureRegion2D) * dirtyRects.size()));
 
 	int current = 0;
 	for (auto dirtyRect : dirtyRects)

@@ -16,7 +16,7 @@ class FBlu : public IBlu
 
 
 	#if PLATFORM_LINUX
-		ExecutablePath = "./blu_ue4_process";;
+		ExecutablePath = "./blu_ue4_process";
 	#endif
 	#if PLATFORM_MAC
 		ExecutablePath += "Mac/shipping/blu_ue4_process.app/Contents/MacOS/blu_ue4_process";

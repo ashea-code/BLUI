@@ -82,14 +82,27 @@ public class Blu : ModuleRules
 
 		} else if(Target.Platform == UnrealTargetPlatform.Mac)
 		{
-				
-			PublicFrameworks.Add(Path.Combine(ThirdPartyPath, "cef/Mac/lib", "Chromium Embedded Framework.framework"));
+			
+			var frameworkPath = Path.Combine(ThirdPartyPath, "cef/Mac/lib", "Chromium Embedded Framework.framework");
+
+			PublicFrameworks.Add(frameworkPath);
 			PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef/Mac/lib", "libcef_dll_wrapper.a"));
 
 			PublicIncludePaths.AddRange(
 				new string[] {
 					Path.Combine(ThirdPartyPath, "cef", "Mac")
 				});
+
+			var filesToStage = Directory.GetFiles(Path.Combine(ThirdPartyPath, "cef/Mac/shipping"), "*", SearchOption.AllDirectories);
+			stageFiles(filesToStage);
+
+			filesToStage = Directory.GetFiles(Path.Combine(ThirdPartyPath, "cef/Mac/lib"), "*", SearchOption.AllDirectories);
+			stageFiles(filesToStage);
+
+			if(!UEBuildConfiguration.bBuildEditor)
+			{
+				AdditionalBundleResources.Add(new UEBuildBundleResource(Path.Combine(frameworkPath, "Chromium Embedded Framework"), "MacOS", false));
+			}
 
 		}
 		else

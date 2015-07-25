@@ -1,23 +1,29 @@
 {
-    "FileVersion" : 3,
- 
-    "FriendlyName" : "BLUI",
-    "Version" : 1,
+    "FileVersion": 3,
+
+    "FriendlyName": "BLUI",
+    "Version": 3,
     "VersionName": "2.5",
-    "EngineVersion" : 1579795,
-    "Description" : "Chrome powered HTML UI and HUD for Unreal Engine 4",
-    "Category" : "UI",
-    "CreatedBy" : "Aaron M. Shea",
-    "CreatedByURL" : "http://aaronshea.me",
-    "CanContainContent" : "true",
- 
-    "Modules" :
+    "EngineVersion": 1579795,
+    "Description": "Chrome powered HTML UI and HUD for Unreal Engine 4",
+    "Category": "UI",
+    "CreatedBy": "Aaron M. Shea",
+    "CreatedByURL": "http://aaronshea.me",
+    "CanContainContent": "true",
+
+    "Modules": 
     [
         {
-            "Name" : "Blu",
+            "Name" : "BluLoader",
             "Type" : "Runtime",
             "LoadingPhase" : "PreDefault",
 			"BlacklistPlatforms" : [ "HTML5", "Android", "iOS"]
-        } 
+        },
+        {
+            "Name": "Blu",
+            "Type": "Runtime",
+            "LoadingPhase": "PreDefault",
+            "BlacklistPlatforms": [ "HTML5", "Android", "iOS" ]
+        }
     ]
 }

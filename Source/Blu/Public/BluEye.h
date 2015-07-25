@@ -214,7 +214,7 @@ public:
 
 	CefRefPtr<CefBrowser> browser;
 
-	void TextureUpdate(const void* buffer);
+	void TextureUpdate(const void* buffer, FUpdateTextureRegion2D * updateRegions, uint32  regionCount);
 
 	void BeginDestroy() override;
 

@@ -236,7 +236,7 @@ void UBluEye::NavForward()
 
 }
 
-void UBluEye::ResizeBrowser(int32 NewWidth, int32 NewHeight)
+void UBluEye::ResizeBrowser(const int32 NewWidth, const int32 NewHeight, UTexture2D*& NewTextureReference)
 {
 
 	// Disable the web view while we resize
@@ -250,12 +250,19 @@ void UBluEye::ResizeBrowser(int32 NewWidth, int32 NewHeight)
 	renderer->Width = NewWidth;
 	renderer->Height = NewHeight;
 
+	Texture = UTexture2D::CreateTransient(Width, Height, PF_B8G8R8A8);
+	Texture->AddToRoot();
+	Texture->UpdateResource();
 
 	// Let the browser's host know we resized it
 	browser->GetHost()->WasResized();
 
 	// Now we can keep going
 	bEnabled = true;
+
+	UE_LOG(LogBlu, Log, TEXT("BluEye was resized!"))
+
+	NewTextureReference = Texture;
 
 }
 

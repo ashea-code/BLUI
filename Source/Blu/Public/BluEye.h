@@ -215,7 +215,7 @@ public:
 
 	/** Resize the browser's viewport */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
-		void ResizeBrowser(int32 NewWidth, int32 NewHeight);
+		void ResizeBrowser(const int32 NewWidth, const int32 NewHeight, UTexture2D*& NewTextureReference);
 
 
 

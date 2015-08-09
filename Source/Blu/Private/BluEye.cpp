@@ -33,9 +33,6 @@ void UBluEye::init()
 	info.width = Width;
 	info.height = Height;
 
-	// Set the texture update region (for now the whole image)
-	RenderParams.UpdateRegions = new FUpdateTextureRegion2D(0, 0, 0, 0, Width, Height);
-
 	// Set transparant option
 	info.SetAsWindowless(0, bIsTransparent);
 
@@ -107,16 +104,6 @@ void UBluEye::TextureUpdate(const void *buffer, FUpdateTextureRegion2D *updateRe
 			UE_LOG(LogBlu, Warning, TEXT("NO TEXTDATA"))
 				return;
 		}	
-	 
-		struct FUpdateTextureRegionsData
-		{
-			FTexture2DResource * Texture2DResource;
-			uint32 NumRegions;
-			FUpdateTextureRegion2D * Regions;
-			uint32 SrcPitch;
-			uint32 SrcBpp;
-			uint8 * SrcData;
-		};
 	 
 		FUpdateTextureRegionsData * RegionData = new FUpdateTextureRegionsData;
 		RegionData->Texture2DResource = (FTexture2DResource*)Texture->Resource;
@@ -263,9 +250,6 @@ void UBluEye::ResizeBrowser(int32 NewWidth, int32 NewHeight)
 	renderer->Width = NewWidth;
 	renderer->Height = NewHeight;
 
-	// Also update the Region definition
-	RenderParams.UpdateRegions->Height = NewHeight;
-	RenderParams.UpdateRegions->Width = NewWidth;
 
 	// Let the browser's host know we resized it
 	browser->GetHost()->WasResized();

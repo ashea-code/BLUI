@@ -12,9 +12,16 @@ struct FBluTextureParams
 	// Pointer to our Texture's resource
 	FTexture2DResource* Texture2DResource;
 
-	// Regions we need to update (for now, the whole image)
-	FUpdateTextureRegion2D* UpdateRegions;
+};
 
+struct FUpdateTextureRegionsData
+{
+	FTexture2DResource * Texture2DResource;
+	uint32 NumRegions;
+	FUpdateTextureRegion2D * Regions;
+	uint32 SrcPitch;
+	uint32 SrcBpp;
+	uint8 * SrcData;
 };
 
 UENUM(BlueprintType)

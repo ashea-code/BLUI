@@ -94,8 +94,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		UTexture2D* GetTexture() const;
 
-	/** Material instance that contains texture inside it */
-	UFUNCTION(BlueprintCallable, Category = "Blu")
+	/** 
+	* Material instance that contains texture inside it 
+	* @deprecated Please use raw texture using GetTexture method. GetMaterialInstance will be removed in the next release! 
+	*/
+	DEPRECATED(4.8, "Please use raw texture using GetTexture method. GetMaterialInstance will be removed in the next release!")
+	UFUNCTION(BlueprintCallable, Category = "Blu", meta = (DeprecatedFunction, DeprecatedNode, DeprecationMessage = "Please use raw texture using GetTexture method. GetMaterialInstance will be removed in the next release!"))
 		UMaterialInstanceDynamic* GetMaterialInstance() const;
 
 	/** Execute JS code inside the browser */

@@ -215,9 +215,7 @@ public:
 
 	/** Resize the browser's viewport */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
-		void ResizeBrowser(const int32 NewWidth, const int32 NewHeight, UTexture2D*& NewTextureReference);
-
-
+		UTexture2D* ResizeBrowser(const int32 NewWidth, const int32 NewHeight);
 
 	CefRefPtr<CefBrowser> browser;
 

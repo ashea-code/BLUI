@@ -236,7 +236,7 @@ void UBluEye::NavForward()
 
 }
 
-void UBluEye::ResizeBrowser(const int32 NewWidth, const int32 NewHeight, UTexture2D*& NewTextureReference)
+UTexture2D* UBluEye::ResizeBrowser(const int32 NewWidth, const int32 NewHeight)
 {
 
 	// Disable the web view while we resize
@@ -262,7 +262,7 @@ void UBluEye::ResizeBrowser(const int32 NewWidth, const int32 NewHeight, UTextur
 
 	UE_LOG(LogBlu, Log, TEXT("BluEye was resized!"))
 
-	NewTextureReference = Texture;
+	return Texture;
 
 }
 

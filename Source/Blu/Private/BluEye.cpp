@@ -529,6 +529,7 @@ void UBluEye::BeginDestroy()
 	}
 
 	DestroyTexture();
+	SetFlags(RF_BeginDestroyed);
 	Super::BeginDestroy();
 
 }

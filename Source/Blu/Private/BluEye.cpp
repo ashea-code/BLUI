@@ -141,6 +141,11 @@ void UBluEye::TextureUpdate(const void *buffer, FUpdateTextureRegion2D *updateRe
 
 void UBluEye::ExecuteJS(const FString& code)
 {
+	if (!browser)
+	{
+		UE_LOG(LogBlu, Warning, TEXT("NO BROWSER ACCESS OR NOT ENABLED"))
+			return;
+	}
 	CefString codeStr = *code;
 	browser->GetMainFrame()->ExecuteJavaScript(codeStr, "", 0);
 }
@@ -169,7 +174,11 @@ void UBluEye::ExecuteJSMethodWithParams(const FString& methodName, const TArray<
 
 void UBluEye::LoadURL(const FString& newURL)
 {
-
+	if (!browser)
+	{
+		UE_LOG(LogBlu, Warning, TEXT("NO BROWSER ACCESS OR NOT ENABLED"))
+			return;
+	}
 	// Check if we want to load a local file
 
 	if (newURL.Contains(TEXT("blui://"), ESearchCase::IgnoreCase, ESearchDir::FromStart))
@@ -200,14 +209,22 @@ void UBluEye::LoadURL(const FString& newURL)
 
 bool UBluEye::IsBrowserLoading()
 {
-
+	if (!browser)
+	{
+		UE_LOG(LogBlu, Warning, TEXT("NO BROWSER ACCESS OR NOT ENABLED"))
+		return false;
+	}
 	return browser->IsLoading();
 
 }
 
 void UBluEye::ReloadBrowser(bool IgnoreCache)
 {
-
+	if (!browser)
+	{
+		UE_LOG(LogBlu, Warning, TEXT("NO BROWSER ACCESS OR NOT ENABLED"))
+		return;
+	}
 	if (IgnoreCache)
 	{
 		return browser->ReloadIgnoreCache();
@@ -219,7 +236,11 @@ void UBluEye::ReloadBrowser(bool IgnoreCache)
 
 void UBluEye::NavBack()
 {
-
+	if (!browser)
+	{
+		UE_LOG(LogBlu, Warning, TEXT("NO BROWSER ACCESS OR NOT ENABLED"))
+		return;
+	}
 	if (browser->CanGoBack())
 	{
 		browser->GoBack();
@@ -229,7 +250,11 @@ void UBluEye::NavBack()
 
 void UBluEye::NavForward()
 {
-
+	if (!browser)
+	{
+		UE_LOG(LogBlu, Warning, TEXT("NO BROWSER ACCESS OR NOT ENABLED"))
+		return;
+	}
 	if (browser->CanGoForward())
 	{
 		browser->GoForward();
@@ -239,7 +264,11 @@ void UBluEye::NavForward()
 
 UTexture2D* UBluEye::ResizeBrowser(const int32 NewWidth, const int32 NewHeight)
 {
-
+	if (!browser)
+	{
+		UE_LOG(LogBlu, Warning, TEXT("NO BROWSER ACCESS OR NOT ENABLED"))
+			return nullptr;
+	}
 	// Disable the web view while we resize
 	bEnabled = false;
 
@@ -269,7 +298,11 @@ UTexture2D* UBluEye::ResizeBrowser(const int32 NewWidth, const int32 NewHeight)
 
 void UBluEye::TriggerMouseMove(const FVector2D& pos, const float scale)
 {
-
+	if (!browser)
+	{
+		UE_LOG(LogBlu, Warning, TEXT("NO BROWSER ACCESS OR NOT ENABLED"))
+		return;
+	}
 	mouse_event.x = pos.X / scale;
 	mouse_event.y = pos.Y / scale;
 
@@ -292,6 +325,11 @@ void UBluEye::TriggerRightClick(const FVector2D& pos, const float scale)
 
 void UBluEye::TriggerLeftMouseDown(const FVector2D& pos, const float scale)
 {
+	if (!browser)
+	{
+		UE_LOG(LogBlu, Warning, TEXT("NO BROWSER ACCESS OR NOT ENABLED"))
+		return;
+	}
 	mouse_event.x = pos.X / scale;
 	mouse_event.y = pos.Y / scale;
 
@@ -300,6 +338,11 @@ void UBluEye::TriggerLeftMouseDown(const FVector2D& pos, const float scale)
 
 void UBluEye::TriggerRightMouseDown(const FVector2D& pos, const float scale)
 {
+	if (!browser)
+	{
+		UE_LOG(LogBlu, Warning, TEXT("NO BROWSER ACCESS OR NOT ENABLED"))
+		return;
+	}
 	mouse_event.x = pos.X / scale;
 	mouse_event.y = pos.Y / scale;
 
@@ -308,6 +351,11 @@ void UBluEye::TriggerRightMouseDown(const FVector2D& pos, const float scale)
 
 void UBluEye::TriggerLeftMouseUp(const FVector2D& pos, const float scale)
 {
+	if (!browser)
+	{
+		UE_LOG(LogBlu, Warning, TEXT("NO BROWSER ACCESS OR NOT ENABLED"))
+		return;
+	}
 	mouse_event.x = pos.X / scale;
 	mouse_event.y = pos.Y / scale;
 
@@ -316,6 +364,11 @@ void UBluEye::TriggerLeftMouseUp(const FVector2D& pos, const float scale)
 
 void UBluEye::TriggerRightMouseUp(const FVector2D& pos, const float scale)
 {
+	if (!browser)
+	{
+		UE_LOG(LogBlu, Warning, TEXT("NO BROWSER ACCESS OR NOT ENABLED"))
+		return;
+	}
 	mouse_event.x = pos.X / scale;
 	mouse_event.y = pos.Y / scale;
 
@@ -324,6 +377,11 @@ void UBluEye::TriggerRightMouseUp(const FVector2D& pos, const float scale)
 
 void UBluEye::TriggerMouseWheel(const float MouseWheelDelta, const FVector2D& pos, const float scale)
 {
+	if (!browser)
+	{
+		UE_LOG(LogBlu, Warning, TEXT("NO BROWSER ACCESS OR NOT ENABLED"))
+		return;
+	}
 	mouse_event.x = pos.X / scale;
 	mouse_event.y = pos.Y / scale;
 
@@ -332,7 +390,11 @@ void UBluEye::TriggerMouseWheel(const float MouseWheelDelta, const FVector2D& po
 
 void UBluEye::KeyDown(FKeyEvent InKey)
 {
-
+	if (!browser)
+	{
+		UE_LOG(LogBlu, Warning, TEXT("NO BROWSER ACCESS OR NOT ENABLED"))
+		return;
+	}
 	processKeyMods(InKey);
 	processKeyCode(InKey);
 
@@ -343,7 +405,11 @@ void UBluEye::KeyDown(FKeyEvent InKey)
 
 void UBluEye::KeyUp(FKeyEvent InKey)
 {
-
+	if (!browser)
+	{
+		UE_LOG(LogBlu, Warning, TEXT("NO BROWSER ACCESS OR NOT ENABLED"))
+		return;
+	}
 	processKeyMods(InKey);
 	processKeyCode(InKey);
 
@@ -369,7 +435,11 @@ void UBluEye::processKeyCode(FKeyEvent InKey)
 
 void UBluEye::CharKeyPress(FCharacterEvent CharEvent)
 {
-
+	if (!browser)
+	{
+		UE_LOG(LogBlu, Warning, TEXT("NO BROWSER ACCESS OR NOT ENABLED"))
+		return;
+	}
 	// Process keymods like usual
 	processKeyMods(CharEvent);
 
@@ -413,7 +483,11 @@ void UBluEye::SpecialKeyPress(EBluSpecialKeys key, bool LeftShiftDown,
 	bool RightCommandDown,
 	bool CapsLocksOn)
 {
-
+	if (!browser)
+	{
+		UE_LOG(LogBlu, Warning, TEXT("NO BROWSER ACCESS OR NOT ENABLED"))
+		return;
+	}
 	int32 keyValue = key;
 
 	key_event.windows_key_code = keyValue;

@@ -59,8 +59,8 @@ public:
 	//GENERATED_UCLASS_BODY()
 
 	/** Initialize function, should be called after properties are set */
-	UFUNCTION(BlueprintCallable, Category = "Blu")
-		void init();
+	UFUNCTION(BlueprintCallable, Category = "Blu", meta = (WorldContext = "WorldContextObject"))
+		void init(UObject* WorldContextObject);
 
 	/** The default URL this UI component will load */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blu")

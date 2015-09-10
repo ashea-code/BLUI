@@ -11,16 +11,17 @@ UBluEye::UBluEye(const class FObjectInitializer& PCIP)
 
 }
 
-void UBluEye::init()
+void UBluEye::init(UObject* WorldContextObject)
 {
 
-	/** 
-	 * We don't want this running in editor unless it's PIE
-	 * If we don't check this, CEF will spawn infinit processes with widget components
-	 **/
+	/**
+	* We don't want this running in editor unless it's PIE
+	* If we don't check this, CEF will spawn infinit processes with widget components
+	**/
+	const UWorld* world = GEngine->GetWorldFromContextObject(WorldContextObject);
 	if (GEngine)
 	{
-		if (GEngine->IsEditor() && !GWorld->IsPlayInEditor())
+		if (!world->IsGameWorld() && !world->IsPlayInEditor())
 		{
 			UE_LOG(LogBlu, Log, TEXT("Notice: not playing - Component Will Not Initialize"));
 			return;

@@ -162,4 +162,52 @@ void UBluJsonObj::doParseJson(TSharedRef<TJsonReader<TCHAR>> JsonReader)
 
 }
 
+// CUSTOM ADDED START
+void UBluJsonObj::setStringArray(const TArray<FString> &value, const FString &index)
+{
+	TArray<TSharedPtr<FJsonValue>> valueArray;
 
+	for (FString val : value)
+	{
+		valueArray.Add(MakeShareable(new FJsonValueString(val)));
+	}
+
+	JsonParsed->SetArrayField(index, valueArray);
+}
+
+void UBluJsonObj::setBooleanArray(const TArray<bool> &value, const FString &index)
+{
+	TArray<TSharedPtr<FJsonValue>> valueArray;
+
+	for (bool val : value)
+	{
+		valueArray.Add(MakeShareable(new FJsonValueBoolean(val)));
+	}
+
+	JsonParsed->SetArrayField(index, valueArray);
+}
+
+void UBluJsonObj::setNumArray(const TArray<float> &value, const FString &index)
+{
+	TArray<TSharedPtr<FJsonValue>> valueArray;
+
+	for (float val : value)
+	{
+		valueArray.Add(MakeShareable(new FJsonValueNumber(val)));
+	}
+
+	JsonParsed->SetArrayField(index, valueArray);
+}
+
+void UBluJsonObj::setObjectArray(const TArray<UBluJsonObj*> &value, const FString &index)
+{
+	TArray<TSharedPtr<FJsonValue>> valueArray;
+
+	for (UBluJsonObj* val : value)
+	{
+		valueArray.Add(MakeShareable(new FJsonValueObject(val->getJsonObj())));
+	}
+
+	JsonParsed->SetArrayField(index, valueArray);
+}
+// CUSTOM ADDED END

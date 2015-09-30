@@ -64,6 +64,20 @@ public:
 	void setJsonObj(TSharedPtr<FJsonObject> NewJson);
 	
 	TSharedPtr<FJsonObject> getJsonObj();
+	
+	// CUSTOM ADDED START
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void setStringArray(const TArray<FString> &value, const FString &index);
+
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void setBooleanArray(const TArray<bool> &value, const FString &index);
+
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void setNumArray(const TArray<float> &value, const FString &index);
+
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void setObjectArray(const TArray<UBluJsonObj*> &value, const FString &index);
+	// CUSTOM ADDED END
 
 private:
 

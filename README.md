@@ -25,16 +25,7 @@ Features
 
 Setting up the editor and project
 ---------------------------------------
-**Copy** the files located inside the `shipping` folder to your Unreal Engine binaries folder (such as `C:\Program Files\Unreal Engine\4.6\Engine\Binaries\Win64`)
-
-Then copy the `BLUI` folder into the "Plugins" folder within your project directory, and enable the plugin by adding:
-
-```
-PublicDependencyModuleNames.AddRange(new string[] { "Blu" });
-```
-
-To YouProject.Build.cs
-
+Then copy the `BLUI` folder into the "Plugins" folder within your **project** directory, and enable the plugin.
 
 Re-generate your project's Visual Studio file and load up the editor. Then check the plugin list to ensure it has been loaded!
 
@@ -54,20 +45,7 @@ HUD Example Blueprint
 ---------------------------------------
 Within the release, you'll find an ExampleHUD blueprint file, place this into your project's blueprints directory to try it out! (It's a simple UMG widget pre-configures to accept keyboard and mouse input, with a BluEye instance hooked up to a canvas)
 
-[A small demo project to get started!](http://bit.ly/1ODRiTO)
 
-Shipping Your Game (Windows + Linux)
+Shipping Your Game (Linux)
 ---------------------------------------
-Copy all contents of `{Windows/Linux} Shipping` into your packaged game's `GameName/Binaries/{Win64/Linux}`, these are the required files for the Chromium process.
-
-Shipping Your Game (OSX)
----------------------------------------
-Copy `ffmpegsumo.so` and `Chromium Embedded Framework`  from `Mac Shipping`  into your game's app `Contents/MacOS` folder. Then copy all content from `Resources` in `Mac Shipping` into your game's app `Contents/Resources`
-
-Then simply copy `blu_ue4_process.app` next to your game app, and ship!
-
-[Video for Shipping on OSX](http://youtu.be/yMkzinUhN2s)
-
-Videos for a little more help!
----------------------------------------
-[![YoutubeVideo](http://img.youtube.com/vi/VCPhsxd5rTE/0.jpg)](https://www.youtube.com/watch?v=VCPhsxd5rTE)
+Copy all contents of the Linux shipping files into your packaged game's `GameName/Binaries/{Linux}`, these are the required files for the Chromium process.

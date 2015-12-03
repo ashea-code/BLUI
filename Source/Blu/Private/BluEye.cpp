@@ -251,9 +251,8 @@ UTexture2D* UBluEye::ResizeBrowser(const int32 NewWidth, const int32 NewHeight)
 	renderer->Width = NewWidth;
 	renderer->Height = NewHeight;
 
-	Texture = UTexture2D::CreateTransient(Width, Height, PF_B8G8R8A8);
-	Texture->AddToRoot();
-	Texture->UpdateResource();
+	// We need to reset the texture
+	ResetTexture();
 
 	// Let the browser's host know we resized it
 	browser->GetHost()->WasResized();

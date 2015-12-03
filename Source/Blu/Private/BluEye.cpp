@@ -239,6 +239,8 @@ void UBluEye::NavForward()
 
 UTexture2D* UBluEye::ResizeBrowser(const int32 NewWidth, const int32 NewHeight)
 {
+	// Do we even have a texture to try and resize?
+	verifyf(Texture, TEXT("Can't resize when there isn't a texture. Did you forget to call init?"));
 
 	// Disable the web view while we resize
 	bEnabled = false;
@@ -457,11 +459,7 @@ void UBluEye::processKeyMods(FInputEvent InKey)
 
 UTexture2D* UBluEye::GetTexture() const
 {
-	if (!Texture)
-	{
-		return UTexture2D::CreateTransient(Width, Height);
-	}
-
+	verifyf(Texture, TEXT("There is no texture to return! Did you forget to call init?"));
 	return Texture;
 }
 

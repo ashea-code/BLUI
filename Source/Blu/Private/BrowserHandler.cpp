@@ -9,7 +9,14 @@ RenderHandler::RenderHandler(int32 width, int32 height, UBluEye* ui)
 
 bool RenderHandler::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect)
 {
-	rect = CefRect(0, 0, Width, Height);
+	if (IsRunningDedicatedServer())
+	{
+        	rect = CefRect(0, 0, 0, 0);
+	}
+	else
+	{
+	   	rect = CefRect(0, 0, width, height);
+	}
 	return true;
 }
 

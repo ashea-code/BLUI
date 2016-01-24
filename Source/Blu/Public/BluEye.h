@@ -46,21 +46,31 @@ enum EBluSpecialKeys
 	scrolllockkey = 145 UMETA(DisplayName = "Scroll Lock")
 };
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FDownloadCompleteSignature, FString, url);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FDownloadUpdatedSignature, FString, url, float, percentage);
+//DECLARE_DYNAMIC_MULTICAST_DELEGATE(FDownloadComplete);
 
 UCLASS(ClassGroup = Blu, Blueprintable)
 class BLU_API UBluEye : public UObject
 {
-
 	GENERATED_BODY()
 
 	UBluEye(const class FObjectInitializer& PCIP);
 
 public:
+
+	//Event delegates
+	UPROPERTY(BlueprintAssignable, Category = "Blu Browser Events")
+		FDownloadCompleteSignature DownloadComplete;
+
+	UPROPERTY(BlueprintAssignable, Category = "Blu Browser Events")
+		FDownloadUpdatedSignature DownloadUpdated;
+
 	//GENERATED_UCLASS_BODY()
 
 	/** Initialize function, should be called after properties are set */
-	UFUNCTION(BlueprintCallable, Category = "Blu", meta = (WorldContext = "WorldContextObject"))
-		void init(UObject* WorldContextObject);
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void init();
 
 	/** The default URL this UI component will load */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blu")
@@ -119,6 +129,26 @@ public:
 	/** Load a new URL into the browser */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		void LoadURL(const FString& newURL);
+
+	/** Get the currently loaded URL */
+	UFUNCTION(BlueprintPure, Category = "Blu")
+		FString GetCurrentURL();
+
+	/** Trigger Zoom */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void SetZoom(const float scale = 1);
+
+	/** Get our zoom level */
+	UFUNCTION(BlueprintPure, Category = "Blu")
+		float GetZoom();
+
+	//Not ready yet
+	//UFUNCTION(BlueprintCallable, Category = "Blu Test")
+		void Test();
+
+	/** Download a file */
+	UFUNCTION(BlueprintCallable, Category = "Blu")
+		void DownloadFile(const FString& fileUrl);
 
 	/** Trigger a LEFT click in the browser via a Vector2D */
 	UFUNCTION(BlueprintCallable, Category = "Blu")
@@ -221,6 +251,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Blu")
 		UTexture2D* ResizeBrowser(const int32 NewWidth, const int32 NewHeight);
 
+	//This cropping function doesn't work atm
+	//UFUNCTION(BlueprintCallable, Category = "Blu")
+		UTexture2D* CropWindow(const int32 Y, const int32 X, const int32 NewWidth, const int32 NewHeight);
+
 	CefRefPtr<CefBrowser> browser;
 
 	void TextureUpdate(const void* buffer, FUpdateTextureRegion2D * updateRegions, uint32  regionCount);
@@ -244,7 +278,9 @@ public:
 		void processKeyMods(FInputEvent InKey);
 
 		// Store UI state in this UTexture2D
+		UPROPERTY()
 		UTexture2D* Texture;
+
 		UMaterialInstanceDynamic* MaterialInstance;
 
 		CefMouseEvent mouse_event;

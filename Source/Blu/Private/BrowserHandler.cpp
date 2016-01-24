@@ -61,7 +61,58 @@ bool BrowserClient::OnProcessMessageReceived(CefRefPtr<CefBrowser> browser, CefP
 	
 }
 
+
+//The path slashes have to be reversed to work with CEF
+FString ReversePathSlashes(FString forwardPath)
+{
+	return forwardPath.Replace(TEXT("/"), TEXT("\\"));
+}
+FString UtilityBLUIDownloadsFolder()
+{
+	return ReversePathSlashes(FPaths::ConvertRelativePathToFull(FPaths::GameDir() + "Plugins/BLUI/Downloads/"));
+}
+
+
 void BrowserClient::SetEventEmitter(FScriptEvent* emitter)
 {
 	this->event_emitter = emitter;
 }
+
+void BrowserClient::OnBeforeDownload(
+	CefRefPtr<CefBrowser> browser,
+	CefRefPtr<CefDownloadItem> download_item,
+	const CefString & suggested_name,
+	CefRefPtr<CefBeforeDownloadCallback> callback)
+{
+	UNREFERENCED_PARAMETER(browser);
+	UNREFERENCED_PARAMETER(download_item);
+
+	//We use this concatenation method to mix c_str with regular FString and then convert the result back to c_str
+	FString downloadPath = UtilityBLUIDownloadsFolder() + FString(suggested_name.c_str());
+
+	callback->Continue(*downloadPath, false);	//don't show the download dialog, just go for it
+
+	UE_LOG(LogClass, Log, TEXT("Downloading file for path %s"), *downloadPath);
+}
+
+void BrowserClient::OnDownloadUpdated(
+	CefRefPtr<CefBrowser> browser,
+	CefRefPtr<CefDownloadItem> download_item,
+	CefRefPtr<CefDownloadItemCallback> callback)
+{
+	int percentage = download_item->GetPercentComplete();
+	FString url = FString(download_item->GetFullPath().c_str());
+	
+	UE_LOG(LogClass, Log, TEXT("Download %s Updated: %d"), *url , percentage);
+
+	blu->DownloadUpdated.Broadcast(url, percentage);
+
+	if (percentage == 100 && download_item->IsComplete()) {
+		UE_LOG(LogClass, Log, TEXT("Download %s Complete"), *url);
+		blu->DownloadComplete.Broadcast(url);
+	}
+
+	//Example download cancel/pause etc, we just have to hijack this
+	//callback->Cancel();
+}
+

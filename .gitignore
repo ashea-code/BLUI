@@ -1,8 +1,0 @@
-Binaries/*
-ThirdParty/cef/Linux/*
-ThirdParty/cef/Mac/*
-ThirdParty/cef/Win/*
-*.dll
-*.lib
-Intermediate/*
-ThirdParty/cef/LICENSE.txt

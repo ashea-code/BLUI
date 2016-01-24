@@ -3,8 +3,8 @@
 
     "FriendlyName": "BLUI",
     "Version": 3,
-    "VersionName": "3.1",
-    "EngineVersion": 1579795,
+    "VersionName": "3.1.1",
+    "EngineVersion": "4.9+",
     "Description": "Chrome powered HTML UI and HUD for Unreal Engine 4",
     "Category": "UI",
     "CreatedBy": "Aaron M. Shea",
@@ -25,5 +25,6 @@
             "LoadingPhase": "PreDefault",
             "BlacklistPlatforms": [ "HTML5", "Android", "iOS" ]
         }
-    ]
+    ],
+	"CanContainContent" : true
 }

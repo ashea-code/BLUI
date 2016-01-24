@@ -3,6 +3,7 @@
 UBluEye::UBluEye(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
 {
+	Texture = nullptr;
 
 	Width = 800;
 	Height = 600;
@@ -11,17 +12,18 @@ UBluEye::UBluEye(const class FObjectInitializer& PCIP)
 
 }
 
-void UBluEye::init(UObject* WorldContextObject)
+void UBluEye::init()
 {
 
-	/**
-	* We don't want this running in editor unless it's PIE
-	* If we don't check this, CEF will spawn infinit processes with widget components
-	**/
-	const UWorld* world = GEngine->GetWorldFromContextObject(WorldContextObject);
+	/** 
+	 * We don't want this running in editor unless it's PIE
+	 * If we don't check this, CEF will spawn infinit processes with widget components
+	 **/
+	Texture = nullptr;
+
 	if (GEngine)
 	{
-		if (!world->IsGameWorld() && !world->IsPlayInEditor())
+		if (GEngine->IsEditor() && !GWorld->IsPlayInEditor())
 		{
 			UE_LOG(LogBlu, Log, TEXT("Notice: not playing - Component Will Not Initialize"));
 			return;
@@ -38,7 +40,7 @@ void UBluEye::init(UObject* WorldContextObject)
 	info.SetAsWindowless(0, bIsTransparent);
 
 	renderer = new RenderHandler(Width, Height, this);
-	g_handler = new BrowserClient(renderer);
+	g_handler = new BrowserClient(renderer, this);
 	browser = CefBrowserHost::CreateBrowserSync(info, g_handler.get(), "about:blank", browserSettings, NULL);
 
 	// Setup JS event emitter
@@ -59,6 +61,8 @@ void UBluEye::ResetTexture()
 
 	// Here we init the texture to its initial state
 	DestroyTexture();
+
+	Texture = nullptr;
 
 	// init the new Texture2D
 	Texture = UTexture2D::CreateTransient(Width, Height, PF_B8G8R8A8);
@@ -97,7 +101,8 @@ void UBluEye::TextureUpdate(const void *buffer, FUpdateTextureRegion2D *updateRe
 		return;
 	}
 
-	if (Texture && Texture->Resource)
+	//todo: remove debug address hack
+	if (Texture && (int64)Texture != 0xdddddddddddddddd && Texture->IsValidLowLevel() && Texture->Resource)
 	{
 
 		if (buffer == nullptr)
@@ -198,11 +203,38 @@ void UBluEye::LoadURL(const FString& newURL)
 
 }
 
+FString UBluEye::GetCurrentURL()
+{
+	return FString(browser->GetMainFrame()->GetURL().c_str());
+}
+
+void UBluEye::SetZoom(const float scale /*= 1*/)
+{
+	browser->GetHost()->SetZoomLevel(scale);
+}
+
+float UBluEye::GetZoom()
+{
+	return browser->GetHost()->GetZoomLevel();
+}
+
+void UBluEye::Test()
+{
+	/*CefRefPtr<CefNavigationEntryVisitor> visitor;
+	browser->GetHost->GetNavigationEntries(visitor, false);*/
+
+	//for (auto in visitor)
+}
+
+void UBluEye::DownloadFile(const FString& fileUrl)
+{
+	browser->GetHost()->StartDownload(*fileUrl);
+	//Todo: ensure downloading works in some way, shape or form?
+}
+
 bool UBluEye::IsBrowserLoading()
 {
-
 	return browser->IsLoading();
-
 }
 
 void UBluEye::ReloadBrowser(bool IgnoreCache)
@@ -239,8 +271,6 @@ void UBluEye::NavForward()
 
 UTexture2D* UBluEye::ResizeBrowser(const int32 NewWidth, const int32 NewHeight)
 {
-	// Do we even have a texture to try and resize?
-	verifyf(Texture, TEXT("Can't resize when there isn't a texture. Did you forget to call init?"));
 
 	// Disable the web view while we resize
 	bEnabled = false;
@@ -253,8 +283,9 @@ UTexture2D* UBluEye::ResizeBrowser(const int32 NewWidth, const int32 NewHeight)
 	renderer->Width = NewWidth;
 	renderer->Height = NewHeight;
 
-	// We need to reset the texture
-	ResetTexture();
+	Texture = UTexture2D::CreateTransient(Width, Height, PF_B8G8R8A8);
+	Texture->AddToRoot();
+	Texture->UpdateResource();
 
 	// Let the browser's host know we resized it
 	browser->GetHost()->WasResized();
@@ -266,6 +297,32 @@ UTexture2D* UBluEye::ResizeBrowser(const int32 NewWidth, const int32 NewHeight)
 
 	return Texture;
 
+}
+
+UTexture2D* UBluEye::CropWindow(const int32 Y, const int32 X, const int32 NewWidth, const int32 NewHeight)
+{
+	// Disable the web view while we resize
+	bEnabled = false;
+
+
+	// Set our new Width and Height
+	Width = NewWidth;
+	Height = NewHeight;
+
+	// Update our render handler
+	renderer->Width = NewWidth;
+	renderer->Height = NewHeight;
+
+	Texture = UTexture2D::CreateTransient(Width, Height, PF_B8G8R8A8);
+	Texture->AddToRoot();
+	Texture->UpdateResource();
+
+	// Now we can keep going
+	bEnabled = true;
+
+	UE_LOG(LogBlu, Log, TEXT("BluEye was cropped!"))
+
+	return Texture;
 }
 
 void UBluEye::TriggerMouseMove(const FVector2D& pos, const float scale)
@@ -459,7 +516,11 @@ void UBluEye::processKeyMods(FInputEvent InKey)
 
 UTexture2D* UBluEye::GetTexture() const
 {
-	verifyf(Texture, TEXT("There is no texture to return! Did you forget to call init?"));
+	if (!Texture)
+	{
+		return UTexture2D::CreateTransient(Width, Height);
+	}
+
 	return Texture;
 }
 

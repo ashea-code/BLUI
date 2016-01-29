@@ -28,6 +28,12 @@ void UBluEye::init(UObject* WorldContextObject)
 		}
 	}
 	
+	if (Width <= 0 || Height <= 0)
+	{
+		UE_LOG(LogBlu, Log, TEXT("Can't initialize when Width or Height are <= 0"));
+		return;
+	}
+
 	browserSettings.universal_access_from_file_urls = STATE_ENABLED;
 	browserSettings.file_access_from_file_urls = STATE_ENABLED;
 
@@ -241,6 +247,13 @@ UTexture2D* UBluEye::ResizeBrowser(const int32 NewWidth, const int32 NewHeight)
 {
 	// Do we even have a texture to try and resize?
 	verifyf(Texture, TEXT("Can't resize when there isn't a texture. Did you forget to call init?"));
+
+	if (NewWidth <= 0 || NewHeight <= 0)
+	{
+		// We can't do this, just do nothing.
+		UE_LOG(LogBlu, Log, TEXT("Can't resize when one or both of the sizes are <= 0!"));
+		return Texture;
+	}
 
 	// Disable the web view while we resize
 	bEnabled = false;

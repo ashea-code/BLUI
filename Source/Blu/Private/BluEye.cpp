@@ -291,6 +291,30 @@ UTexture2D* UBluEye::ResizeBrowser(const int32 NewWidth, const int32 NewHeight)
 
 }
 
+UBluEye* UBluEye::SetProperties(const int32 SetWidth,
+	const int32 SetHeight,
+	const bool SetIsTransparent,
+	const bool SetEnabled,
+	const bool SetWebGL,
+	const FString& SetDefaultURL,
+	const FName& SetTextureParameterName,
+	UMaterialInterface* SetBaseMaterial)
+{
+	Width = SetWidth;
+	Height = SetHeight;
+
+	bEnabled = SetEnabled;
+
+	bIsTransparent = SetIsTransparent;
+	bEnableWebGL = SetWebGL;
+	BaseMaterial = SetBaseMaterial;
+
+	DefaultURL = SetDefaultURL;
+	TextureParameterName = SetTextureParameterName;
+
+	return this;
+}
+
 void UBluEye::TriggerMouseMove(const FVector2D& pos, const float scale)
 {
 
@@ -487,11 +511,6 @@ UTexture2D* UBluEye::GetTexture() const
 {
 	verifyf(Texture, TEXT("There is no texture to return! Did you forget to call init?"));
 	return Texture;
-}
-
-UMaterialInstanceDynamic* UBluEye::GetMaterialInstance() const
-{
-	return MaterialInstance;
 }
 
 void UBluEye::ResetMatInstance()

@@ -9,6 +9,7 @@ UBluEye::UBluEye(const class FObjectInitializer& PCIP)
 	Height = 600;
 
 	bIsTransparent = false;
+	bEnableWebGL = false;
 
 }
 
@@ -30,6 +31,12 @@ void UBluEye::init()
 		}
 	}
 	
+	if (Width <= 0 || Height <= 0)
+	{
+		UE_LOG(LogBlu, Log, TEXT("Can't initialize when Width or Height are <= 0"));
+		return;
+	}
+
 	browserSettings.universal_access_from_file_urls = STATE_ENABLED;
 	browserSettings.file_access_from_file_urls = STATE_ENABLED;
 
@@ -38,6 +45,16 @@ void UBluEye::init()
 
 	// Set transparant option
 	info.SetAsWindowless(0, bIsTransparent);
+
+	// Figure out if we want to turn on WebGL support
+	if (bEnableWebGL)
+	{
+		if (BluManager::CPURenderSettings)
+		{
+			UE_LOG(LogBlu, Error, TEXT("You have enabled WebGL for this browser, but CPU Saver is enabled in BluManager.cpp - WebGL will not work!"));
+		}
+		browserSettings.webgl = STATE_ENABLED;
+	}
 
 	renderer = new RenderHandler(Width, Height, this);
 	g_handler = new BrowserClient(renderer, this);
@@ -134,7 +151,6 @@ void UBluEye::TextureUpdate(const void *buffer, FUpdateTextureRegion2D *updateRe
 
 				FMemory::Free(RegionData->Regions);
 				delete RegionData;
-
 			});
 
 	}
@@ -272,6 +288,13 @@ void UBluEye::NavForward()
 UTexture2D* UBluEye::ResizeBrowser(const int32 NewWidth, const int32 NewHeight)
 {
 
+	if (NewWidth <= 0 || NewHeight <= 0)
+	{
+		// We can't do this, just do nothing.
+		UE_LOG(LogBlu, Log, TEXT("Can't resize when one or both of the sizes are <= 0!"));
+		return Texture;
+	}
+
 	// Disable the web view while we resize
 	bEnabled = false;
 
@@ -323,6 +346,30 @@ UTexture2D* UBluEye::CropWindow(const int32 Y, const int32 X, const int32 NewWid
 	UE_LOG(LogBlu, Log, TEXT("BluEye was cropped!"))
 
 	return Texture;
+}
+
+UBluEye* UBluEye::SetProperties(const int32 SetWidth,
+	const int32 SetHeight,
+	const bool SetIsTransparent,
+	const bool SetEnabled,
+	const bool SetWebGL,
+	const FString& SetDefaultURL,
+	const FName& SetTextureParameterName,
+	UMaterialInterface* SetBaseMaterial)
+{
+	Width = SetWidth;
+	Height = SetHeight;
+
+	bEnabled = SetEnabled;
+
+	bIsTransparent = SetIsTransparent;
+	bEnableWebGL = SetWebGL;
+	BaseMaterial = SetBaseMaterial;
+
+	DefaultURL = SetDefaultURL;
+	TextureParameterName = SetTextureParameterName;
+
+	return this;
 }
 
 void UBluEye::TriggerMouseMove(const FVector2D& pos, const float scale)
@@ -433,11 +480,14 @@ void UBluEye::CharKeyPress(FCharacterEvent CharEvent)
 
 	// Below char input needs some special treatment, se we can't use the normal key down/up methods
 
-	key_event.windows_key_code = CharEvent.GetCharacter();
-	key_event.native_key_code = CharEvent.GetCharacter();
+#if PLATFORM_MAC
+	key_event.character = CharEvent.GetCharacter();
+#else
+    key_event.windows_key_code = CharEvent.GetCharacter();
+    key_event.native_key_code = CharEvent.GetCharacter();
+#endif
 	key_event.type = KEYEVENT_CHAR;
 	browser->GetHost()->SendKeyEvent(key_event);
-
 }
 
 void UBluEye::RawCharKeyPress(const FString charToPress, bool isRepeat,
@@ -522,11 +572,6 @@ UTexture2D* UBluEye::GetTexture() const
 	}
 
 	return Texture;
-}
-
-UMaterialInstanceDynamic* UBluEye::GetMaterialInstance() const
-{
-	return MaterialInstance;
 }
 
 void UBluEye::ResetMatInstance()

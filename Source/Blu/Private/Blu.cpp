@@ -14,7 +14,6 @@ class FBlu : public IBlu
 		BluManager::settings.no_sandbox = true;
 		BluManager::settings.remote_debugging_port = 7777;
 
-
 	#if PLATFORM_LINUX
 		ExecutablePath = "./blu_ue4_process";
 	#endif

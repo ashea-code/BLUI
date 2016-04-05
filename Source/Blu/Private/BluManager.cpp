@@ -12,10 +12,10 @@ void BluManager::OnBeforeCommandLineProcessing(const CefString& process_type,
 	/////////////////
 	/**
 	* Used to pick command line switches
-	* If set to "true": CEF will use less CPU, but rendering performance will be lower. CSS3 and WebGL may not be usable
+	* If set to "true": CEF will use less CPU, but rendering performance will be lower. CSS3 and WebGL are not be usable
 	* If set to "false": CEF will use more CPU, but rendering will be better, CSS3 and WebGL will also be usable
 	*/
-	BluManager::CPURenderSettings = true;
+	BluManager::CPURenderSettings = false;
 	/////////////////
 
 	command_line->AppendSwitch("off-screen-rendering-enabled");
@@ -33,9 +33,9 @@ void BluManager::OnBeforeCommandLineProcessing(const CefString& process_type,
 	else
 	{
 		// Enables things like CSS3 and WebGL
-		command_line->AppendSwitch("in-process-gpu");
-		command_line->AppendSwitchWithValue("use-gl", "osmesa");
 		command_line->AppendSwitch("enable-gpu-rasterization");
+		command_line->AppendSwitch("enable-webgl");
+		command_line->AppendSwitch("disable-web-security");
 	}
 
 

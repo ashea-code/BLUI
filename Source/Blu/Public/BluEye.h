@@ -82,6 +82,9 @@ public:
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blu")
 		int32 Height;
 
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category=Blu)
+		bool bEnableWebGL;
+
 	/** Material that will be instanced to load UI texture into it */
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Blu")
 		UMaterialInterface* BaseMaterial;

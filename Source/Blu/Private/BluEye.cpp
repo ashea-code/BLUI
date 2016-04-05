@@ -8,6 +8,7 @@ UBluEye::UBluEye(const class FObjectInitializer& PCIP)
 	Height = 600;
 
 	bIsTransparent = false;
+	bEnableWebGL = false;
 
 }
 
@@ -42,6 +43,16 @@ void UBluEye::init(UObject* WorldContextObject)
 
 	// Set transparant option
 	info.SetAsWindowless(0, bIsTransparent);
+
+	// Figure out if we want to turn on WebGL support
+	if (bEnableWebGL)
+	{
+		if (BluManager::CPURenderSettings)
+		{
+			UE_LOG(LogBlu, Error, TEXT("You have enabled WebGL for this browser, but CPU Saver is enabled in BluManager.cpp - WebGL will not work!"));
+		}
+		browserSettings.webgl = STATE_ENABLED;
+	}
 
 	renderer = new RenderHandler(Width, Height, this);
 	g_handler = new BrowserClient(renderer);
@@ -135,7 +146,6 @@ void UBluEye::TextureUpdate(const void *buffer, FUpdateTextureRegion2D *updateRe
 
 				FMemory::Free(RegionData->Regions);
 				delete RegionData;
-
 			});
 
 	}

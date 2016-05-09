@@ -32,6 +32,26 @@ void RenderHandler::OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type
 	parentUI->TextureUpdate(buffer, updateRegions, dirtyRects.size());
 }
 
+void BrowserClient::OnAfterCreated(CefRefPtr<CefBrowser> browser)
+{
+	CEF_REQUIRE_UI_THREAD();
+	if (!m_Browser.get())
+	{
+		// Keep a reference to the main browser.
+		m_Browser = browser;
+		m_BrowserId = browser->GetIdentifier();
+	}
+}
+
+void BrowserClient::OnBeforeClose(CefRefPtr<CefBrowser> browser)
+{
+	CEF_REQUIRE_UI_THREAD();
+	if (m_BrowserId == browser->GetIdentifier())
+	{
+		m_Browser = NULL;
+	}
+}
+
 bool BrowserClient::OnProcessMessageReceived(CefRefPtr<CefBrowser> browser, CefProcessId source_process, CefRefPtr<CefProcessMessage> message)
 {
 	

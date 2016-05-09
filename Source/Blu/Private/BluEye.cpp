@@ -556,23 +556,16 @@ void UBluEye::CloseBrowser()
 
 void UBluEye::BeginDestroy()
 {
-
 	if (browser)
 	{
-
-		// Make sure things stop playing, like audio, video, etc.
-		LoadURL("about:blank");
-
 		// Close up the browser
 		browser->GetHost()->CloseDevTools();
 		browser->GetHost()->CloseBrowser(true);
 
 		UE_LOG(LogBlu, Warning, TEXT("Browser Closing"));
-
 	}
 
 	DestroyTexture();
 	SetFlags(RF_BeginDestroyed);
 	Super::BeginDestroy();
-
 }

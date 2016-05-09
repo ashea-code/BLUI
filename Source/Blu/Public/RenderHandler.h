@@ -5,6 +5,7 @@
 #endif
 #include "include/cef_client.h"
 #include "include/cef_app.h"
+#include "include/wrapper/cef_helpers.h"
 #if PLATFORM_WINDOWS
 #include "HideWindowsPlatformTypes.h"
 #endif
@@ -36,11 +37,17 @@ class RenderHandler : public CefRenderHandler
 };
 
 // for manual render handler
-class BrowserClient : public CefClient
+class BrowserClient : public CefClient, public CefLifeSpanHandler
 {
 
 	private:
 		FScriptEvent* event_emitter;
+		CefRefPtr<RenderHandler> m_renderHandler;
+
+		// For lifespan
+		CefRefPtr<CefBrowser> m_Browser;
+		int m_BrowserId;
+		bool m_bIsClosing;
 
 	public:
 		BrowserClient(RenderHandler* renderHandler) : m_renderHandler(renderHandler)
@@ -53,13 +60,23 @@ class BrowserClient : public CefClient
 			return m_renderHandler;
 		};
 
-		CefRefPtr<RenderHandler> m_renderHandler;
-
+		// Getter for renderer
 		virtual CefRefPtr<RenderHandler> GetRenderHandlerCustom()
 		{
 			return m_renderHandler;
 		};
 
+		// Getter for lifespan
+		virtual CefRefPtr<CefLifeSpanHandler> GetLifeSpanHandler() override
+		{
+			return this;
+		}
+
+		// Lifespan methods
+		void OnAfterCreated(CefRefPtr<CefBrowser> browser) override;
+		void OnBeforeClose(CefRefPtr<CefBrowser> browser) override;
+
+		// CEF Client
 		virtual bool OnProcessMessageReceived(CefRefPtr<CefBrowser> browser, CefProcessId source_process, CefRefPtr<CefProcessMessage> message) override;
 		void SetEventEmitter(FScriptEvent* emitter);
 

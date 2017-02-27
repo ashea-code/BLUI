@@ -24,7 +24,9 @@ class RenderHandler : public CefRenderHandler
 {
 	private:
 		UBluEye* parentUI;
-
+		uint8* BackBuffer;
+		uint32 BackBufferSizeCached;
+		
 	public:
 
 		int32 Width;
@@ -36,6 +38,7 @@ class RenderHandler : public CefRenderHandler
 		void OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer, int width, int height) override;
 
 		RenderHandler(int32 width, int32 height, UBluEye* ui);
+		~RenderHandler();
 
 		// CefBase interface
 		// NOTE: Must be at bottom

@@ -5,6 +5,13 @@ RenderHandler::RenderHandler(int32 width, int32 height, UBluEye* ui)
 	this->Width = width;
 	this->Height = height;
 	this->parentUI = ui;
+	this->BackBufferSizeCached = width * height * 4;
+	this->BackBuffer = new uint8[this->BackBufferSizeCached];
+}
+
+RenderHandler::~RenderHandler()
+{
+	delete this->BackBuffer;
 }
 
 bool RenderHandler::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect)
@@ -28,8 +35,10 @@ void RenderHandler::OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type
 		current++;
 	}
 
+	memcpy(BackBuffer, buffer, BackBufferSizeCached);
+
 	// Trigger our parent UIs Texture to update
-	parentUI->TextureUpdate(buffer, updateRegions, dirtyRects.size());
+	parentUI->TextureUpdate(BackBuffer, updateRegions, dirtyRects.size());
 }
 
 void BrowserClient::OnAfterCreated(CefRefPtr<CefBrowser> browser)

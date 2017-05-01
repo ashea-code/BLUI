@@ -12,7 +12,7 @@ class FBluLoader : public IBluLoader
 		// If we're on Windows we need to load DLLs from our custom path
 		#if PLATFORM_WINDOWS
 			LibPath += "Win/shipping/";
-			SetDllDirectory(*LibPath);
+			FPlatformProcess::PushDllDirectory(*LibPath);
             UE_LOG(LogBluLoader, Log, TEXT("patched dll directory paths"));
 		#endif
         

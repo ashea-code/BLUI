@@ -6,14 +6,9 @@ using System;
 public class Blu : ModuleRules
 {
 
-	private string ModulePath
-	{
-		get { return Path.GetDirectoryName(RulesCompiler.GetModuleFilename(this.GetType().Name)); }
-	}
-
 	private string ThirdPartyPath
 	{
-		get { return Path.GetFullPath(Path.Combine(ModulePath, "../../ThirdParty/")); }
+		get { return Path.GetFullPath(Path.Combine(ModuleDirectory, "../../ThirdParty/")); }
 	}
 
 	private void stageFiles(String[] filesToStage)

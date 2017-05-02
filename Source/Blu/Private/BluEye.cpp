@@ -1,4 +1,5 @@
 #include "BluPrivatePCH.h"
+#include "RenderHandler.h"
 
 UBluEye::UBluEye(const class FObjectInitializer& PCIP)
 	: Super(PCIP)
@@ -57,7 +58,7 @@ void UBluEye::init()
 	}
 
 	renderer = new RenderHandler(Width, Height, this);
-	g_handler = new BrowserClient(renderer, this);
+	g_handler = new BrowserClient(renderer);
 	browser = CefBrowserHost::CreateBrowserSync(info, g_handler.get(), "about:blank", browserSettings, NULL);
 
 	// Setup JS event emitter

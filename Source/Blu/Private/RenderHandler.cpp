@@ -9,14 +9,7 @@ RenderHandler::RenderHandler(int32 width, int32 height, UBluEye* ui)
 
 bool RenderHandler::GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect)
 {
-	if (IsRunningDedicatedServer())
-	{
-        	rect = CefRect(0, 0, 0, 0);
-	}
-	else
-	{
-	   	rect = CefRect(0, 0, width, height);
-	}
+	rect = CefRect(0, 0, Width, Height);
 	return true;
 }
 
@@ -41,7 +34,7 @@ void RenderHandler::OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type
 
 void BrowserClient::OnAfterCreated(CefRefPtr<CefBrowser> browser)
 {
-	CEF_REQUIRE_UI_THREAD();
+	//CEF_REQUIRE_UI_THREAD();
 	if (!m_Browser.get())
 	{
 		// Keep a reference to the main browser.
@@ -52,7 +45,7 @@ void BrowserClient::OnAfterCreated(CefRefPtr<CefBrowser> browser)
 
 void BrowserClient::OnBeforeClose(CefRefPtr<CefBrowser> browser)
 {
-	CEF_REQUIRE_UI_THREAD();
+	//CEF_REQUIRE_UI_THREAD();
 	if (m_BrowserId == browser->GetIdentifier())
 	{
 		m_Browser = NULL;
@@ -132,11 +125,11 @@ void BrowserClient::OnDownloadUpdated(
 	
 	UE_LOG(LogClass, Log, TEXT("Download %s Updated: %d"), *url , percentage);
 
-	blu->DownloadUpdated.Broadcast(url, percentage);
+	m_renderHandler->parentUI->DownloadUpdated.Broadcast(url, percentage);
 
 	if (percentage == 100 && download_item->IsComplete()) {
 		UE_LOG(LogClass, Log, TEXT("Download %s Complete"), *url);
-		blu->DownloadComplete.Broadcast(url);
+		m_renderHandler->parentUI->DownloadComplete.Broadcast(url);
 	}
 
 	//Example download cancel/pause etc, we just have to hijack this

@@ -19,7 +19,7 @@ public class Blu : ModuleRules
 		}
 	}
 
-	public Blu(TargetInfo Target)
+	public Blu(ReadOnlyTargetRules Target) : base(Target)
 	{
 
 		PublicDependencyModuleNames.AddRange(

@@ -16,8 +16,13 @@
 DECLARE_LOG_CATEGORY_EXTERN(LogBlu, Log, All);
 
 // Blu Classes
+#pragma push_macro("OVERRIDE")
+#undef OVERRIDE
+
 #include "BluManager.h"
 #include "BluEye.h"
 #include "RenderHandler.h"
 #include "BluJsonObj.h"
 #include "BluBlueprintFunctionLibrary.h"
+
+#pragma pop_macro("OVERRIDE")

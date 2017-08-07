@@ -42,7 +42,7 @@ void UBluEye::init(UObject* WorldContextObject)
 	info.height = Height;
 
 	// Set transparant option
-	info.SetAsWindowless(0, bIsTransparent);
+	info.SetAsWindowless(0); // , bIsTransparent
 
 	// Figure out if we want to turn on WebGL support
 	if (bEnableWebGL)

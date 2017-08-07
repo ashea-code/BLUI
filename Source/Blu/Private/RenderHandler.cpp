@@ -1,4 +1,5 @@
 #include "BluPrivatePCH.h"
+#include "include/wrapper/cef_helpers.h"
 
 RenderHandler::RenderHandler(int32 width, int32 height, UBluEye* ui)
 {

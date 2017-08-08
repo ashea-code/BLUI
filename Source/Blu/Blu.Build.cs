@@ -42,9 +42,11 @@ public class Blu : ModuleRules
 				"Blu/Private",
 			});
 
-		if(Target.Platform == UnrealTargetPlatform.Win64)
-		{
+        PublicIncludePaths.AddRange(new string[] { "Blu/Public" });
 
+
+        if (Target.Platform == UnrealTargetPlatform.Win64)
+		{
 			PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef/Win/lib", "libcef.lib"));
 			PublicAdditionalLibraries.Add(Path.Combine(ThirdPartyPath, "cef/Win/lib", "libcef_dll_wrapper.lib"));
 

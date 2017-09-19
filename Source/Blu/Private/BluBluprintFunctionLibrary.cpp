@@ -62,3 +62,9 @@ FString UBluBlueprintFunctionLibrary::GameRootDirectory()
 {
 	return FPaths::ConvertRelativePathToFull(FPaths::GameDir());
 }
+
+
+bool UBluBlueprintFunctionLibrary::HasSubstring(const FString& SearchIn, const FString& Substring, ESearchCase::Type SearchCase /*= ESearchCase::IgnoreCase*/, ESearchDir::Type SearchDir /*= ESearchDir::FromStart*/)
+{
+	return SearchIn.Contains(Substring, SearchCase, SearchDir);
+}

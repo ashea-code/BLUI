@@ -30,12 +30,12 @@ Encapsulated *BluiWidget* user widget in an actor. Drag and drop this actor into
 
 ![example output](https://i.imgur.com/bso2ah6.png)
 
-*3 BluiWorldWIdgetActorExample actors with "youtube.com", "blui ue4" and "local://test.html" specified as their URL respectively*
+*3 BluiWorldWIdgetActorExample actors with ```youtube.com```, ```blui ue4``` and ```local://test.html``` specified as their URL respectively*
 
 
 #### Url
 
-By default the actor will check the url for *local://* prepend and load local content first if detected. This should be placed inside the following directory: *{project root}/Content/html*
+By default the actor will check the url for ```local://``` prepend and load local content first if detected. This should be placed inside the following directory: ```{project root}/Content/html```
 
 ![local url](https://i.imgur.com/30hk67Z.png)
 

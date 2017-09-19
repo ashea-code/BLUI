@@ -3,7 +3,9 @@
 
 ## Getnamo Fork Notes
 
-Made small additions and changes for certain use cases.
+Fork made to support small additions and changes for certain use cases.
+
+To install check out the latest releases https://github.com/getnamo/BLUI/releases and drag and drop *Plugins* folder into your project root folder
 
 ### Download and Fullscreen Support
 

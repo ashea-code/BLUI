@@ -35,11 +35,13 @@ Encapsulated *BluiWidget* user widget in an actor. Drag and drop this actor into
 
 #### Url
 
-By default the actor will check the url for ```local://``` prepend and load local content first if detected. This should be placed inside the following directory: ```{project root}/Content/html```
+By default the actor will check the url for ```local://``` protocol and load local content first if detected. This should be placed inside the following directory: ```{project root}/Content/html```. NB: You can still use the vanilla ```blui://``` protocol which will load content relative to your project root.
 
 ![local url](https://i.imgur.com/30hk67Z.png)
 
 *e.g. having a test.html file inside your Content/html folder*
+
+
 
 Basic URL validity is also tested, but you can safely ignore http:// etc.
 

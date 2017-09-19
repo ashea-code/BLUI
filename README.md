@@ -42,16 +42,15 @@ By default the actor will check the url for ```local://``` protocol and load loc
 *e.g. having a test.html file inside your Content/html folder*
 
 
-
-Basic URL validity is also tested, but you can safely ignore http:// etc.
+Basic URL validity is also tested, but you can safely ignore http:// etc. E.g. just specifying youtube.com will resolve correctly
 
 ![](https://i.imgur.com/R6we4jO.png)
 
-*just specifying youtube.com will resolve correctly*
 
 If your URL isn't valid however, it will redirect the string as a search term e.g. typing a sentance or search term
 
 ![auto-search](https://i.imgur.com/iDoXyFy.png)
+
 
 You can untick *Should Auto Search Invalid Url* to disable this behavior.
 

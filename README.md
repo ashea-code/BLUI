@@ -15,7 +15,7 @@ Updated CEF build to support fullscreen videos.
 
 ### Convenience Blueprints
 
-The native plugin didn't contain any  self contained drag and drop examples so I've added some.
+The native plugin didn't contain any self contained drag and drop examples so I've added some.
 
 ![examples](https://i.imgur.com/UOCEHM8.png)
 
@@ -47,7 +47,7 @@ Basic URL validity is also tested, but you can safely ignore http:// etc. E.g. j
 ![](https://i.imgur.com/R6we4jO.png)
 
 
-If your URL isn't valid however, it will redirect the string as a search term e.g. typing a sentance or search term
+If your URL isn't valid however, it will redirect the string as a search term e.g. typing a sentance or a search term.
 
 ![auto-search](https://i.imgur.com/iDoXyFy.png)
 
@@ -63,7 +63,7 @@ By default the actor has a BLUI resolution of 1000x1000, you can change this by 
 
 ### BluTickActor
 
-Instead of ticking in your level bp, I prefer to use a simple actor to do the ticking. Other convenience blueprints may spawn this as necessary so if you use those, you don 't ever need to use this directly.
+Instead of ticking in your level bp, I prefer to use a simple actor to do the ticking. Other convenience blueprints may spawn this as necessary so if you use those, you don't ever need to use this directly.
 
 ## //End Fork Notes
 

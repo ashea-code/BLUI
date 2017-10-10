@@ -17,8 +17,7 @@ THIRD_PARTY_INCLUDES_END
 #include "HideWindowsPlatformTypes.h"
 #endif
 
-#include "../Public/BluEye.h"
-
+#include "BluEye.h"
 
 class RenderHandler : public CefRenderHandler
 {
@@ -34,6 +33,11 @@ class RenderHandler : public CefRenderHandler
 		bool GetViewRect(CefRefPtr<CefBrowser> browser, CefRect &rect) override;
 
 		void OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type, const RectList &dirtyRects, const void *buffer, int width, int height) override;
+
+		void OnCursorChange(CefRefPtr<CefBrowser> browser, CefCursorHandle cursor, CefRenderHandler::CursorType type, const CefCursorInfo& custom_cursor_info) override;
+
+		virtual bool StartDragging(CefRefPtr<CefBrowser> browser, CefRefPtr<CefDragData> dragData, CefRenderHandler::DragOperationsMask allowedOps, int x, int y) override;
+		virtual void UpdateDragCursor(CefRefPtr<CefBrowser> browser, CefRenderHandler::DragOperation operation) override;
 
 		RenderHandler(int32 width, int32 height, UBluEye* ui);
 

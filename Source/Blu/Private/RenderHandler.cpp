@@ -1,4 +1,6 @@
 #include "BluPrivatePCH.h"
+#include "../Public/JSMessageData.h"
+#include "include/wrapper/cef_helpers.h"
 
 RenderHandler::RenderHandler(int32 width, int32 height, UBluEye* ui)
 {
@@ -32,6 +34,22 @@ void RenderHandler::OnPaint(CefRefPtr<CefBrowser> browser, PaintElementType type
 	parentUI->TextureUpdate(buffer, updateRegions, dirtyRects.size());
 }
 
+void RenderHandler::OnCursorChange(CefRefPtr<CefBrowser> browser, CefCursorHandle cursor, CefRenderHandler::CursorType type, const CefCursorInfo& custom_cursor_info)
+{
+	this->parentUI->SetCursor(cursor, type);
+}
+
+bool RenderHandler::StartDragging(CefRefPtr<CefBrowser> browser, CefRefPtr<CefDragData> dragData, CefRenderHandler::DragOperationsMask allowedOps, int x, int y)
+{
+	UE_LOG(LogBlu, Log, TEXT("===>>>>>>>>>>>> StartDragging"));
+	return true;
+}
+
+void RenderHandler::UpdateDragCursor(CefRefPtr<CefBrowser> browser, CefRenderHandler::DragOperation operation)
+{
+	UE_LOG(LogBlu, Log, TEXT("===>>>>>>>>>>>> UpdateDragCursor"));
+}
+
 void BrowserClient::OnAfterCreated(CefRefPtr<CefBrowser> browser)
 {
 	CEF_REQUIRE_UI_THREAD();
@@ -54,17 +72,31 @@ void BrowserClient::OnBeforeClose(CefRefPtr<CefBrowser> browser)
 
 bool BrowserClient::OnProcessMessageReceived(CefRefPtr<CefBrowser> browser, CefProcessId source_process, CefRefPtr<CefProcessMessage> message)
 {
-	
 	FString data;
-	FString name = FString(UTF8_TO_TCHAR(message->GetArgumentList()->GetString(0).ToString().c_str()));
-	FString type = FString(UTF8_TO_TCHAR(message->GetArgumentList()->GetString(2).ToString().c_str()));
-	FString data_type = FString(UTF8_TO_TCHAR(message->GetArgumentList()->GetString(3).ToString().c_str()));
+
+	size_t argumentsSize = message->GetArgumentList()->GetSize();
 	
-	if (type == "js_event")
+	FString eventName = FString(UTF8_TO_TCHAR(message->GetArgumentList()->GetString(0).ToString().c_str()));
+	FJSMessageData eventData;
+	eventData.EventName = eventName;
+	for (size_t i = 1; i < argumentsSize; i=i+2) {
+		FJSMessageDataVariant value;
+		value.Type = FString(UTF8_TO_TCHAR(message->GetArgumentList()->GetString(i).ToString().c_str()));
+		value.Value = FString(UTF8_TO_TCHAR(message->GetArgumentList()->GetString(i+1).ToString().c_str()));
+		eventData.Parameters.Add(value);
+	}
+	UE_LOG(LogBlu, Log, TEXT(">>>>>>>>>>>> OnProcessMessageReceived: %s"), *eventName);
+	event_emitter->Broadcast(eventName, eventData);
+	
+	/*
+	FString name = FString(UTF8_TO_TCHAR(message->GetArgumentList()->GetString(0).ToString().c_str()));
+	FString param1 = FString(UTF8_TO_TCHAR(message->GetArgumentList()->GetString(1).ToString().c_str()));
+
+	UE_LOG(LogBlu, Log, TEXT(">>>>>>>>>>>> OnProcessMessageReceived: %s > param 1 > %s"), *eventName, *param1);
+	
+	if (name == "js_event")
 	{
-		
 		// Check the datatype
-		
 		if (data_type == "bool")
 			data = message->GetArgumentList()->GetBool(1) ? TEXT("true") : TEXT("false");
 		else if (data_type == "int")
@@ -76,7 +108,7 @@ bool BrowserClient::OnProcessMessageReceived(CefRefPtr<CefBrowser> browser, CefP
 		
 		event_emitter->Broadcast(name, data);
 	}
-	
+	*/
 	return true;
 	
 }

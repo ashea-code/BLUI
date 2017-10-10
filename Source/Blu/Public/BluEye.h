@@ -1,10 +1,11 @@
 #pragma once
+#include "JSMessageData.h"
 #include "BluEye.generated.h"
 
 class BrowserClient;
 class RenderHandler;
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FScriptEvent, const FString&, EventName, const FString&, EventMessage);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FScriptEvent, FString, EventName, FJSMessageData, messageData);
 
 struct FBluTextureParams
 {
@@ -45,7 +46,6 @@ enum EBluSpecialKeys
 	numlockkey = 144 UMETA(DisplayName = "Num Lock"),
 	scrolllockkey = 145 UMETA(DisplayName = "Scroll Lock")
 };
-
 
 UCLASS(ClassGroup = Blu, Blueprintable)
 class BLU_API UBluEye : public UObject
@@ -230,6 +230,8 @@ public:
 
 	void TextureUpdate(const void* buffer, FUpdateTextureRegion2D * updateRegions, uint32  regionCount);
 
+	void SetCursor(CefCursorHandle cursorHandler, int type);
+
 	void BeginDestroy() override;
 
 	protected:
@@ -254,6 +256,7 @@ public:
 
 		CefMouseEvent mouse_event;
 		CefKeyEvent key_event;
+		UWorld* world;
 
 	private:
 

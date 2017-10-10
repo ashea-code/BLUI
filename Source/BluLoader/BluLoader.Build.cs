@@ -4,14 +4,8 @@ using System;
 
 public class BluLoader : ModuleRules
 {
-	public BluLoader(TargetInfo Target)
+	public BluLoader(ReadOnlyTargetRules Target) : base(Target)
 	{
-		PublicDependencyModuleNames.AddRange(
-			new string[]
-		{
-			"Core",
-			"CoreUObject",
-			"Engine"
-		});
+		PublicDependencyModuleNames.AddRange(new string[] {"Core","CoreUObject","Engine"});
 	}
 }

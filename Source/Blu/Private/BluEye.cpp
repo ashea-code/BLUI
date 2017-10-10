@@ -19,7 +19,7 @@ void UBluEye::init(UObject* WorldContextObject)
 	* We don't want this running in editor unless it's PIE
 	* If we don't check this, CEF will spawn infinit processes with widget components
 	**/
-	const UWorld* world = GEngine->GetWorldFromContextObject(WorldContextObject);
+	world = GEngine->GetWorldFromContextObject(WorldContextObject);
 	if (GEngine)
 	{
 		if (!world->IsGameWorld() && !world->IsPlayInEditor())
@@ -57,6 +57,7 @@ void UBluEye::init(UObject* WorldContextObject)
 	renderer = new RenderHandler(Width, Height, this);
 	g_handler = new BrowserClient(renderer);
 	browser = CefBrowserHost::CreateBrowserSync(info, g_handler.get(), "about:blank", browserSettings, NULL);
+	browser->GetHost()->SetFocus(true);
 
 	// Setup JS event emitter
 	g_handler->SetEventEmitter(&ScriptEventEmitter);
@@ -153,6 +154,28 @@ void UBluEye::TextureUpdate(const void *buffer, FUpdateTextureRegion2D *updateRe
 		UE_LOG(LogBlu, Warning, TEXT("no Texture or Texture->resource"))
 	}
 
+}
+
+void UBluEye::SetCursor(CefCursorHandle cursorHandler, int type)
+{
+	APlayerController* controller = world->GetFirstPlayerController();
+
+	switch (type) {
+		case CefRenderHandler::CursorType::CT_POINTER:
+			controller->CurrentMouseCursor = EMouseCursor::Type::Default;
+			break;
+		case CefRenderHandler::CursorType::CT_HAND:
+			controller->CurrentMouseCursor = EMouseCursor::Type::Hand;
+			break;
+		case CefRenderHandler::CursorType::CT_GRAB:
+			controller->CurrentMouseCursor = EMouseCursor::Type::GrabHand;
+			break;
+		case CefRenderHandler::CursorType::CT_GRABBING:
+			controller->CurrentMouseCursor = EMouseCursor::Type::GrabHandClosed;
+			break;
+	default:
+		controller->CurrentMouseCursor = EMouseCursor::Type::Default;
+	}
 }
 
 void UBluEye::ExecuteJS(const FString& code)
@@ -317,10 +340,8 @@ UBluEye* UBluEye::SetProperties(const int32 SetWidth,
 
 void UBluEye::TriggerMouseMove(const FVector2D& pos, const float scale)
 {
-
 	mouse_event.x = pos.X / scale;
 	mouse_event.y = pos.Y / scale;
-
 	browser->GetHost()->SendFocusEvent(true);
 	browser->GetHost()->SendMouseMoveEvent(mouse_event, false);
 
@@ -402,7 +423,7 @@ void UBluEye::KeyUp(FKeyEvent InKey)
 
 void UBluEye::KeyPress(FKeyEvent InKey)
 {
-
+	UE_LOG(LogBlu, Warning, TEXT("===>>>>>>>>>>>> BloKeyPress"));
 	// Simply trigger down, then up key events
 	KeyDown(InKey);
 	KeyUp(InKey);

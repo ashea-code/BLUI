@@ -26,6 +26,7 @@ class BLU_API BluManager : public CefApp
 		static CefMainArgs main_args;
 		static bool CPURenderSettings;
 
+	public:
 	virtual void OnBeforeCommandLineProcessing(const CefString& process_type,
 			CefRefPtr< CefCommandLine > command_line) override;
 

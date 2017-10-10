@@ -2,7 +2,6 @@
 
 BluManager::BluManager()
 {
-
 }
 
 void BluManager::OnBeforeCommandLineProcessing(const CefString& process_type,

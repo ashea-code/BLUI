@@ -60,7 +60,7 @@ FString UBluBlueprintFunctionLibrary::JSONToString(UBluJsonObj *ObjectToParse)
 
 FString UBluBlueprintFunctionLibrary::GameRootDirectory()
 {
-	return FPaths::ConvertRelativePathToFull(FPaths::GameDir());
+	return FPaths::ConvertRelativePathToFull(FPaths::ProjectDir());
 }
 
 

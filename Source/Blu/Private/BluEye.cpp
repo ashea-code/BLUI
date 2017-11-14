@@ -198,7 +198,7 @@ void UBluEye::LoadURL(const FString& newURL)
 	{
 
 		// Get the current working directory
-		FString GameDir = FPaths::ConvertRelativePathToFull(FPaths::GameDir());
+		FString GameDir = FPaths::ConvertRelativePathToFull(FPaths::ProjectDir());
 
 		// We're loading a local file, so replace the proto with our game directory path
 		FString LocalFile = newURL.Replace(TEXT("blui://"), *GameDir, ESearchCase::IgnoreCase);

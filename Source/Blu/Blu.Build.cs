@@ -94,7 +94,7 @@ public class Blu : ModuleRules
 			filesToStage = Directory.GetFiles(Path.Combine(ThirdPartyPath, "cef/Mac/lib"), "*", SearchOption.AllDirectories);
 			stageFiles(filesToStage);
 
-			if(!UEBuildConfiguration.bBuildEditor)
+			if(!Target.bBuildEditor)
 			{
 				AdditionalBundleResources.Add(new UEBuildBundleResource(Path.Combine(frameworkPath, "Chromium Embedded Framework"), "MacOS", false));
 			}

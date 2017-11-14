@@ -2,7 +2,7 @@
     "FileVersion": 3,
     "FriendlyName": "BLUI",
     "Version": 3,
-    "VersionName": "3.2.3",
+    "VersionName": "3.2.4",
     "Description": "Chromium Embedded Framework (CEF) powered HTML UI and HUD for Unreal Engine 4",
     "Category": "UI",
     "CreatedBy": "Aaron M. Shea",

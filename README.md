@@ -11,7 +11,7 @@ To install check out the latest releases https://github.com/getnamo/BLUI/release
 
 Contains changes to allow downloading of files via the inbuilt browser.
 
-Updated CEF build to 3.2556 support fullscreen videos.
+Updated CEF build to 3.2556 to support fullscreen videos.
 
 ### Convenience Blueprints
 

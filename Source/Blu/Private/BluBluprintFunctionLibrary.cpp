@@ -11,7 +11,7 @@ UBluBlueprintFunctionLibrary::UBluBlueprintFunctionLibrary(const class FObjectIn
 UBluEye* UBluBlueprintFunctionLibrary::NewBluEye(UObject* WorldContextObject)
 {
 
-	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject);
+	UWorld* World = GEngine->GetWorldFromContextObject(WorldContextObject, EGetWorldErrorMode::LogAndReturnNull);
 	UBluEye* tempObject = Cast<UBluEye>(StaticConstructObject_Internal(UBluEye::StaticClass()));
 
 	return tempObject;
@@ -55,4 +55,16 @@ FString UBluBlueprintFunctionLibrary::JSONToString(UBluJsonObj *ObjectToParse)
 
 	return returnString;
 
+}
+
+
+FString UBluBlueprintFunctionLibrary::GameRootDirectory()
+{
+	return FPaths::ConvertRelativePathToFull(FPaths::ProjectDir());
+}
+
+
+bool UBluBlueprintFunctionLibrary::HasSubstring(const FString& SearchIn, const FString& Substring, ESearchCase::Type SearchCase /*= ESearchCase::IgnoreCase*/, ESearchDir::Type SearchDir /*= ESearchDir::FromStart*/)
+{
+	return SearchIn.Contains(Substring, SearchCase, SearchDir);
 }

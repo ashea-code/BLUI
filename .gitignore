@@ -1,8 +1,4 @@
-Binaries/*
-ThirdParty/cef/Linux/*
-ThirdParty/cef/Mac/*
-ThirdParty/cef/Win/*
-*.dll
-*.lib
+# Compiled source files for the engine to use
 Intermediate/*
-ThirdParty/cef/LICENSE.txt
+Binaries/*
+ThirdParty/cef/Win/*

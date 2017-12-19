@@ -22,10 +22,8 @@ THIRD_PARTY_INCLUDES_END
 
 class RenderHandler : public CefRenderHandler
 {
-	private:
-		UBluEye* parentUI;
-
 	public:
+		UBluEye* parentUI;
 
 		int32 Width;
 		int32 Height;
@@ -44,7 +42,7 @@ class RenderHandler : public CefRenderHandler
 };
 
 // for manual render handler
-class BrowserClient : public CefClient, public CefLifeSpanHandler
+class BrowserClient : public CefClient, public CefLifeSpanHandler, public CefDownloadHandler, public CefDisplayHandler
 {
 
 	private:
@@ -79,13 +77,40 @@ class BrowserClient : public CefClient, public CefLifeSpanHandler
 			return this;
 		}
 
+		virtual bool OnProcessMessageReceived(CefRefPtr<CefBrowser> browser, CefProcessId source_process, CefRefPtr<CefProcessMessage> message) override;
+		void SetEventEmitter(FScriptEvent* emitter);
+
+		//CefDownloadHandler
+		virtual void OnBeforeDownload(
+			CefRefPtr<CefBrowser> browser,
+			CefRefPtr<CefDownloadItem> download_item,
+			const CefString& suggested_name,
+			CefRefPtr<CefBeforeDownloadCallback> callback) override;
+
+		virtual void OnDownloadUpdated(
+			CefRefPtr<CefBrowser> browser,
+			CefRefPtr<CefDownloadItem> download_item,
+			CefRefPtr<CefDownloadItemCallback> callback) override;
+
+		//CefLifeSpanHandler
+		virtual bool OnBeforePopup(CefRefPtr<CefBrowser> browser,
+			CefRefPtr<CefFrame> frame,
+			const CefString& target_url,
+			const CefString& target_frame_name,
+			WindowOpenDisposition target_disposition,
+			bool user_gesture,
+			const CefPopupFeatures& popupFeatures,
+			CefWindowInfo& windowInfo,
+			CefRefPtr<CefClient>& client,
+			CefBrowserSettings& settings,
+			bool* no_javascript_access) override
+		{
+			return false;
+		}
+
 		// Lifespan methods
 		void OnAfterCreated(CefRefPtr<CefBrowser> browser) override;
 		void OnBeforeClose(CefRefPtr<CefBrowser> browser) override;
-
-		// CEF Client
-		virtual bool OnProcessMessageReceived(CefRefPtr<CefBrowser> browser, CefProcessId source_process, CefRefPtr<CefProcessMessage> message) override;
-		void SetEventEmitter(FScriptEvent* emitter);
 
 		// NOTE: Must be at bottom
 	public:
